@@ -1,0 +1,29 @@
+{
+  "skill_name": "master-bp-review",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "帮我用大师视角评一下这个BP：我要做一个面向中小企业的AI报销管理工具，主打微信小程序，月订阅99元。目前有3家种子用户，月流水300元。",
+      "expected_output": "7位大师分别给出独立的投资决策和评审（声音各异，允许观点冲突）；创始人有判断地采纳或拒绝建议并重写BP；全文中文；报告保存为md文件并确认路径",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Review this business plan for a SaaS startup targeting HR departments: [user provides a document path or pasted text describing a hiring automation tool]",
+      "expected_output": "Skill triggers even though user wrote in English; 5 separate master reviews with distinct voices; founder response with strategic decisions; rewritten BP; output saved as Chinese markdown",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "我的创业想法是做一个宠物医疗AI诊断平台，帮主人在去医院前初步了解宠物病情。请给我投资人反馈。",
+      "expected_output": "技能被触发（用户没有明确说'大师评BP'但意图明确）；5位评审人独立评审，各评审人观点有合理分歧；Jobs关注产品体验，Thiel质疑垄断性，YC追问增长数据；创始人回应有自己的判断",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "这是我们公司的商业计划书，麻烦帮我看看有什么问题：[附上一个跨境电商选品SaaS的BP文档]",
+      "expected_output": "5位大师各自独立评审，不合并为一个声音；输出包含第二部分创始人回应与战略决策；第三部分有重写后的BP；文件以bp-review-开头命名保存",
+      "files": []
+    }
+  ]
+}
