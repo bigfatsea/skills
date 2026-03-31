@@ -1,6 +1,6 @@
 ---
 name: master-bp-review
-description: Use when the user wants feedback on a business plan, startup idea, or any business document — including phrases like "review my BP", "点评商业计划书", "大师评BP", "投资人视角分析", "帮我看看这个商业计划", "给我创业建议". Also trigger when a user shares a document and asks for business or investor-style feedback, even without explicitly mentioning investors or a formal review.
+description: Use when the user wants feedback on a business plan, pitch deck, or other business document for investor-style or strategic review. Trigger for requests like "review my BP", "点评商业计划书", "review this pitch deck", "投资人视角分析这份 deck", "帮我看看这个商业计划书", or when the user shares a BP, deck, memo, or business document and asks for business or investor-style feedback. Do not use for raw startup ideas without a document or deck to review.
 ---
 
 # Master BP Review Skill
@@ -121,9 +121,9 @@ Each master reviews independently — this is what makes the output valuable. Th
 
 ## How to Execute
 
-### 1. Read the Business Plan
+### 1. Read the Business Document
 
-When invoked, the user will provide one or more document paths:
+When invoked, the user will provide one or more business documents, such as a BP, pitch deck, memo, or pasted business text:
 - Use the Read tool to read all provided documents
 - For PDF files, read them completely
 - Understand the full context before beginning analysis
@@ -202,7 +202,7 @@ After saving:
 
 ## Execution Flow
 
-1. **Read BP** → Understand the business
+1. **Read BP / pitch deck / business document** → Understand the business
 2. **Jobs reviews** → Product/UX/design → 投/不投 + reasoning
 3. **Fried reviews** → Sustainability/small team/profitability → 投/不投 + reasoning
 4. **Thiel reviews** → Monopoly/secrets → 投/不投 + reasoning
@@ -215,10 +215,10 @@ After saving:
 
 ## Example Usage
 
-User: "Review this business plan: docs/my-startup-bp.pdf"
+User: "Review this pitch deck: docs/my-startup-pitch-deck.pdf"
 
 Claude will:
-1. Read the BP document
+1. Read the business document
 2. Generate 7 separate reviews (one from each master)
 3. Generate founder response and rewritten BP
 4. Save to `bp-review-my-startup-20251227-153045.md`
