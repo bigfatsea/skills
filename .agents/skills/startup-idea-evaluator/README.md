@@ -27,7 +27,7 @@ Output defaults to **Simplified Chinese** with English business terms (CAC, LTV,
 
 ```
 startup-idea-evaluator/
-├── skill.md                     # Main skill (7-step workflow, ~300 lines)
+├── SKILL.md                     # Main skill (7-step workflow, ~300 lines)
 ├── references/
 │   ├── gtm-playbooks.md         # 7 archetypes + team context notes + dual-market tactics
 │   ├── market-analysis.md       # Market sizing, competition, pricing overlays; delegates to market-research skill
@@ -44,7 +44,7 @@ startup-idea-evaluator/
 **Project-level** (shared with collaborators):
 ```bash
 mkdir -p .claude/skills/references
-cp skill.md .claude/skills/startup-idea-evaluator.md
+cp SKILL.md .claude/skills/startup-idea-evaluator.md
 cp references/*.md .claude/skills/references/
 ```
 Then invoke:
@@ -55,11 +55,11 @@ Then invoke:
 **Personal skill** (all your projects):
 ```bash
 mkdir -p ~/.claude/skills/references
-cp skill.md ~/.claude/skills/startup-idea-evaluator.md
+cp SKILL.md ~/.claude/skills/startup-idea-evaluator.md
 cp references/*.md ~/.claude/skills/references/
 ```
 
-**One-off inline**: Paste `skill.md` content (without YAML frontmatter) directly at the start of a conversation.
+**One-off inline**: Paste `SKILL.md` content (without YAML frontmatter) directly at the start of a conversation.
 
 ---
 
@@ -69,7 +69,7 @@ Gemini CLI reads `GEMINI.md` from the project root as a system-prompt extension.
 
 ```bash
 # Strip YAML frontmatter and write to GEMINI.md
-tail -n +8 skill.md > GEMINI.md
+tail -n +8 SKILL.md > GEMINI.md
 echo -e "\n---\n" >> GEMINI.md
 cat references/gtm-playbooks.md >> GEMINI.md
 echo -e "\n---\n" >> GEMINI.md
@@ -79,7 +79,7 @@ cat references/market-analysis.md >> GEMINI.md
 Or set a global system prompt in `~/.gemini/settings.json`:
 ```json
 {
-  "systemPrompt": "<paste skill.md content here (without frontmatter)>"
+  "systemPrompt": "<paste SKILL.md content here (without frontmatter)>"
 }
 ```
 
@@ -94,14 +94,14 @@ gemini
 ### OpenAI API / Codex / ChatGPT
 
 **Custom Instructions (ChatGPT):**
-1. Copy `skill.md` content (skip the `---` YAML frontmatter block)
+1. Copy `SKILL.md` content (skip the `---` YAML frontmatter block)
 2. Settings → Personalization → Custom Instructions → paste in "How would you like ChatGPT to respond?"
 
 **API usage:**
 ```python
 import openai
 
-with open("skill.md") as f:
+with open("SKILL.md") as f:
     raw = f.read()
 
 # Strip YAML frontmatter (content between first two --- blocks)
@@ -131,7 +131,7 @@ import { readFileSync } from 'fs';
 
 const client = new OpenAI();
 
-const skillBody = readFileSync('skill.md', 'utf8').split('---').slice(2).join('---').trim();
+const skillBody = readFileSync('SKILL.md', 'utf8').split('---').slice(2).join('---').trim();
 const gtm = readFileSync('references/gtm-playbooks.md', 'utf8');
 const mkt = readFileSync('references/market-analysis.md', 'utf8');
 const systemPrompt = `${skillBody}\n\n---\n\n${gtm}\n\n---\n\n${mkt}`;
@@ -149,7 +149,7 @@ const response = await client.chat.completions.create({
 
 ### Any LLM (Universal)
 
-1. Copy `skill.md` (skip YAML frontmatter)
+1. Copy `SKILL.md` (skip YAML frontmatter)
 2. Optionally append both reference files
 3. Set as system prompt in any capable LLM (Claude, GPT-4, Gemini 1.5 Pro, Qwen-Max, etc.)
 4. Best results with 32K+ context window when including references
