@@ -1,5 +1,5 @@
 ---
-name: startup-idea-evaluator
+name: Startup Idea Evaluator
 description: >
   Evaluate startup ideas and early-stage projects as a pragmatic angel investor + operator.
   Optimized for small AI-augmented teams with China/global context.

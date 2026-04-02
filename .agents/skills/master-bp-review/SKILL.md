@@ -1,5 +1,5 @@
 ---
-name: master-bp-review
+name: Master BP Reviewer
 description: Use when the user wants feedback on a business plan, pitch deck, or other business document for investor-style or strategic review. Trigger for requests like "review my BP", "点评商业计划书", "review this pitch deck", "投资人视角分析这份 deck", "帮我看看这个商业计划书", or when the user shares a BP, deck, memo, or business document and asks for business or investor-style feedback. Do not use for raw startup ideas without a document or deck to review.
 ---
 
