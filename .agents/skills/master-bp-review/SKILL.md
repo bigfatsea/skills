@@ -3,9 +3,9 @@ name: Master BP Review
 description: Use when the user wants feedback on a business plan, pitch deck, or other business document for investor-style or strategic review. Trigger for requests like "review my BP", "点评商业计划书", "review this pitch deck", "投资人视角分析这份 deck", "帮我看看这个商业计划书", or when the user shares a BP, deck, memo, or business document and asks for business or investor-style feedback. Do not use for raw startup ideas without a document or deck to review.
 ---
 
-<!-- Ver 2026-05-09 10:34, by GPT-5 -->
+<!-- Ver 2026-05-09 10:45, by GPT-5 -->
 
-# Master BP Review Skill
+# Master BP Review
 
 This skill evaluates business plans (BPs), pitch decks, and other business documents by selecting the 5 most suitable master reviewers from a broader candidate pool. The goal is not to force every business through the same famous-person checklist, but to match the review lenses to the actual business: VC-scale startup, bootstrapped SaaS, small business, creative brand, creator tool, marketplace, local service, or China-specific product.
 
@@ -376,7 +376,7 @@ Use the selected master's actual lens from the candidate pool. Be specific to th
 
 #### 步骤3: 远景描绘
 
-基于这位大师的远见卓识，描绘该业务在5年、10年后可能达到的远景。
+基于这位大师的远见卓识，描绘该业务的 1-3 年现实远景，以及更远未来可能抵达的终局形态。
 
 The vision should match the master:
 
