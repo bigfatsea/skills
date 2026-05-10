@@ -1,0 +1,5 @@
+# Ver 2026-05-10 15:09, by GPT-5
+interface:
+  display_name: "Synthesize Documents"
+  short_description: "Merge multiple documents into one evidence-aware synthesis"
+  default_prompt: "Use $synthesize-documents to merge these source documents into a comprehensive synthesis that preserves consensus, minority points, and disagreements."

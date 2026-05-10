@@ -1,4 +1,4 @@
-<!-- Ver 2026-05-09 11:25, by GPT-5 -->
+<!-- Ver 2026-05-10 15:09, by GPT-5 -->
 
 # skills
 
@@ -17,6 +17,7 @@ https://github.com/bigfatsea/skills
 | `Master BP Review` | You have a business plan, pitch deck, memo, or similar business document and want investor-style or strategic review. Do not use it for a raw startup idea without a document. | A structured BP review using 5 context-fit master reviewers, founder response, strategic decision, and rewritten BP direction. |
 | `Startup Idea Evaluator` | You want to evaluate a startup idea, early project, pivot, GTM direction, monetization logic, or whether something is worth building. | A pragmatic China/global startup assessment with kill switch, assumptions, validation plan, unit economics, GTM, and verdict. |
 | `Prompt Architect` | You have a rough feature request, app idea, workflow concept, or coding brief and want a stronger implementation prompt for Claude Code. | A clarified product spec, critical technical decisions, and a precise build prompt. |
+| `synthesize-documents` | You have multiple drafts, reports, reviews, memos, or source documents and want one comprehensive synthesis. | A standalone synthesis that preserves consensus, minority-only points, disagreements, evidence checks, and final recommendations. |
 
 ## Master BP Review
 
@@ -87,6 +88,23 @@ Example prompt:
 Use Prompt Architect: build a Mac menu bar tool that records short voice notes, transcribes them, and appends structured tasks to a local Markdown inbox.
 ```
 
+## synthesize-documents
+
+`synthesize-documents` merges multiple source documents into one comprehensive replacement document. It is for consolidation tasks where the output must preserve shared conclusions, minority-only points, disagreements, source structure, user-specific requirements, and evidence-based judgment instead of producing a shallow summary.
+
+Typical workflow:
+
+- Reads every provided document and builds a source inventory.
+- Extracts shared consensus, partial consensus, minority-only content, and disagreements.
+- Evaluates non-consensus points with context and external verification when needed.
+- Writes a standalone synthesis that can replace the older input documents.
+
+Example prompt:
+
+```text
+Use $synthesize-documents to merge docs/report-a.md, docs/report-b.md, and docs/report-c.md into one comprehensive Markdown synthesis.
+```
+
 ## Install
 
 List available skills from GitHub:
@@ -113,6 +131,7 @@ Other valid skill names:
 Master BP Review
 Prompt Architect
 Startup Idea Evaluator
+synthesize-documents
 ```
 
 Install all skills to specific agents:
@@ -141,3 +160,4 @@ Current skills:
 - `master-bp-review`
 - `startup-idea-evaluator`
 - `prompt-architect`
+- `synthesize-documents`
