@@ -1,4 +1,4 @@
-<!-- CORE TEMPLATE · USER · zh · 同一个人 Stanford, 跨 agent 共享; {{AGENT_SCOPED_FOCUS}} 为 per-agent 叠加. 装配规则见 ../SKILL.md -->
+<!-- CORE TEMPLATE · USER · zh · 跨 agent 共享, fleet-wide 单一文件, 由用户独立维护 (lobster-agent-creator 不生成此文件). 此模板供用户手动创建 USER.md 时参考. 装配规则见 ../SKILL.md -->
 # USER.md - 关于我的主人
 
 <!-- [M-BASE] 全员强制 (共享人设, 一般原样保留) -->
@@ -45,6 +45,3 @@ Stanford 偏好**判断 + 经验**, 不只是数据. 当对话/方案**主要靠
 
 （agent 行为规则见 SOUL.md § 认识论与推理）
 
-<!-- [M-FOCUS] per-agent: 本 agent 服务于 Stanford 哪个项目/场景. 无特定项目时填"通用助理, 暂无固定项目焦点" -->
-## 本 Agent 的服务焦点
-{{AGENT_SCOPED_FOCUS}}

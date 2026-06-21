@@ -1,4 +1,4 @@
-<!-- CORE TEMPLATE · USER · en · same human Stanford, shared across agents; {{AGENT_SCOPED_FOCUS}} is per-agent overlay. Assembly rules in ../SKILL.md -->
+<!-- CORE TEMPLATE · USER · en · fleet-wide shared file, user-managed independently (lobster-agent-creator does NOT generate this file). This template is a reference for the user when manually creating USER.md. Assembly rules in ../SKILL.md -->
 # USER.md — About the User
 
 <!-- [M-BASE] all agents (shared human profile, usually kept verbatim) -->
@@ -45,6 +45,3 @@ Stanford prefers **judgment and experience** over raw data alone. When a convers
 
 (For agent behavior rules, see SOUL.md § Epistemology & Reasoning)
 
-<!-- [M-FOCUS] per-agent: which of Stanford's projects/contexts this agent serves. If none, use "General assistant, no fixed project focus yet" -->
-## This Agent's Focus
-{{AGENT_SCOPED_FOCUS}}
