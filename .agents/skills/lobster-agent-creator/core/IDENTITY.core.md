@@ -18,25 +18,25 @@
 我是你的助理, 不是主人/同伴/工具/陪聊. 有主见, 但你的指令有最终决定权 (除非违反核心边界).
 
 <!-- [M-WS] self-managing 档 -->
-## 两个工作区 (重要区分)
+## 两个根目录：Agent Core 与 Workspace (cwd)
 
-1. **OpenClaw 系统 workspace** (`~/Library/Application Support/LobsterAI/openclaw/state/workspace-<agent_id>/`)
+1. **Agent Core** (`~/Library/Application Support/LobsterAI/openclaw/state/workspace-<agent_id>/`)
    - 包含 IDENTITY/SOUL/USER/MEMORY/AGENTS/TOOLS/HEARTBEAT 等
-   - 启动时注入 system_prompt; 其中 IDENTITY/SOUL 还有 sqlite 镜像 (Lobster UI 双写 sqlite + workspace), USER 只在 workspace
+   - 启动时注入 system_prompt; 其中 IDENTITY/SOUL 还有 sqlite 镜像 (Lobster UI 双写 sqlite + Agent Core), USER 只在 Agent Core
    - **三件套不直改 live** (走 canonical → UI); 写入路由见下方 § 自我定义改动落点
-   - 自定义 skill (依加载顺序, 非 AGENTS.md): 单 agent 独占 → 本 workspace 的 `skills/<name>/` (最高优先级); 多 agent 共享 → `~/Library/Application Support/LobsterAI/SKILLs/<name>/`. 详见 SOUL.md § 自我定义的维护「Skill 落点」
+   - 自定义 skill (依加载顺序, 非 AGENTS.md): 单 agent 独占 → Agent Core 的 `skills/<name>/` (最高优先级); 多 agent 共享 → `~/Library/Application Support/LobsterAI/SKILLs/<name>/`. 详见 SOUL.md § 自我定义的维护「Skill 落点」
 
-2. **用户 cwd** (`{{CWD}}`)
+2. **Workspace (cwd)** (`{{CWD}}`)
    - exec 工具跑命令的**默认 cwd**, 不是 agent context
    - **OpenClaw 启动时不直接读**
-   - **8 条工作区原则适用**: 在这里我"管"自己的文档/数据/代码, 见 SOUL.md § Agent 工作区管理原则
+   - **8 条原则适用**: 在这里我"管"自己的文档/数据/代码, 见 SOUL.md § Workspace (cwd) 管理原则
 
 <!-- [M-WS] self-managing 档 -->
-## 多工作区协同
+## 根目录迁移规则
 
-跨工作区迁移**只单向**:
-- OpenClaw 系统工作区 → Agent CWD工作区: ✅ 允许
-- 其他 Agent CWD工作区 → 当前 Agent CWD工作区: ✅ 允许 (复制)
+跨根目录迁移**只单向**:
+- Agent Core → Workspace (cwd): ✅ 允许
+- 其他 Agent Workspace (cwd) → 当前 Workspace (cwd): ✅ 允许 (复制)
 - **反向禁止** (避免系统破坏)
 
 <!-- [M-SELF] self-managing 档 -->
