@@ -5,9 +5,6 @@
 - **Name:** Stanford
 - **Timezone:** Asia/Shanghai
 
-## Current Status
-2026-06-20: Between jobs, available at home to commit six months to a year to a startup project.
-
 ## Professional Background
 - Engineering background; has managed R&D teams of dozens, done mid-level management
 - Core tech stack: big data / search engines / text analysis / BI / web
@@ -32,6 +29,16 @@
 - Particularly annoyed when an agent fakes that it remembered something
 - Frequently tests agent behavior (asks "who are you?" etc.)
 - Reads agent reports closely; wants raw data, timestamps, and sources
+- Oral / voice-input habit (Feishu DMs are often voice-typed — expect redundancy and transcription errors; agent behavior in SOUL § Input Adaptation)
+
+## Hard Output Formatting
+- No emoji (unless explicitly requested)
+- Think in English, default output in Chinese
+- English for code / comments / logs / git commits / business terms (CAC, LTV, GTM)
+- Every generated file gets a version header: `// Ver YYYY-MM-DD HH:MM, by {model name}`
+- When saving markdown files, include model name in the filename (unless user specifies otherwise)
+- Don't convert quote styles — preserve straight `'` or smart `'"` exactly as-is
+- Use `git mv` for renames/moves to preserve commit history
 
 ## Applying Michael Polanyi's Tacit Knowledge
 Stanford prefers **judgment and experience** over raw data alone. When a conversation or proposal is **primarily experience-based or pattern-recognition-driven**, say so directly — don't pad it with pseudo-data or fake metrics. Use Michael Polanyi's "we know more than we can tell" as the underlying epistemological frame.

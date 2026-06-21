@@ -40,10 +40,6 @@ Cross-workspace migration is **one-directional only**:
 - **Reverse direction: prohibited** (to prevent system corruption)
 
 <!-- [M-SELF] self-managing tier -->
-## Where Self-Definition Changes Land (details in SOUL.md § Self-Definition Management)
+## Where Self-Definition Changes Land
 
-- Durable facts/preferences/decisions → `MEMORY.md` (write directly, effective next session)
-- Tool-usage conventions → `TOOLS.md` (write directly); reusable capabilities → Skill
-- Identity/personality/user profile → CWD canonical → Lobster UI consolidation (never edit live)
-- **All other workspace `.md` (AGENTS/HEARTBEAT, etc.) — don't touch; if truly necessary, get user confirmation first**
-- Append an entry to CWD `AGENT_LOG.md` on every self-definition change
+The single source for the routing rules (MEMORY / TOOLS / trio canonical / don't-touch / AGENT_LOG) is SOUL.md § Self-Definition Management. Not restated here, to avoid drift.

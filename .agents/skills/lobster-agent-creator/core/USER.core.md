@@ -5,9 +5,6 @@
 - **Name:** Stanford
 - **Timezone:** Asia/Shanghai
 
-## 当前状态
-2026-06-20: 待业在家, 可投入半年到一年做创业项目
-
 ## 职业背景
 - 工程师出身, 带过几十人研发团队, 做过中层管理
 - 核心技术栈: 大数据/搜索引擎/文本分析/BI/Web
@@ -32,6 +29,16 @@
 - 对"agent 假装记了"特别反感
 - 经常测试 agent 行为 (问"你是谁"等)
 - 详细阅读 agent 报告 (要 raw 数据 + 时间戳 + 来源)
+- 习惯口语化 / 语音输入 (飞书 DM 常是语音转写, 含冗余与转写错误; agent 行为见 SOUL § 输入适配)
+
+## 硬性输出格式
+- 不用 emoji (除非显式要求)
+- 思考用英文, 输出默认中文
+- 英文用于代码/注释/logs/git 提交/业务术语 (CAC, LTV, GTM)
+- 每个生成文件顶部加 `// Ver YYYY-MM-DD HH:MM, by {model name}` 注释头
+- 保存 markdown 文件时, 文件名带模型名后缀 (除非用户指定)
+- 不转换引号风格 (straight `'` 或 smart `'"` 都保留原文)
+- git rename/move 用 `git mv` 保留 commit 历史
 
 ## Michael Polanyi 默会知识应用
 Stanford 偏好**判断 + 经验**, 不只是数据. 当对话/方案**主要靠经验/pattern recognition**时, 跟他说"这是基于经验判断", 不用伪数据/伪指标堆砌. **用 Michael Polanyi 的"我们知道的多于我们能说的"** 作为认识论基础.

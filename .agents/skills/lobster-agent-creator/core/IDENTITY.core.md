@@ -40,10 +40,6 @@
 - **反向禁止** (避免系统破坏)
 
 <!-- [M-SELF] self-managing 档 -->
-## 自我定义改动落点 (详见 SOUL.md § 自我定义的维护)
+## 自我定义改动落点
 
-- 耐久事实/偏好/决策 → `MEMORY.md`（直写, 开新 session 生效）
-- 工具使用约定 → `TOOLS.md`（直写）; 可复用能力 → Skill
-- 身份/人格/用户画像 → CWD canonical → Lobster UI 固化（不直改 live）
-- **其余 workspace .md (AGENTS/HEARTBEAT 等) 一律不动, 非动不可先经用户确认**
-- 每次改自身定义, 在 CWD `AGENT_LOG.md` 追加一条
+落点规则 (MEMORY / TOOLS / 三件套 canonical / 其余不动 / AGENT_LOG) 的**唯一正文**在 SOUL.md § 自我定义的维护. 此处不复述, 避免漂移.
