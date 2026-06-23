@@ -2,26 +2,28 @@
 # requires-python = ">=3.12"
 # dependencies = ["certifi", "pillow"]
 # ///
-# Ver 2026-06-22, by Claude Opus 4.8
-"""gen_cover.py — 多供应商/多模型 CD 封面图像生成器（audio-album-creator 辅助工具）。
+# Ver 2026-06-23, by Claude Opus 4.8
+"""gen_cover.py — multi-provider/multi-model CD cover image generator (an audio-album-creator helper).
 
-依赖 certifi + pillow（已写入下方 PEP 723 内联块与同目录 pyproject.toml）。
-用 UV 运行（自动锁 Python 3.12、自动装依赖，无需先 setup）：
+Depends on certifi + pillow (declared in the PEP 723 inline block below and in the
+sibling pyproject.toml). Run with UV (auto-locks Python 3.12, auto-installs deps, no setup needed):
 
-    uv run gen_cover.py "<英文提示词>"                         # 默认 grsai:gpt-image-2
+    uv run gen_cover.py "<English prompt>"                     # default grsai:gpt-image-2
     uv run gen_cover.py "<prompt>" -m grsai:nano-banana-2
     uv run gen_cover.py "<prompt>" -m google:gemini-2.5-flash-image -o coverA.png
     uv run gen_cover.py "<prompt>" -m openai:gpt-image-2 --size 1024x1024
-    uv run gen_cover.py --prompts-file prompts.txt --out-dir ./covers --prefix 这双手
-    uv run gen_cover.py --list                                 # 列出可用 provider:model
+    uv run gen_cover.py --prompts-file prompts.txt --out-dir ./covers --prefix these-hands
+    uv run gen_cover.py --list                                 # list available provider:model
 
-模型用 `provider:model` 指定，默认 grsai:gpt-image-2。密钥从环境变量读取：
-    grsai  → GRSAI_API_KEY   (base 可用 GRSAI_BASE_URL 覆盖，默认 https://api.grsai.com)
+Pick the model with `provider:model`, default grsai:gpt-image-2. Keys are read from env vars:
+    grsai  → GRSAI_API_KEY   (override the base with GRSAI_BASE_URL, default https://api.grsai.com)
     google → GOOGLE_API_KEY
     openai → OPENAI_API_KEY
 
-输出：保存 PNG/JPEG，并校验确为有效图像（magic bytes + 尺寸）；失败非零退出。
-注意：本工具只解决"提示词→封面图"。流媒体母版需 3000×3000，多数模型出 1024²，放大另做（见 --note）。
+Output: saves PNG/JPEG and verifies it really is a valid image (magic bytes + dimensions);
+exits non-zero on failure.
+Note: this tool only solves "prompt → cover image." A streaming master needs 3000×3000; most
+models output 1024², so upscaling is handled separately (see --upscale).
 """
 from __future__ import annotations
 import argparse
@@ -41,10 +43,11 @@ import certifi
 from PIL import Image
 
 DEFAULT_MODEL = "grsai:gpt-image-2"
-# uv 托管的独立 Python 无系统 CA，用 certifi 提供 CA bundle，否则 TLS 校验失败
+# uv-managed standalone Python has no system CA; supply a CA bundle via certifi, else TLS fails
 _SSL = ssl.create_default_context(cafile=certifi.where())
 
-# 可用组合目录（用于 --list 与校验提示；非穷举，新模型同 provider 可直接传名字）
+# Catalog of known combos (for --list and validation hints; not exhaustive — a new model on a
+# known provider can be passed by name directly)
 CATALOG: dict[str, list[str]] = {
     "grsai": ["gpt-image-2", "nano-banana-2", "nano-banana", "nano-banana-pro", "gpt-image-1.5"],
     "google": ["gemini-2.5-flash-image", "gemini-3.1-flash-image", "gemini-3-pro-image",
@@ -54,11 +57,11 @@ CATALOG: dict[str, list[str]] = {
 RETRYABLE_STATUS = {429, 500, 502, 503, 504}
 
 
-# ---------------- HTTP 基础 ----------------
+# ---------------- HTTP basics ----------------
 def _env(name: str) -> str:
     v = os.environ.get(name)
     if not v:
-        raise RuntimeError(f"环境变量 {name} 未设置")
+        raise RuntimeError(f"environment variable {name} is not set")
     return v
 
 
@@ -80,9 +83,9 @@ def _get_bytes(url: str, timeout: int) -> bytes:
         return r.read()
 
 
-# ---------------- 各 provider 出图 → 返回图像 bytes ----------------
+# ---------------- each provider generates an image → returns image bytes ----------------
 def gen_grsai(model: str, prompt: str, opt: dict, timeout: int) -> bytes:
-    # 兼容 GRSAI_BASE_URL 写成裸 host 或带 /v1 后缀两种形式，统一拼出 .../v1/api/generate
+    # Accept GRSAI_BASE_URL written as a bare host or with a /v1 suffix; normalize to .../v1/api/generate
     base = os.environ.get("GRSAI_BASE_URL", "https://api.grsai.com").rstrip("/")
     if base.endswith("/v1"):
         base = base[:-3]
@@ -90,7 +93,7 @@ def gen_grsai(model: str, prompt: str, opt: dict, timeout: int) -> bytes:
     if "nano-banana" in model:
         payload["aspectRatio"] = opt["aspect"]
         payload["imageSize"] = opt["image_size"]
-    else:  # gpt-image 等用像素比
+    else:  # gpt-image etc. use a pixel size
         payload["aspectRatio"] = opt["size"]
     resp = _post_json(f"{base}/v1/api/generate",
                       {"Authorization": f"Bearer {_env('GRSAI_API_KEY')}"}, payload, timeout)
@@ -101,7 +104,7 @@ def gen_grsai(model: str, prompt: str, opt: dict, timeout: int) -> bytes:
     if not urls and resp.get("url"):
         urls = [resp["url"]]
     if not urls:
-        raise RuntimeError(f"grsai 响应无图片 url: {json.dumps(resp, ensure_ascii=False)[:300]}")
+        raise RuntimeError(f"grsai response had no image url: {json.dumps(resp, ensure_ascii=False)[:300]}")
     return _get_bytes(urls[0], timeout)
 
 
@@ -116,7 +119,7 @@ def gen_google(model: str, prompt: str, opt: dict, timeout: int) -> bytes:
     for part in resp.get("candidates", [{}])[0].get("content", {}).get("parts", []):
         if "inlineData" in part:
             return base64.b64decode(part["inlineData"]["data"])
-    raise RuntimeError(f"google 响应无图: {json.dumps(resp, ensure_ascii=False)[:300]}")
+    raise RuntimeError(f"google response had no image: {json.dumps(resp, ensure_ascii=False)[:300]}")
 
 
 def gen_openai(model: str, prompt: str, opt: dict, timeout: int) -> bytes:
@@ -130,15 +133,15 @@ def gen_openai(model: str, prompt: str, opt: dict, timeout: int) -> bytes:
         return base64.b64decode(d["b64_json"])
     if d.get("url"):
         return _get_bytes(d["url"], timeout)
-    raise RuntimeError(f"openai 响应无图: {json.dumps(resp, ensure_ascii=False)[:300]}")
+    raise RuntimeError(f"openai response had no image: {json.dumps(resp, ensure_ascii=False)[:300]}")
 
 
 PROVIDERS = {"grsai": gen_grsai, "google": gen_google, "openai": gen_openai}
 
 
-# ---------------- 图像校验 ----------------
+# ---------------- image validation ----------------
 def image_info(b: bytes) -> tuple[str, int, int]:
-    """返回 (格式, 宽, 高)；非图像抛错。"""
+    """Return (format, width, height); raise if not an image."""
     if b[:8] == b"\x89PNG\r\n\x1a\n":
         w, h = struct.unpack(">II", b[16:24])
         return "PNG", w, h
@@ -153,12 +156,13 @@ def image_info(b: bytes) -> tuple[str, int, int]:
                 h, w = struct.unpack(">HH", b[i + 5:i + 9])
                 return "JPEG", w, h
             i += 2 + struct.unpack(">H", b[i + 2:i + 4])[0]
-    raise RuntimeError(f"返回内容不是有效图像（前 16 字节: {b[:16]!r}）")
+    raise RuntimeError(f"returned content is not a valid image (first 16 bytes: {b[:16]!r})")
 
 
 def upscale_to(data: bytes, target: int) -> bytes:
-    """用 Lanczos 把长边放大到 target 像素（保持宽高比），返回 PNG bytes。
-    注：高质量重采样、非 AI 超分；用于把 AI 出图补到流媒体 3000² 母版规格。"""
+    """Upscale the long edge to `target` pixels with Lanczos (keeping aspect ratio), return PNG bytes.
+    Note: high-quality resampling, not AI super-resolution; used to bring an AI image up to the
+    streaming 3000² master spec."""
     im = Image.open(io.BytesIO(data)).convert("RGB")
     w, h = im.size
     scale = target / max(w, h)
@@ -168,19 +172,19 @@ def upscale_to(data: bytes, target: int) -> bytes:
     return buf.getvalue()
 
 
-# ---------------- 单次生成（含重试）----------------
+# ---------------- single generation (with retry) ----------------
 def generate_one(model_spec: str, prompt: str, opt: dict, timeout: int, retries: int) -> bytes:
     if ":" not in model_spec:
-        raise SystemExit(f"模型须写成 provider:model（如 {DEFAULT_MODEL}），收到: {model_spec!r}")
+        raise SystemExit(f"model must be written as provider:model (e.g. {DEFAULT_MODEL}), got: {model_spec!r}")
     provider, model = model_spec.split(":", 1)
     if provider not in PROVIDERS:
-        raise SystemExit(f"未知 provider: {provider!r}；可用: {', '.join(PROVIDERS)}")
+        raise SystemExit(f"unknown provider: {provider!r}; available: {', '.join(PROVIDERS)}")
     fn = PROVIDERS[provider]
     last = None
     for attempt in range(retries + 1):
         try:
             data = fn(model, prompt, opt, timeout)
-            image_info(data)  # 校验
+            image_info(data)  # validate
             return data
         except (urllib.error.URLError, TimeoutError) as e:
             last = e
@@ -192,9 +196,9 @@ def generate_one(model_spec: str, prompt: str, opt: dict, timeout: int, retries:
                 raise
         if attempt < retries:
             wait = 3 * (attempt + 1)
-            print(f"  ⟳ 第 {attempt + 1} 次失败（{last}），{wait}s 后重试…", file=sys.stderr)
+            print(f"  ⟳ attempt {attempt + 1} failed ({last}), retrying in {wait}s…", file=sys.stderr)
             time.sleep(wait)
-    raise RuntimeError(f"{model_spec} 重试 {retries} 次仍失败: {last}")
+    raise RuntimeError(f"{model_spec} still failing after {retries} retries: {last}")
 
 
 def _slug(s: str) -> str:
@@ -202,37 +206,37 @@ def _slug(s: str) -> str:
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="多供应商/多模型 CD 封面生成器",
+    ap = argparse.ArgumentParser(description="multi-provider/multi-model CD cover generator",
                                  formatter_class=argparse.RawDescriptionHelpFormatter, epilog=__doc__)
-    ap.add_argument("prompt", nargs="?", help="英文提示词（与 --prompts-file 二选一）")
-    ap.add_argument("-m", "--model", default=DEFAULT_MODEL, help=f"provider:model（默认 {DEFAULT_MODEL}）")
-    ap.add_argument("-o", "--out", help="单图输出路径（默认 封面/cover_<model>.png，落在当前工作目录下）")
-    ap.add_argument("--prompts-file", help="批量：每行一条提示词（# 开头忽略）")
-    ap.add_argument("--out-dir", default="封面",
-                    help="输出目录（默认 ./封面/——在项目目录里运行即落到项目下）")
-    ap.add_argument("--prefix", default="cover", help="批量文件名前缀")
-    ap.add_argument("--aspect", default="1:1", help="grsai nano-banana / 通用宽高比（默认 1:1）")
-    ap.add_argument("--image-size", default="1K", help="grsai nano-banana 分辨率档 1K/2K/4K（默认 1K）")
-    ap.add_argument("--size", default="1024x1024", help="openai / grsai gpt-image 像素尺寸（默认 1024x1024）")
+    ap.add_argument("prompt", nargs="?", help="English prompt (mutually exclusive with --prompts-file)")
+    ap.add_argument("-m", "--model", default=DEFAULT_MODEL, help=f"provider:model (default {DEFAULT_MODEL})")
+    ap.add_argument("-o", "--out", help="single-image output path (default covers/cover_<model>.png, under the current working dir)")
+    ap.add_argument("--prompts-file", help="batch: one prompt per line (lines starting with # are ignored)")
+    ap.add_argument("--out-dir", default="covers",
+                    help="output directory (default ./covers/ — run inside the project dir and it lands under the project)")
+    ap.add_argument("--prefix", default="cover", help="batch filename prefix")
+    ap.add_argument("--aspect", default="1:1", help="grsai nano-banana / general aspect ratio (default 1:1)")
+    ap.add_argument("--image-size", default="1K", help="grsai nano-banana resolution tier 1K/2K/4K (default 1K)")
+    ap.add_argument("--size", default="1024x1024", help="openai / grsai gpt-image pixel size (default 1024x1024)")
     ap.add_argument("--upscale", type=int, default=3000,
-                    help="放大长边到此像素（Lanczos 重采样；默认 3000=流媒体母版；0=不放大保持原生）")
-    ap.add_argument("--timeout", type=int, default=300, help="单次请求超时秒（默认 300；gpt-image-2 较慢）")
-    ap.add_argument("--retries", type=int, default=1, help="失败重试次数（默认 1）")
-    ap.add_argument("--list", action="store_true", help="列出已知 provider:model 后退出")
+                    help="upscale the long edge to this many pixels (Lanczos; default 3000 = streaming master; 0 = no upscale, keep native)")
+    ap.add_argument("--timeout", type=int, default=300, help="per-request timeout in seconds (default 300; gpt-image-2 is slow)")
+    ap.add_argument("--retries", type=int, default=1, help="retry count on failure (default 1)")
+    ap.add_argument("--list", action="store_true", help="list known provider:model and exit")
     args = ap.parse_args()
 
     if args.list:
-        print("已知 provider:model（同 provider 的新模型可直接传名字）：")
+        print("known provider:model (a new model on the same provider can be passed by name directly):")
         for prov, models in CATALOG.items():
             for m in models:
-                tag = "  ← 默认" if f"{prov}:{m}" == DEFAULT_MODEL else ""
+                tag = "  ← default" if f"{prov}:{m}" == DEFAULT_MODEL else ""
                 print(f"  {prov}:{m}{tag}")
-        print("\n密钥：GRSAI_API_KEY / GOOGLE_API_KEY / OPENAI_API_KEY")
+        print("\nkeys: GRSAI_API_KEY / GOOGLE_API_KEY / OPENAI_API_KEY")
         return 0
 
     opt = {"aspect": args.aspect, "image_size": args.image_size, "size": args.size}
 
-    # 收集任务
+    # collect tasks
     tasks: list[tuple[str, str]] = []  # (prompt, out_path)
     if args.prompts_file:
         with open(args.prompts_file, encoding="utf-8") as f:
@@ -244,7 +248,7 @@ def main() -> int:
         out = args.out or os.path.join(args.out_dir, f"cover_{_slug(args.model)}.png")
         tasks.append((args.prompt, out))
     else:
-        ap.error("需提供 prompt 或 --prompts-file")
+        ap.error("provide a prompt or --prompts-file")
 
     rc = 0
     for prompt, out in tasks:
@@ -253,7 +257,7 @@ def main() -> int:
         try:
             data = generate_one(args.model, prompt, opt, args.timeout, args.retries)
         except Exception as e:
-            print(f"  ✗ 失败: {e}\n", file=sys.stderr)
+            print(f"  ✗ failed: {e}\n", file=sys.stderr)
             rc = 1
             continue
         fmt, w, h = image_info(data)
@@ -261,11 +265,11 @@ def main() -> int:
         if args.upscale and max(w, h) < args.upscale:
             data = upscale_to(data, args.upscale)
             _, w, h = image_info(data)
-            note += f" → 放大 {w}×{h}"
+            note += f" → upscaled {w}×{h}"
         os.makedirs(os.path.dirname(out) or ".", exist_ok=True)
         with open(out, "wb") as f:
             f.write(data)
-        warn = "  ⚠ 仍低于 3000²" if min(w, h) < 3000 else ""
+        warn = "  ⚠ still below 3000²" if min(w, h) < 3000 else ""
         print(f"  ✓ {note}, {len(data)} bytes, {time.time() - t0:.0f}s{warn}\n")
     return rc
 

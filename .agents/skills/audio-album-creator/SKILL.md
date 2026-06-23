@@ -1,283 +1,283 @@
 ---
 name: audio-album-creator
-description: '把一份素材包（音频/文字/照片）提炼成一张完整的原创情感音乐专辑方案（Markdown）。当用户要"给某个人/某段经历做一张专辑""把这些素材做成专辑方案""创作生命专辑/纪念专辑""Amber Ark 式定制专辑""根据创作指南写专辑"时使用。用户会指明本次使用哪些素材文件。适用于为至亲、恋人、孩子、团队/公司做的叙事性定制专辑。Not for: 单纯歌词润色、纯乐理咨询、无叙事素材的泛泛作词。'
+description: "Distill a pack of source material (audio / text / photos) into a complete, production-ready original emotional music album plan (a Markdown document). Use when the user wants to make an album for a person or a life experience, turn raw material into an album plan, create a life/memorial album, an Amber Ark-style custom album, or write an album following the creation guide. The user names which source files to use this time. For narrative, custom albums made for close family, a partner, a child, or a team/company. Not for plain lyric polishing, pure music-theory Q&A, or generic lyric-writing with no narrative material."
 ---
 
-<!-- Ver 2026-06-22, by Claude Opus 4.8 -->
+<!-- Ver 2026-06-23, by Claude Opus 4.8 -->
 
 # Audio Album Creator
 
-把用户给定的素材包（音频、文字、照片，或三者混合）读懂、提炼出精华，再走一条**简单却有效**的流水线，产出一份**完整、可直接投产的原创情感专辑方案**（Markdown 文档）。
+Read and understand a user-supplied pack of source material (audio, text, photos, or any mix), distill its essence, then run a **simple but effective** pipeline to produce a **complete, ready-to-produce original emotional album plan** (a Markdown document).
 
-这套方法的引擎是 `references/album-creation-guide.md`（Album Creation Guide），产出结构参照 `references/album-plan-template.md`（纯骨架模板，只给章节与占位符，不含任何故事内容与风格倾向——避免污染不同主题的创作）。
+The engine behind this method is `references/album-creation-guide.md` (the Album Creation Guide); the output structure follows `references/album-plan-template.md` (a pure skeleton template — section headings and placeholders only, with no story content or stylistic bias, so it can't contaminate the creation of different themes).
 
-## 核心理念（决定一切创作取舍）
+## Core principles (these drive every creative trade-off)
 
-- **一主一副双主打**：整张专辑（典型 6–8 首）设**两首主打**，承载两种"打动客户"的力——**主打**（按叙事选，通常 throughline 收束曲）走词曲俱佳、含情感锚点，是"让客户落泪"的破防瞬间（QC ≥ 9/10，85+）；**副主打**（按旋律/曲风最抓耳选）主攻"第一耳朵的好听"，词守门槛即可（80+，好听优先）。其余"底座曲"守合格线（≥7/10，60+）。**为什么两首**：好听是先入为主的（客户选专辑时的第一反应），打动是留存的（让客户觉得被懂）——两个高地分别承载，比押注一首更稳。**（下文出现的"代表作"即指主打。）**
-- **质量资源刻意不均匀（只此一处说清）**：**"不均匀"针对的是 Suno 抽卡算力与曲风探索**（音频生成贵），**不针对歌词文本打磨**——歌词是纯文本、迭代近乎免费，三轮打磨**全员执行**（含底座，见 Step 4）。
-- **两层质量模型（每首歌的及格线与上限）**：**门槛层**（每首必过）= 旋律好听、顺口、朗朗上口、可跟唱、不倒字、故事对得上号、不矫情；**锚点层**（主打必含 1–2 处、副主打可选）= 让客户觉得"这是在说我"的情感瞬间。**工整是为"上口好听"服务的手段，不是目的——当过度工整伤害自然流畅时，好听优先。**
-- **60 分商业标准**：朋友圈分享级，不是出版级。除两首主打外不追求艺术高度，追求"客户觉得值"。
-- **Prosody（形义一致）是第一原则**：词、曲、声、制作四层都服务同一个情感意图。配套两条底层原则（框架 §2.1/§2.2）：**信号优先于噪声**（只写模型能解析成声音的东西，把最强信号放副歌）+ **控制分层**（每个意图放它最可靠的层：全局声音→Style、段落变化→metatag、句内气口→标点换行）。下面的"硬性写作纪律"多是这两条的推论。
-- **sense-bound 取材**：专辑的灵魂是从素材里抓到的**专属锚点**（具体物件、气味、口头禅、场景、关键事件），不是抽象抒情。越具体，听者越觉得"这首歌是关于我的"。
-- **真人即伦理**：若主角是真实的人，须有尊严地处理；敏感内容（政治/疾病/逝者/隐私）按框架 §26–27 抽象化或剔除；成品交付前提醒家人确认。
-- **封面是视觉层的 Prosody**：CD 封面与词曲声制作同源——主体意象、色彩、排版、构图都服从同一情感意图，直接复用蓝图的 throughline 意象 + 最强专属锚点 + 情感基调 + 风格家族 + Persona 气质，让"封面像专辑听起来的样子"。一次性产出 **3 种真正分叉的风格**供选（呼应 Step 2 的三草图精神），细则见框架 §36。
+- **One lead + one second lead (two singles)**: a whole album (typically 6–8 tracks) carries **two singles** that bear the two different forces that "move the customer." The **lead single (主打)** — chosen by narrative, usually the throughline-resolving closer — is excellent in both lyrics and music, carries the emotional anchor, and is the breaking-point moment that "makes the customer cry" (QC ≥ 9/10, 85+). The **second lead (副主打)** — chosen by whichever track is most ear-catching in melody/style — aims first at "sounds great on the first listen," with lyrics that only need to clear the bar (80+, sound-first). The remaining "base tracks (底座)" hold the pass line (≥ 7/10, 60+). **Why two**: being catchy is what wins first impressions (the customer's gut reaction when choosing the album), and being moving is what drives retention (making the customer feel understood) — splitting these two peaks across two tracks is safer than betting everything on one. **(Where "signature track" appears below, it means the lead single.)**
+- **Quality resources are deliberately uneven (stated clearly only here)**: "uneven" applies to **Suno roll-generation (抽卡) compute and style exploration** (audio generation is expensive) — **not to lyric-text polishing**. Lyrics are pure text, iteration is nearly free, and the three-pass polish is run on **every track** (base tracks included; see Step 4).
+- **Two-layer quality model (each track's pass line and ceiling)**: the **threshold layer** (every track must pass) = melodically pleasant, smooth, singable, easy to sing along to, no 倒字 (tonal mismatch — a character whose tone contour fights the melody so it's misheard as another word), the story checks out, not maudlin. The **anchor layer** (required for the lead single — 1–2 spots; optional for the second lead) = the emotional moment that makes the customer feel "this is about me." **Metrical tidiness (工整) is a means in service of "catchy and pleasant," not an end — when over-tidiness hurts natural flow, pleasant wins.**
+- **The 60-point commercial standard**: share-with-friends quality, not publication quality. Outside the two singles, don't chase artistic height — chase "the customer feels it was worth it."
+- **Prosody (form matches meaning) is the first principle**: lyrics, music, voice, and production — all four layers serve one emotional intent. Paired with two underlying principles (guide §2): **signal over noise** (write only what the model can parse into sound, and put the strongest signal in the chorus) + **layered control** (put each intent on its most reliable layer: global sound → Style; section-level change → metatag; in-line breath points → punctuation and line breaks). The "hard writing discipline" below is mostly corollaries of these two.
+- **Sense-bound sourcing**: an album's soul is the **personal anchors** caught from the source material (specific objects, smells, catchphrases, scenes, key events), not abstract sentiment. The more specific, the more the listener feels "this song is about me."
+- **A real person means ethics**: if the subject is a real person, handle them with dignity; abstract away or cut sensitive content (politics / illness / the deceased / privacy) per guide §27; before delivering the finished work, remind the family to confirm it.
+- **The cover art is Prosody at the visual layer**: the CD cover shares a source with the lyric/music/voice/production work — subject imagery, color, typography, and composition all obey the same emotional intent, reusing the blueprint's throughline imagery + strongest personal anchor + emotional tone + style family + Persona character, so "the cover looks like the album sounds." Produce **3 genuinely divergent styles** in one pass (echoing the three-sketch spirit of Step 2); details in guide §36.
 
-## 工作流
+## Workflow
 
-这是一个**人工运行**的 skill，不追求端到端全自动。它分三段递进产出：**Tier 1 选方向（Step 2）→ Tier 2 定蓝图与契约（Step 3）→ Tier 3 逐曲创作（Step 4 起）**。
+This is a **human-run** skill, not an end-to-end fully automated one. It produces output in three escalating tiers: **Tier 1 pick the direction (Step 2) → Tier 2 lock the blueprint and contract (Step 3) → Tier 3 create track by track (Step 4 onward)**.
 
-**两种运行模式（Step 0 确认）**：
+**Two run modes (confirm at Step 0)**:
 
-- **交互模式（默认）**：1 个必选 gate（Step 2 创作方向）+ 1 个可选 gate（Step 3 专辑名/主打+副主打/曲序确认）。**逐曲创作（Step 4）不打断**。
-- **自动模式**：所有 gate 自动选"最推荐"，一口气跑完，末端交报告。
+- **Interactive mode (default)**: 1 mandatory gate (Step 2, creative direction) + 1 optional gate (Step 3, album name / lead + second lead / track order confirmation). **Track-by-track creation (Step 4) is not interrupted.**
+- **Auto mode**: every gate auto-picks the "most recommended," runs straight through, and hands over a report at the end.
 
-**逐曲创作用 subagent fan-out**：从 Step 4 起，**每首歌派一个独立 subagent** 专注创作（治"一条长上下文背 8 首歌"的注意力稀释），靠 Step 3 冻结的"创作契约卡"保住专辑一致性。**每首的"多版词择优"由 subagent 自评完成，两种模式都不回灌用户逐首选**（避免选择爆炸）；用户想改，去读"候选与打磨"附录手动改选。
+**Track-by-track creation uses subagent fan-out**: from Step 4 on, **dispatch one independent subagent per track** to focus on creation (this cures the attention dilution of "one long context carrying 8 songs"), relying on the "creative contract card" frozen in Step 3 to preserve album-level consistency. **Each track's "pick-best-from-multiple-lyric-versions" is done by the subagent's own self-evaluation; neither mode feeds it back to the user for a per-track choice** (avoiding choice explosion); if the user wants changes, they read the "candidates and polish" appendix and re-pick by hand.
 
-末端产出独立报告（创作总结 + 质检报告），**是否返工由用户判断，skill 自身不做自动返工**。
+The end produces standalone reports (a creation summary + a QA report). **Whether to rework is the user's call; the skill itself does no automatic rework.**
 
-非平凡（素材多、范围不清）时，先在工作目录建 `_album_plan.md` 记任务分解与进度，完成后清理。
+For non-trivial jobs (lots of material, unclear scope), first create `_album_plan.md` in the working directory to record task breakdown and progress, and clean it up when done.
 
-### Step 0：确认输入与工作目录（先于一切）
+### Step 0: Confirm input and working directory (before anything else)
 
-1. **确认素材**：用户本次指明用哪些文件。逐一确认路径与类型（音频/文字/图片/视频）。
-2. **确定工作目录（这是固定规则）**：
-   - 若所有素材**都在同一个文件夹内** → 工作目录 = 该文件夹，所有中间结果与最终产物都存这里。
-   - 若素材**散落在不同位置** → 在**当前目录**下新建一个子文件夹，以**项目名**命名（项目名取主角名或专辑主题，如 `{主角名}专辑/`），所有产物存这里。
-3. **确认创作 brief**（缺则简短追问，不要瞎猜）：主角是谁、什么场合、要什么核心情感、谁买单/谁听、语言（默认普通话）、**是否真实人物**（决定伦理与敏感处理强度）。
-4. **确认运行模式**：
-   - **交互模式（默认）**：Step 2 必停、Step 3 可停，逐曲不打断。
-   - **自动模式**：所有 gate 自动选最推荐，连续跑完。
-   - 同时确认**投放档**（影响 Step 4 成本）：**标准档**（底座也写 3 版词）/ **经济档**（底座只写 1 版词×3 轮，仅两首主打吃满）。交互模式默认标准档，自动模式默认经济档，用户可覆盖。
+1. **Confirm the material**: the user names which files to use this time. Confirm each path and type (audio / text / image / video) one by one.
+2. **Determine the working directory (this is a fixed rule)**:
+   - If all material is **inside one folder** → the working directory = that folder, and all intermediate results and final outputs are stored there.
+   - If the material is **scattered across locations** → create a subfolder under the **current directory**, named by the **project name** (the project name is the subject's name or the album theme, e.g. `{subject}-album/`), and store all outputs there.
+3. **Confirm the creative brief** (if missing, ask briefly — don't guess): who the subject is, what occasion, what core emotion is wanted, who's paying / who's listening, language (Mandarin by default), **whether it's a real person** (this sets the strength of ethics and sensitive handling).
+4. **Confirm the run mode**:
+   - **Interactive mode (default)**: Step 2 must stop, Step 3 may stop, track-by-track is uninterrupted.
+   - **Auto mode**: every gate auto-picks the most recommended and runs through continuously.
+   - At the same time confirm the **production tier** (affects Step 4 cost): **standard tier** (base tracks also get 3 lyric versions) / **economy tier** (base tracks get only 1 lyric version × 3 passes; only the two singles get the full treatment). Interactive mode defaults to standard tier, auto mode defaults to economy tier; the user can override.
 
-### Step 1：摄取与提炼素材（Ingest & Distill）
+### Step 1: Ingest & distill the material
 
-本 skill 默认运行在**多模态模型**上：直接读取并理解文本 / 图片 / 音频 / 视频素材，无需任何转码或转录管线。
+This skill runs on a **multimodal model** by default: it reads and understands text / image / audio / video material directly, with no transcoding or transcription pipeline.
 
-- **文字 / 图片**：直接读全。图片要提取年代、场景、人物关系、情绪，以及可作专属锚点的**物件**。
-- **音频 / 视频**：直接交模型理解，抓口述内容、语气情绪、环境线索。
-- **若当前模型或 harness 无法摄取某类素材**（例如不支持音频）：**不要卡住，也不要编造内容**——直接跳过该素材，并在 Step 8 的创作总结里**明确记录"某某素材因模型不支持被忽略"**，让用户知情。
+- **Text / images**: read in full. For images, extract era, scene, relationships, mood, and any **objects** usable as personal anchors.
+- **Audio / video**: hand directly to the model to understand — catch the spoken content, tone and mood, environmental cues.
+- **If the current model or harness cannot ingest a material type** (e.g. audio isn't supported): **don't get stuck and don't fabricate content** — skip that material and, in the Step 8 creation summary, **explicitly record "such-and-such material was ignored because the model doesn't support it"** so the user knows.
 
-提炼后**写一份中间文件** `素材提炼-{主角}.md` 存入工作目录，含：
+After distilling, **write an intermediate file** `material-distillation-{subject}.md` into the working directory, containing:
 
-- 人物小传 / 时间线（关键人生节点）
-- **专属锚点清单**（框架 §5 的命门：物件、气味、口头禅、场景、关键事件——逐条列出，越具体越好）
-- 情感弧候选（苦→甜、失→得、离→归 等）
-- 家族成员与关系、重要日期（为后续家族记忆与复购埋点，亦服务视角选择）
-- **敏感内容标记与处理方案**（哪些要抽象化、哪些过暗须剔除）
-- **素材摄取情况**（哪些读了、哪些因不支持被忽略、有无明显残缺）——供创作总结引用
-- **创作契约草料**（为 Step 3 冻结契约卡铺垫）：Persona 候选的人声三层描述符雏形、throughline 候选意象、题眼复现字候选、各曲可用锚点的初步归集。此处只是备料，正式锁定在 Step 3。
+- Character bio / timeline (key life milestones)
+- **Personal-anchor list** (the crux of guide §5: objects, smells, catchphrases, scenes, key events — list each one, the more specific the better)
+- Emotional-arc candidates (bitter→sweet, loss→gain, parting→return, etc.)
+- Family members and relationships, important dates (seeding later family-memory and repeat-purchase hooks; also serving the perspective choice)
+- **Sensitive-content flags and handling plan** (which to abstract, which are too dark and must be cut)
+- **Ingestion status** (what was read, what was ignored as unsupported, any obvious gaps) — to be cited in the creation summary
+- **Raw stock for the creative contract** (groundwork for freezing the contract card in Step 3): draft three-layer vocal descriptors for Persona candidates, throughline image candidates, recurring-motif-word candidates, an initial gathering of usable anchors per track. This is just prep; formal locking happens in Step 3.
 
-### Step 2：【Tier 1 · 必选 gate】提出 3 版方案草图，请用户选择
+### Step 2: [Tier 1 · mandatory gate] Propose 3 draft directions, ask the user to choose
 
-基于 Step 1 的提炼，**给出 3 个本质不同的方案草图**，让用户拍板。三者应在以下维度**真正分叉**（由素材内容决定，不是换皮）：
+Based on the Step 1 distillation, **offer 3 fundamentally different draft directions** for the user to decide. The three should **genuinely diverge** (determined by the material's content, not reskins) along these dimensions:
 
-- **风格取向**（如 江南民谣 vs 抒情灵魂 vs 新民乐）；
-- **情感基调**（如 苦尽释然的暖 vs 隐忍克制的痛 vs 豁达通透的轻）；
-- **故事内核 / throughline**（用哪条主线统摄一生——如"一双手" vs "一盏灯" vs "一条回家的路"）。
+- **Stylistic leaning** (e.g. Jiangnan folk vs. lyrical soul vs. neo-folk);
+- **Emotional tone** (e.g. the warmth of bitterness-released vs. the restrained ache of holding back vs. the lightness of serene clarity);
+- **Story core / throughline** (which throughline governs a whole life — e.g. "a pair of hands" vs. "a single lamp" vs. "the road home").
 
-每个草图给出（**只到"草图"粒度，不展开完整 8 轨蓝图**——那是 Step 3 的事，避免 3 倍蓝图成本丢弃 2 份）：
+Give each draft (**only at "sketch" granularity — don't expand a full 8-track blueprint**, which is Step 3's job, to avoid 3× blueprint cost with 2 discarded):
 
-- 一句话概念 + 情感弧走向
-- **throughline 意象** + 题眼复现字
-- **粗曲目脉络**（6–8 首，每首一句话题材）
-- 候选主打切入角度 + **一句 hook 样句**（让用户先尝到口感）
-- 风格家族雏形
+- A one-line concept + the emotional-arc trajectory
+- **Throughline image** + the recurring motif word
+- **Rough tracklist outline** (6–8 tracks, one line of subject per track)
+- The candidate lead single's angle + **one sample hook line** (so the user gets a taste first)
+- An embryonic style family
 
-**标出最推荐的一个，并讲清推荐理由**（为什么它最贴这份素材、最有"破防"潜力）。
+**Mark the most recommended one and spell out why** (why it best fits this material and has the most "breaking-point" potential).
 
-- **交互模式**：用 `AskUserQuestion` 把三个草图作为选项呈现（系统会自动附"Other"，便于自定义方向）。用户可：按推荐选 / 选另一个 / 自定义 / 选某项并补充意见。
-- **自动模式**：直接采用最推荐的草图，不打断。
+- **Interactive mode**: use `AskUserQuestion` to present the three sketches as options (the system auto-adds "Other" for custom directions). The user can: take the recommendation / pick another / customize / pick one and add notes.
+- **Auto mode**: adopt the most recommended sketch directly, no interruption.
 
-把"三草图 + 推荐理由 + 最终选择与补充"记入中间文件 `创作方向-{主角}.md`。**选定后进入 Step 3。**
+Record "three sketches + recommendation rationale + final choice and notes" into the intermediate file `creative-direction-{subject}.md`. **Once chosen, proceed to Step 3.**
 
-### Step 3：【Tier 2 · 可选 gate】专辑级统筹（Album Blueprint）+ 冻结创作契约卡
+### Step 3: [Tier 2 · optional gate] Album-level coordination (Album Blueprint) + freeze the creative contract card
 
-读 `references/album-creation-guide.md` 的 §34（专辑统筹）、§24（一致性）、Part I §3（情感→杠杆），并对照模板 §0。**沿用户选定的方向**展开，写入中间文件 `专辑蓝图.md`：
+Read §34 (album coordination), §24 (consistency), Part I §3 (emotion→lever) of `references/album-creation-guide.md`, and cross-reference template §0. **Expand along the direction the user chose** and write into the intermediate file `album-blueprint.md`:
 
-1. **概念与情感弧**：一句话讲清这是一张什么样的专辑；情感弧即曲目顺序。
-2. **Persona 锁定**：主嗓用**人声三层**描述（音色质感+唱法+制作，框架 §15.4，如"温暖老年女中音、气声到放开、近麦"），必要时设辅嗓（如下一代接唱完成"传承"）。**艺人名只作内部参照、绝不入 prompt**（翻译成三层描述符）。可为全专定 1–2 个**调性(key)**收束漂移。
-3. **主题动机**：贯穿全专的一个 throughline 意象 + 一句副线意象 + 一条在器乐/收尾处复现的旋律动机。
-4. **风格家族**：统一的配器与制作基调，允许家族内变化。
-5. **曲目编排表**（6–8 首，可含 1 首器乐留白作"呼吸"）：列 # / 曲名 / 题材 / 流派 / 调式 / BPM·拍号 / 定位（主打/副主打/底座/间奏）/ Persona。
-6. **指定主打 + 提名副主打**：**主打**放全专高潮位（中心偏后，按叙事选，通常 throughline 收束曲），其后留 1–2 首回落与释然。**副主打**按"曲风/旋律最抓耳"在其余曲中**提名一首候选**——**不锁死**：Step 4 抽卡后若另一首旋律更惊艳可改（好听由抽卡定，故晚定）。
-7. **3 个专辑名候选**：标推荐，附一句理由。
+1. **Concept and emotional arc**: state in one line what kind of album this is; the emotional arc is the track order.
+2. **Persona lock**: describe the lead voice with the **three vocal layers** (timbre texture + delivery + production, guide §15.4, e.g. "warm aged mezzo, breathy to opened-up, close-mic"), and set a backup voice if needed (e.g. the next generation taking over the singing to complete "passing it on"). **Artist names are for internal reference only and never enter a prompt** (translate them into the three-layer descriptors). You may set 1–2 **keys** for the whole album to rein in drift.
+3. **Thematic motif**: one throughline image running through the whole album + one one-line subplot image + one melodic motif that recurs in the instrumental / at closings.
+4. **Style family**: a unified instrumentation and production baseline, with variation allowed within the family.
+5. **Tracklist arrangement table** (6–8 tracks, may include 1 instrumental as a "breath"): list # / title / subject / genre / mode / BPM·meter / role (lead / second lead / base / interlude) / Persona.
+6. **Designate the lead + nominate the second lead**: place the **lead single** at the album's climax (center-back, chosen by narrative, usually the throughline-resolving closer), leaving 1–2 tracks of descent and release after it. **Nominate one candidate for the second lead** among the rest by "most ear-catching style/melody" — **don't lock it**: after the Step 4 roll-generations, if another track's melody is more stunning, it can change (catchiness is decided by the rolls, so it's locked late).
+7. **3 album-name candidates**: mark the recommendation, with a one-line reason.
 
-**可选 gate**：交互模式下，可在此用 `AskUserQuestion` 让用户确认专辑名 / 主打 + 副主打 / 曲序（用户也可跳过直接放行）；自动模式直接采用推荐项，不打断。
+**Optional gate**: in interactive mode, you may here use `AskUserQuestion` to have the user confirm the album name / lead + second lead / track order (the user may also skip and wave it through); auto mode adopts the recommendations directly, no interruption.
 
-#### 冻结"创作契约卡"（fan-out 不散架的命门）
+#### Freeze the "creative contract card" (the crux that keeps fan-out from falling apart)
 
-蓝图定稿后，在 `专辑蓝图.md` 末尾**冻结一张约 1–2KB 的创作契约卡**。它是发给每个逐曲 subagent 的"宪法"，**取代让 subagent 重读整本框架**——这是专辑级一致性在 fan-out 下不裂的关键。模板：
+After the blueprint is finalized, **freeze a roughly 1–2KB creative contract card** at the end of `album-blueprint.md`. It is the "constitution" handed to each per-track subagent, and **replaces having the subagent re-read the whole guide** — this is the key to album-level consistency not splitting under fan-out. Template:
 
 ```
-## 创作契约卡（全专不可违背）
-- Persona「{名}」人声三层：{warm aged mezzo, breathy→opened-up with a catch, close-mic warm analog}
-- 辅嗓（如有）：{young warm female}
-- 统一调性：主 {A minor} / 收束 {C major}
-- 风格家族：{江南民谣/国风抒情}；核心配器 {erhu+guzheng+piano+soft strings}；制作 {warm analog, close-mic}
-- throughline 意象：{一双手}；题眼复现字：{手/疤/暖}
-- 副线意象：{铜脚炉}（在 #5 器乐、#8 终曲复现动机）
-- 视角基调：{第一人称回望}；呼吸点：{主打 Bridge / 终曲切下一代}
-- 工整 vs 写意：默认工整；写意余地 {0–1 首，放最压抑的一首}
-- 写作纪律卡：见本 SKILL"硬性写作纪律"全文（标点控气口禁裸空格 / 副歌逐次写全 / 副歌密铺对仗 / metatag 全英文 / 题眼零倒字 …）
+## Creative contract card (inviolable album-wide)
+- Persona "{name}" three vocal layers: {warm aged mezzo, breathy→opened-up with a catch, close-mic warm analog}
+- Backup voice (if any): {young warm female}
+- Unified key: main {A minor} / closing {C major}
+- Style family: {Jiangnan folk / guofeng lyrical}; core instrumentation {erhu+guzheng+piano+soft strings}; production {warm analog, close-mic}
+- Throughline image: {a pair of hands}; recurring motif words: {hand / scar / warm}
+- Subplot image: {brass foot-warmer} (recur the motif in #5 instrumental, #8 finale)
+- Perspective baseline: {first-person looking back}; breath points: {lead single Bridge / finale cuts to the next generation}
+- Tidy vs. free: tidy by default; free-verse latitude {0–1 track, on the most repressed one}
+- Writing-discipline card: see the full "hard writing discipline" in this SKILL (punctuation controls breath / no bare spaces / write every chorus out in full / dense parallel couplets in chorus / metatags all in English / zero 倒字 on motif words …)
 
-## 各曲档案（逐首一份，发给对应 subagent）
-- # / 曲名 / 定位（主打·副主打·底座·间奏）/ 情感弧位置
-- 题材与素材锚点（来自素材提炼，越具体越好）
-- 情感→杠杆建议（调式/BPM/拍号/配器/动态/人声）
-- 必须触达的 throughline 点（如"手"意象须现于副歌）
+## Per-track dossiers (one per track, handed to the matching subagent)
+- # / title / role (lead · second lead · base · interlude) / position in the emotional arc
+- Subject and material anchors (from the distillation, the more specific the better)
+- Emotion→lever suggestions (mode / BPM / meter / instrumentation / dynamics / vocals)
+- Throughline points that must be hit (e.g. the "hand" image must appear in the chorus)
 ```
 
-> subagent 在自己这首内自由发挥，但**不得自创 Persona / 风格家族 / throughline**。需要深查引擎时，给它 `references/album-creation-guide.md` 路径按需读相关 §。
+> A subagent has free rein within its own track, but **may not invent its own Persona / style family / throughline**. When it needs to dig deep into the engine, give it the path to `references/album-creation-guide.md` to read the relevant § on demand.
 
-### Step 4：【Tier 3】逐曲并行 subagent 词曲创作
+### Step 4: [Tier 3] Parallel per-track subagent lyric+music creation
 
-主上下文**不再亲自逐首写词**，而是**为每首歌派一个独立 subagent**——让每首歌重获"专注单曲"的满格注意力（这正是"单独丢给一个干净上下文质量更高"的机制），同时靠创作契约卡保住专辑一致性。8 首可并行，墙钟≈最慢一首，而非 8 首之和。
+The main context **no longer writes each track's lyrics itself**; instead it **dispatches one independent subagent per track** — giving each track back the full attention of "a single focused song" (this is exactly the mechanism by which "handing it off to a clean context gives higher quality"), while the creative contract card preserves album consistency. 8 tracks can run in parallel; wall-clock ≈ the slowest single track, not the sum of all 8.
 
-**发给每个 subagent 的 brief**：
+**The brief handed to each subagent**:
 
-- **输入** = 创作契约卡（全专宪法）+ 本曲档案（定位/锚点/杠杆/throughline 触点）+ `references/album-creation-guide.md` 路径备查。
-- **任务** = 产出 ①3 个候选歌名；②若干版完整中文歌词（每版过下方"三轮打磨协议"）；③Suno Style 曲风；④自评择优选出推荐版，附简短择优理由 + 倒字/QC 简注。
-- **约束** = 服从契约卡；不得自创 Persona/风格家族/throughline；遵守本 SKILL"硬性写作纪律"。
+- **Input** = the creative contract card (album-wide constitution) + this track's dossier (role / anchors / levers / throughline touchpoints) + the path to `references/album-creation-guide.md` for reference.
+- **Task** = produce ① 3 candidate song titles; ② several complete Chinese-lyric versions (each run through the "three-pass polish protocol" below); ③ the Suno Style; ④ self-evaluate and pick the recommended version, with a brief pick-rationale + a short 倒字/QC note.
+- **Constraints** = obey the contract card; don't invent Persona / style family / throughline; follow this SKILL's "hard writing discipline."
 
-**分层投放（三档；"非均匀"的含义见核心理念）**：
+**Tiered investment (three tiers; the meaning of "uneven" is in Core principles)**:
 
-| 曲位 | 歌词版本 | 三轮打磨 | 曲风(Style) | 目标 | 生产 SOP |
+| Track role | Lyric versions | Three-pass polish | Style | Target | Production SOP |
 |---|---|---|---|---|---|
-| **主打** | **1 完整 + 金句双轨 + 2 候选副歌** | 完整版 3 轮 + 金句锤炼 | **3 种（含人声风格）** | 85+ | N≥8、定 Persona、副歌 Inpainting 2–5 次、逐句校倒字（框架 §31） |
-| **副主打** | 2 版 | 每版 3 轮 + 好听三测试 | **2–3 种（侧重旋律/曲风抓耳）** | 80+（好听优先） | **高 N 抽卡求旋律命中**、Inpainting 调编曲、词守门槛 |
-| **底座** | 标准档 3 版 / 经济档 1 版 | 每版 3 轮 | **1 种家族内**（可+1 备） | 60+ | N=2–4、复用 Persona+风格家族、合格即收 |
-| **器乐间奏** | — | — | 1 种（开 Instrumental，Lyrics 留空）+ 结构说明 | — | 多抽卡取最暖一条 |
+| **Lead single** | **1 complete + dual-track killer line + 2 candidate choruses** | 3 passes on the complete version + killer-line forging | **3 (including vocal style)** | 85+ | N≥8, lock Persona, chorus Inpainting 2–5×, line-by-line 倒字 check (guide §31) |
+| **Second lead** | 2 versions | 3 passes each + the three catchiness tests | **2–3 (favoring ear-catching melody/style)** | 80+ (sound-first) | **high-N rolls to land the melody**, Inpainting to tune the arrangement, lyrics clear the bar |
+| **Base** | standard tier 3 versions / economy tier 1 | 3 passes each | **1 within the family** (may +1 backup) | 60+ | N=2–4, reuse Persona + style family, accept once it passes |
+| **Instrumental interlude** | — | — | 1 (turn on Instrumental, leave Lyrics empty) + a structure note | — | roll several, take the warmest |
 
-> **底座不做 3 曲风**：底座曲风已被风格家族+Persona 锁死，强行 3 种要么破坏专辑一致、要么是化妆式微调（浪费）。**曲风不是底座的变量，歌词才是。**
+> **Base tracks don't do 3 styles**: a base track's style is already locked by the style family + Persona; forcing 3 styles either breaks album consistency or is a cosmetic tweak (wasteful). **Style is not the base track's variable — lyrics are.**
 
-**每版歌词，subagent 必须逐项写全（七维落地）**：
+**For each lyric version, the subagent must write out all of the following (seven dimensions, fully landed)**:
 
-1. **维度 1 词与叙事**：素材锚点 → 意象化（以具体喻情，不直白诉苦）→ 副歌 hook（短、可重复、专属意象+普世情感）→ 视角（§6）→ 结构落点（私密细节进主歌、深情留白进副歌）。
-2. **维度 2 情感→杠杆**（§3/§18）：定调式、速度/拍号、配器、动态、人声，并写明每个取值"为什么"服务情感。情感弧（如小调主歌→大调副歌）落到调式+动态的段内变化。
-3. **维度 3–7**：曲风 / 曲式与动态弧 / 节奏 / 人声 / 乐器配器。
-4. **Suno Style 字段**（§21）：4–7 个描述符；**人声三层（音色+唱法+制作）放最前**，可加**调性(key)**提升一致性，核心乐器点名（民乐用 erhu/guzheng 等具体名）。音色交给 Style+Persona，人声段落弧下放 metatag。附 Sliders（情感歌=Weirdness Safe + Style Influence Strong + Prompt Helper Off）。
-5. **完整中文歌词**（见下"硬性写作纪律"）：副歌放最强锚点、句内气口用标点/换行、段落按需不套满。
-6. **中文可唱性 / 倒字自检**（§13/§22）：逐一检查 hook 关键词与人名零倒字，标出需重点盯的长句。
+1. **Dimension 1, lyrics and narrative**: material anchor → imagery (express emotion through the concrete, not bluntly venting grief) → chorus hook (short, repeatable, personal image + universal emotion) → perspective (§6) → structural placement (private details into verses, deep emotion held back into the chorus).
+2. **Dimension 2, emotion→lever** (§3/§18): set mode, tempo/meter, instrumentation, dynamics, vocals, and state for each value "why" it serves the emotion. The emotional arc (e.g. minor-key verse → major-key chorus) lands as in-section change in mode + dynamics.
+3. **Dimensions 3–7**: style / song form and dynamic arc / rhythm / vocals / instrumentation.
+4. **Suno Style field** (§21): 4–7 descriptors; **the three vocal layers (timbre + delivery + production) go first**, may add the **key** to boost consistency, name core instruments (for Chinese folk instruments use specific names like erhu/guzheng). Leave timbre to Style + Persona, and push the section-level vocal arc down to metatags. Attach Sliders (emotional song = Weirdness Safe + Style Influence Strong + Prompt Helper Off).
+5. **Complete Chinese lyrics** (see "hard writing discipline" below): put the strongest anchor in the chorus, use punctuation/line breaks for in-line breath points, don't fill every section just because the formula has one.
+6. **Chinese singability / 倒字 self-check** (§13/§22): check the hook keywords and personal names one by one for zero 倒字, flag the long lines that need watching.
 
-#### 三轮打磨协议（把框架 §14"重写=金标准"落成可执行步骤，全员执行）
+#### Three-pass polish protocol (turns guide §14 "rewriting = the gold standard" into executable steps, run on every track)
 
-每版歌词必须跑完三轮，并**留一段简短打磨记录**（哪轮改了什么）：
-
-```
-第1轮 立意/意象聚焦：抓专属锚点、砍陈词预制件、定 throughline 落点、定视角与段落职能
-第2轮 工整/押韵：锁一辙一韵到底、【副歌密铺对仗·主歌按需埋对句】、行长齐(≤10–12字)、
-                 砍口语连接词("你们都知道""我自己扛")、稳定/不稳定工具按情感取用
-第3轮 钩子/可唱：hook 缩短可重复、最强锚点上副歌信号位、倒字自检(题眼/人名零倒字)、
-                 气口标点化(禁裸空格)、metatag 双锚、副歌逐次写全
-```
-
-> 这套协议只花文本 token、**全员执行（含底座）**，是修复词作质量的最高 ROI 单点。三轮记录连同各版歌词一并保留，供 Step 5 写入"候选与打磨"附录。
-
-#### 主打 / 副主打额外锤炼（挂在本步，不另设 Step）
-
-两首主打的 subagent 在三轮打磨之外，再各做一道（成本只是多几行文本）：
-
-- **金句双轨对打（仅主打）**：核心 hook 同时产出**「极简留白版」与「丰满工整版」**两条候选正面对打、择优——**强制保住张力，防被单向工整化稀释**（这正是修复"好句被押韵磨钝"的开关）。择优过三测：**删形容词测试**（删了会不会更狠）、**留白测试**（有没有替听众把话说完）、**跟唱测试**（老人听一遍记不记得住）。
-- **好听三测试（主打 + 副主打）**：朗朗上口测试 / 跟唱测试 / **旋律记忆点测试（hook 能不能哼出来）**。副主打以此为首要验收口径。
-
-> 边界：**金句留白只用在主打的 1–2 句锚点上，不全曲推行**——全曲留白会让歌词变稀、反伤好听。
-
-### Step 5：缝合与汇总（fan-out 后的一致性兜底 + 组装）
-
-subagent 各写各的，跨曲一致性可能裂。回到主上下文做一遍**缝合检查**（廉价但必要），逐项过：
-
-- **动机/题眼复现**是否真的落地（throughline 意象是否贯穿、副线意象是否在指定曲复现、旋律动机是否在器乐/终曲 callback）；
-- **Persona / 调性 / 风格家族**是否跑偏；
-- **视角是否有"呼吸"**（不是全程同一人称，§6）；
-- 有无**两首副歌撞辙/撞 hook**、有无重复意象或自我抄袭；
-- **主打 / 副主打是否真的差异化**（一个走情感锚点、一个走旋律抓耳，别变成两首同质的歌）；
-- 真人伦理与敏感处理是否一致到位。
-
-发现裂缝就**回灌对应 subagent 修订或在主上下文微调**，直到缝合通过。然后组装产物：
-
-1. **专辑方案主文档**：用**每首的选定版**组装，干净可交付。末尾附一张"本专辑如何落实 Album Creation Guide"对照表（结构见模板文末）。
-2. **候选与打磨文档**（`候选与打磨-{专辑名}-{model name}.md`）：把每曲的 **3 候选歌名 / 多版歌词 / 三轮打磨记录 / 3 专辑名候选**收入，标出选定版与理由，供用户手动改选。
-
-### Step 6：CD 封面设计（一次性产出 3 种风格）
-
-放在缝合定稿之后——专辑名、throughline、Persona、风格家族此时已锁。封面**不另起炉灶**，从蓝图直接取料：throughline 意象 / 最强专属锚点 / 情感基调 / 风格家族 / Persona 气质，逐一映射到视觉四要素（主体意象 / 色彩 / 排版 / 构图）。原则与规格见框架 §36。**本步只产出封面设计与提示词（属 Design）；实际出图属 Production，与 Suno 抽卡同列"待执行"——纯 Design 运行到提示词为止、不调图像 API。**
-
-- **一次性给 3 种真正分叉的风格**（非换皮，呼应 Step 2 三草图）：**具象摄影 / 插画手绘 / 抽象极简（或拼贴）是默认原型、按专辑气质可替换**，或同一主体走不同色调与排版；只须三案真正分叉。每种写：①视觉概念一句话；②四要素取值；③可直接喂图像模型的提示词。照模板"封面设计（3 风格候选）"节填充。
-- **主体 = throughline 意象 / 最强专属锚点**（具体物件优先、sense-bound），别用抽象泛图；**throughline 不可视觉化时退到锚点物件**。构图**留出叠标题的负空间**，缩略图（流媒体首图极小）要焦点强、信息少。
-- **提示词两套写法**：Midjourney 用"主体 + 风格/媒介 + 光线 + 色彩情绪 + 构图"并加 `--ar 1:1`（≤约 60 词）；Nano Banana / GPT Image 用自然语言句（Subject + Action + Scene + mood）。**提示词统一加 `no text`/"do not render any text"**，防模型自己糊假字母占掉留白。
-- **AI 文字渲染不可靠**：专辑名 / 主角名优先**后期叠字**，或用文字渲染强的模型（Nano Banana Pro / GPT Image）；别指望 Midjourney 把标题拼对。
-- **规格**：流媒体母版 **3000×3000、1:1、sRGB、JPG/PNG**；若要实体 CD，另出 **126×126mm（含 3mm 出血）、300 DPI（≥1417px）、CMYK**、文字留安全区。AI 先出最高分辨率方形再放大到 3000²。
-- **真人 / 在世主角**：**默认不依赖可辨识人脸**——用 throughline 实物、手/背影等局部或插画（既规避肖像授权，也因 AI 本就画不出特定真人）；确需本人肖像须家人授权。敏感意象按框架 §27 抽象化。
-- **交互模式**可用 `AskUserQuestion` 让用户选定 1 种主封面（其余留作备选）；**自动模式**选最贴专辑气质的一种并说明理由。
-
-把 3 风格设计与提示词写入专辑方案文档的封面节（模板已含）。**若要实际出图**（Production，非纯 Design），可用辅助脚本 `scripts/gen_cover.py`（UV + Python 3.12，多供应商/多模型，默认 `grsai:gpt-image-2`）。
-
-**环境零配置（前提：已装 uv）**：脚本内含 PEP 723 内联依赖块（`certifi`+`pillow`），`uv run` 首次执行会**自动锁 Python 3.12 并装好依赖**，无需任何 setup。**在工作目录里运行**，图片即落到 `{工作目录}/封面/` 下（脚本默认 `--out-dir 封面`）：
+Every lyric version must run all three passes, and **keep a brief polish log** (what each pass changed):
 
 ```
-cd {工作目录} && uv run {skill}/scripts/gen_cover.py "<提示词>" -o 封面/这双手-A写实静物.png
+Pass 1 — concept/imagery focus: catch the personal anchor, cut clichéd prefab phrases, set the throughline landing point, set perspective and section roles
+Pass 2 — tidiness/rhyme: lock one rhyme category to the end, [dense parallel couplets in the chorus · bury couplets in verses as needed], even line length (≤10–12 chars),
+          cut colloquial connectives ("you all know," "I carried it alone"), use stable/unstable tools per the emotion
+Pass 3 — hook/singability: shorten the hook so it's repeatable, put the strongest anchor on the chorus's signal spot, 倒字 self-check (zero 倒字 on motif words/names),
+          breath points to punctuation (no bare spaces), dual-anchor the metatags, write every chorus out in full
 ```
 
-> 注：上面是**按路径从工作目录运行**，env 由脚本内联块自举——这是推荐路径。若想要一份可复现、可锁定的常驻 env（如 IDE/contributor 用），`scripts/` 下另备了 `pyproject.toml` + `uv.lock` + `.python-version`，在该目录执行一次 `uv sync` 即装好 `.venv`，之后可 `uv run python gen_cover.py …`。两条路径依赖一致。
+> This protocol costs only text tokens, is **run on every track (base included)**, and is the single highest-ROI fix for lyric quality. Keep the three-pass log alongside each lyric version, to be written into the "candidates and polish" appendix in Step 5.
 
-`--list` 看可用 `provider:model`，密钥读环境变量（GRSAI_API_KEY/GOOGLE_API_KEY/OPENAI_API_KEY）。脚本**默认 `--upscale 3000`**（Lanczos 放大到流媒体母版，可改值或 `0` 关闭），自带 PNG 校验+重试。**所有产出图片放目标项目（工作）目录下，不要散落到别处。**
+#### Extra forging for the lead / second lead (hangs off this step, not a separate Step)
 
-### Step 7：质检报告（QA Report，fresh-eyes subagent 对抗式复检）
+Beyond the three-pass polish, the lead and second-lead subagents each do one more thing (the cost is just a few extra lines of text):
 
-**派一个独立 subagent 做 fresh-eyes 复检**——只给它最终专辑方案 + 引擎 QC 章节（§31/§32/§33），**不带"我刚写完"的自我背书偏见**。它像作者背后的责任编辑一样，以挑剔的视角对产品质量负责，宁可多报问题。逐项检查并给结论（通过 / 需修 / 风险）：
+- **Dual-track killer-line face-off (lead only)**: produce the core hook as **both a "minimalist, held-back version" and a "full, tidy version"**, pit them head-to-head, and pick the better — **forcing the tension to survive, preventing it from being diluted by one-way tidying** (this is exactly the switch that fixes "a good line dulled by rhyme"). The pick passes three tests: the **delete-the-adjectives test** (would deleting it hit harder), the **negative-space test** (did it say everything for the listener), the **sing-along test** (would an elder remember it after one listen).
+- **Three catchiness tests (lead + second lead)**: the catchy test / the sing-along test / **the melodic-hook test (can the hook be hummed)**. The second lead is verified primarily by this yardstick.
 
-- **好听 / 上口（一级项，先于工整）**：每首是否顺口、朗朗上口、可跟唱、有旋律记忆点（hook 能否哼出来）；**副主打以此为首要验收**
-- **主打锚点**：是否有 1–2 句"这是在说我"的情感瞬间；金句有没有被押韵磨钝（对照"极简留白版"自检）
-- 倒字 / 中文可唱性逐首复核；hook 是否立得住、短而可重复
-- **对仗密度**：副歌是否密铺对仗、还是退化成"带换行的口语散文"
-- **三轮打磨是否真做**：每版歌词是否有打磨记录、是否真有迭代痕迹（而非一遍成稿贴标签）
-- **裸空格违规**：句内气口是否用标点/换行，有无用裸空格当停顿（绝不许）
-- 副歌是否逐次写全、有无"（重复）"违规；metatag 是否全英文、歌词正文有无中文括注
-- 每首 Style 是否 4–7 描述符、**人声三层是否在前、是否标调性**、有无互相冲突的描述符；有无误用艺人名 / 复刻名曲
-- Prosody 形义一致（结构是否匹配情感）；专辑一致性（Persona / 风格家族 / 主题动机贯穿）
-- 情感弧与曲序是否成立；总时长是否落在 26–30 分钟
-- 流派置信度预期是否标注（戏曲/民乐等低置信只承诺"味道近似"）
-- **封面 3 风格**：是否真正分叉（非换皮）、主体是否锚定 throughline 意象/专属锚点、色彩排版是否对应情感基调与 Persona 气质、是否留了叠标题的负空间、规格是否达标（3000×3000 1:1）；提示词有无误塞平台 logo/艺人名
-- 敏感 / 伦理处理是否到位（真人；含封面是否用了未授权的真人肖像）
-- 字词细节打磨：生僻字、英数混排、**气口（用标点/换行而非裸空格）**、口语化；**副歌是否放了最强锚点**、段落有无套满公式/写太满之嫌、歌词是否偏长
+> Boundary: **killer-line negative space is used only on the lead's 1–2 anchor lines, not pushed across the whole song** — full-song negative space thins out the lyrics and instead hurts catchiness.
 
-**诚实标注边界**：方案阶段是纯文本，**倒字实际听感、AI 瑕疵、音准、动态等只能在 Suno 抽卡试听后才能定论**——这类项单列为"待试听阶段验证"，不要假装在文本上验完。
+### Step 5: Stitching and assembly (the consistency backstop after fan-out + assembly)
 
-末尾给**总体质检结论** + **建议返工项清单**（按优先级）。写入独立文件 `质检报告-{专辑名}-{model name}.md`。**只报告、不自动返工**——是否返工交用户判断。
+The subagents each write their own; cross-track consistency may crack. Return to the main context and do a **stitching check** (cheap but necessary), going through each item:
 
-### Step 8：创作总结（Summary Report，项目级回顾）
+- **Motif/motif-word recurrence** actually landed (does the throughline image run through, does the subplot image recur in the designated tracks, does the melodic motif call back in the instrumental/finale);
+- **Persona / key / style family** not drifting;
+- **Perspective "breathes"** (not one person throughout, §6);
+- Any **two choruses sharing a rhyme/hook**, any repeated imagery or self-plagiarism;
+- **The lead / second lead are genuinely differentiated** (one goes for the emotional anchor, one for ear-catching melody — don't let them become two homogeneous songs);
+- Real-person ethics and sensitive handling consistently in place.
 
-写一份**项目总体总结**（与 QA 报告是两回事，独立文件）：回顾整个创作过程，列出每一步要点（素材摄取情况、选定的创作方向及理由、专辑蓝图要点、主打/副主打与底座概况、**各曲为何选这一版歌词的择优理由**、**封面 3 风格与选定方向**），并**坦白过程中的问题**——哪些素材被忽略、选材有无残缺或偏向、敏感内容如何取舍、哪些地方做了妥协。写入 `创作总结-{专辑名}-{model name}.md`。
+When you find a crack, **feed it back to the matching subagent to revise, or fine-tune in the main context**, until stitching passes. Then assemble the outputs:
 
-### Step 9：保存与交付
+1. **The album-plan main document**: assembled from **each track's selected version**, clean and deliverable. Append a "how this album implements the Album Creation Guide" mapping table at the end (structure per the template's closing section).
+2. **The candidates-and-polish document** (`candidates-and-polish-{album}-{model name}.md`): collect each track's **3 candidate titles / multiple lyric versions / three-pass polish logs / 3 album-name candidates**, mark the selected version and the reason, for the user to re-pick by hand.
 
-最终产物均存入工作目录，文件顶部加版本头注释 `<!-- Ver YYYY-MM-DD HH:MM, by {model name} -->`：
+### Step 6: CD cover design (produce 3 styles in one pass)
 
-- **专辑方案**（主产物，每首选定版，**含封面 3 风格设计与提示词节**）：`专辑方案-{专辑名}-{主角}-{model name}.md`
-- **候选与打磨**（3 候选歌名 / 多版歌词 / 三轮打磨记录 / 3 专辑名候选）：`候选与打磨-{专辑名}-{model name}.md`
-- **质检报告**：`质检报告-{专辑名}-{model name}.md`
-- **创作总结**：`创作总结-{专辑名}-{model name}.md`
-- **封面图**（若已实际生成）：**存入工作目录的 `封面/` 子目录**（与其余产物同处一个项目目录，勿散落）；选定主封面 + 备选，命名 `{专辑名}-{风格}.png`，流媒体母版 3000×3000。
-- 中间文件（素材提炼、创作方向、专辑蓝图〔含创作契约卡〕）一并保留。
+This goes after the stitched final draft — by now the album name, throughline, Persona, and style family are locked. The cover **doesn't start from scratch**: it draws directly from the blueprint — throughline image / strongest personal anchor / emotional tone / style family / Persona character — mapping each onto the four visual elements (subject imagery / color / typography / composition). Principles and specs in guide §36. **This step produces only the cover design and prompts (that's Design); actually generating the image is Production, on the same "to be executed" footing as Suno rolls — a pure-Design run goes only as far as the prompts and does not call an image API.**
 
-## 硬性写作纪律（违反会直接毁掉 Suno 产出）
+- **Give 3 genuinely divergent styles in one pass** (not reskins, echoing the three sketches of Step 2): **photorealistic photography / hand-drawn illustration / abstract minimalism (or collage) are the default archetypes, swappable per the album's character**, or the same subject in different color and typography; only the three need to genuinely diverge. For each write: ① a one-line visual concept; ② the four-element values; ③ a prompt that can be fed straight to an image model. Fill in the template's "cover design (3 style candidates)" section.
+- **Subject = the throughline image / strongest personal anchor** (prefer a concrete object, sense-bound), don't use a generic abstract image; **when the throughline can't be visualized, fall back to the anchor object**. Leave **negative space for overlaying the title** in the composition, and the thumbnail (the streaming first image is tiny) needs a strong focal point and little information.
+- **Two prompt styles**: Midjourney uses "subject + style/medium + lighting + color mood + composition" with `--ar 1:1` (≤ ~60 words); Nano Banana / GPT Image use natural-language sentences (Subject + Action + Scene + mood). **Always add `no text` / "do not render any text"** to the prompt, to stop the model from smearing fake letters into the space.
+- **AI text rendering is unreliable**: prefer **overlaying the title in post** for the album name / subject name, or use a model strong at text rendering (Nano Banana Pro / GPT Image); don't count on Midjourney to spell the title right.
+- **Specs**: streaming master **3000×3000, 1:1, sRGB, JPG/PNG**; for a physical CD, also produce **126×126mm (incl. 3mm bleed), 300 DPI (≥1417px), CMYK**, with text in the safe area. AI first outputs the highest-resolution square, then upscale to 3000².
+- **Real / living subjects**: **don't rely on a recognizable face by default** — use the throughline object, a hand/back-of-figure or other crop, or illustration (this both sidesteps likeness rights and works because AI can't actually render a specific real person); a genuine portrait of the person requires family authorization. Abstract sensitive imagery per guide §27.
+- **Interactive mode** may use `AskUserQuestion` to have the user pick 1 main cover (the rest kept as alternates); **auto mode** picks the one best fitting the album's character and explains why.
 
-> 底层就两条原则——**信号优先于噪声 + 控制分层**（框架 §2.1/§2.2）：只写 Suno 能解析成声音的东西，把最强信号放最显眼处，每个意图放到它最可靠的控制层。下面都是它的推论，拿不准时回到原则。
+Write the 3 style designs and prompts into the cover section of the album-plan document (the template already includes it). **If you want to actually generate the image** (Production, not pure Design), use the helper script `scripts/gen_cover.py` (UV + Python 3.12, multi-provider/multi-model, default `grsai:gpt-image-2`).
 
-- **副歌逐次写全**：每次出现的副歌都把字写全，**绝不写"（重复）"或"同上"**——Suno 按字面生成。
-- **副歌 = 最强信号位**：副歌重复最多，**把最锚定（专属意象）、最有冲击的字句放副歌**；主歌讲"为什么/铺陈"，副歌负责"被记住"。
-- **锁辙 + 密铺对仗（中文"像歌"第一杠杆）**：每首副歌**锁一辙一韵到底**（中华新韵十三辙），主歌偶句押韵；**副歌默认密铺对仗**（成对句结构相同、意象相对，如"一碗甜粥／一缕晨光""风吹不熄／雨打不凉"），主歌按需埋对句。行长齐（≤约10–12 字）、砍口语连接词。**宁可工整密对，绝不写"带换行的口语散文"**（框架 §9.1）。但**工整服务"上口好听"**：当锁辙/对仗逼出生硬绕口、或替听众把话说尽时，回到 Prosody——好听本身就是情感载体，此时松一格、留白优先（尤其主打的锚点句）。
-- **句内节奏用标点和换行，不用裸空格**：Suno 把标点/换行当呼吸指令读（句号=换气复位、逗号=短停、…=延留、连字符=拖字、换行=较长停顿、空行=器乐续人声停）；**行内裸空格不可靠、常被连读吞掉**。行宜 ≤约10–12 字，长句拆行，别塞满。
-- **演唱/编配提示一律用英文方括号 metatag**（`[Verse: breathy, sparse]`、`[Chorus: full band, erhu accent]`），**歌词正文只留要唱的字**；**严禁中文括注**（如"（轻声）"），Suno 会当歌词唱出来。
-- **每首 Style 4–7 描述符，人声三层放最前**：音色+唱法+制作（§15.4）放 Style 开头；可加**调性**（`in A minor`）提升专辑一致性（§15.5）；核心乐器点名（民乐用 erhu/guzheng/pipa/dizi 具体名）。
-- **不复刻名曲、不写艺人名**（被过滤/封号，且艺人名是安慰剂）：把目标歌手当内部参照，**翻译成人声三层描述符**再写；只做"神似 + 原创词"。
-- **段落按职能增删，别套满公式、别每段写满**：经典模板是工具箱不是填空题，能 3 段说清不写 5 段；**歌词宁简勿满**（形式服从情感）。
-- **和弦进行不写进歌词正文**（会被当歌词唱出）；要影响和声用"调式+调性+情绪+流派"，和弦进行只作 Style 末尾的低预期补充（§15.5）。
-- **结构标签齐全**：`[Intro]…[Verse 1]…[Chorus]…[Bridge]…[Outro][End]`，`[End]` 防拖尾。
+**Zero-config environment (prerequisite: uv is installed)**: the script carries an inline PEP 723 dependency block (`certifi`+`pillow`), so the first `uv run` will **auto-lock Python 3.12 and install the deps**, with no setup. **Run it inside the working directory** and images land in `{working dir}/covers/` (the script defaults to `--out-dir covers`):
 
-## 参考资料（按需读取，progressive disclosure）
+```
+cd {working dir} && uv run {skill}/scripts/gen_cover.py "<prompt>" -o covers/these-hands-A-still-life.png
+```
 
-- `references/album-creation-guide.md`：完整方法论引擎（Album Creation Guide v3.5）。**Step 3–4 创作前必读相关章节**（两条底层原则 §2.1/§2.2、情感→杠杆 §3/§18、词 Part II〔工整 §9.1〕、曲 Part III、Suno 实操 Part IV〔人声三层 §15.4、调性/和弦 §15.5、Style §21、标点即节奏 §22〕、提示词框架 Part V、QC Part VI、流派置信度 §26）。**逐曲 subagent 默认只读 Step 3 的创作契约卡，不强制通读全文**；需深查某 § 时再按路径读；**Step 6 封面设计读 §36（封面=视觉层的 Prosody）**。Suno 与图像模型能力随版本变化，实操前以当前版本为准。
-- `references/album-plan-template.md`：最终方案的结构骨架与占位符。**Step 3 起照此结构填充**，逐项替换 `{…}` 占位符，删除不适用的可选段（如非真人则删"真人提示"）。模板只给形态，内容与风格全部来自素材提炼。
+> Note: the above **runs by path from the working directory**, with the env bootstrapped by the script's inline block — this is the recommended path. If you want a reproducible, lockable persistent env (e.g. for IDE/contributor use), `scripts/` also ships a `pyproject.toml` + `uv.lock` + `.python-version`; run `uv sync` once in that directory to set up `.venv`, then `uv run python gen_cover.py …`. The two paths have identical dependencies.
 
-全部完成后，向用户简报：工作目录在哪、生成了哪几个文件（专辑方案〔含封面 3 风格〕/ 候选与打磨 / 质检报告 / 创作总结 + 中间文件）、主打与副主打是哪两首、**封面选定方向**、**质检报告里的建议返工项**与**创作总结里被忽略/残缺的素材**，并明确：**是否返工由用户决定，skill 不自动返工**。真人素材额外提醒"成品交付前请家人确认"。
+`--list` shows the available `provider:model`, keys are read from environment variables (GRSAI_API_KEY/GOOGLE_API_KEY/OPENAI_API_KEY). The script **defaults to `--upscale 3000`** (Lanczos upscaling to the streaming master; change the value or `0` to disable), with built-in PNG validation + retry. **Put all output images in the target project's (working) directory — don't scatter them elsewhere.**
+
+### Step 7: QA Report (a fresh-eyes subagent's adversarial re-check)
+
+**Dispatch an independent subagent for a fresh-eyes re-check** — give it only the final album plan + the engine's QC chapters (§31/§32/§33), **without the "I just wrote this" self-endorsement bias**. Like the editor standing behind the author, it owns product quality with a critical eye and would rather over-report problems. Check each item and give a verdict (pass / needs fix / risk):
+
+- **Catchy / smooth (a first-class item, ahead of tidiness)**: is each track smooth, catchy, sing-along-able, with a melodic hook (can the hook be hummed); **the second lead is verified primarily by this**
+- **Lead-single anchor**: are there 1–2 "this is about me" emotional moments; has the killer line been dulled by rhyme (self-check against the "minimalist held-back version")
+- 倒字 / Chinese singability re-checked per track; does the hook hold up, short and repeatable
+- **Parallel-couplet density**: is the chorus densely paved with parallel couplets, or has it degraded into "colloquial prose with line breaks"
+- **Were the three passes actually done**: does each lyric version have a polish log, are there real iteration traces (not a one-shot draft with a label slapped on)
+- **Bare-space violations**: are in-line breath points done with punctuation/line breaks, any bare spaces used as pauses (never allowed)
+- Is every chorus written out in full, any "(repeat)" violation; are metatags all in English, any Chinese parenthetical notes in the lyric body
+- Is each Style 4–7 descriptors, **are the three vocal layers up front, is the key marked**, any mutually conflicting descriptors; any misuse of an artist name / reproduction of a famous song
+- Prosody form-meaning match (does structure match emotion); album consistency (Persona / style family / thematic motif running through)
+- Does the emotional arc and track order hold up; is total runtime in the 26–30 minute range
+- Is the genre-confidence expectation noted (opera/folk-instrument and other low-confidence cases only promise "approximate flavor")
+- **The 3 cover styles**: genuinely divergent (not reskins), subject anchored to the throughline image/personal anchor, color and typography matching the emotional tone and Persona character, negative space left for the overlaid title, specs met (3000×3000 1:1); any platform logo/artist name wrongly stuffed into the prompt
+- Sensitive / ethical handling adequate (real person; including whether the cover used an unauthorized likeness of a real person)
+- Word-level polish: rare characters, mixed CJK-and-alphanumeric, **breath points (punctuation/line breaks, not bare spaces)**, colloquial feel; **is the strongest anchor in the chorus**, any section over-filled by formula/over-written, are the lyrics on the long side
+
+**Honestly mark the boundary**: the plan stage is pure text — **the actual sound of 倒字, AI artifacts, pitch, dynamics, etc. can only be settled after Suno rolls and a listen** — list these separately as "to be verified at the listening stage," and don't pretend to have verified them on text.
+
+End with an **overall QA verdict** + a **prioritized list of suggested rework items**. Write into a standalone file `qa-report-{album}-{model name}.md`. **Report only, no automatic rework** — whether to rework is the user's call.
+
+### Step 8: Creation Summary (a project-level retrospective)
+
+Write an **overall project summary** (a separate thing from the QA report, its own file): review the whole creation process, list the key points of each step (ingestion status, the chosen direction and why, the album blueprint highlights, an overview of the lead/second lead and base tracks, **why each track's selected lyric version was picked**, **the 3 cover styles and the chosen direction**), and **come clean about the problems along the way** — which material was ignored, whether the selection had gaps or bias, how sensitive content was handled, where compromises were made. Write into `creation-summary-{album}-{model name}.md`.
+
+### Step 9: Save and deliver
+
+All final outputs are stored in the working directory, each with a version-header comment at the top `<!-- Ver YYYY-MM-DD HH:MM, by {model name} -->`:
+
+- **The album plan** (the main output, each track's selected version, **including the cover's 3-style design and prompts section**): `album-plan-{album}-{subject}-{model name}.md`
+- **Candidates and polish** (3 candidate titles / multiple lyric versions / three-pass polish logs / 3 album-name candidates): `candidates-and-polish-{album}-{model name}.md`
+- **QA report**: `qa-report-{album}-{model name}.md`
+- **Creation summary**: `creation-summary-{album}-{model name}.md`
+- **Cover images** (if actually generated): **stored in the working directory's `covers/` subfolder** (in the same project directory as the rest of the outputs, don't scatter them); the chosen main cover + alternates, named `{album}-{style}.png`, streaming master 3000×3000.
+- Keep the intermediate files too (material distillation, creative direction, album blueprint [including the creative contract card]).
+
+## Hard writing discipline (violations will directly ruin the Suno output)
+
+> The foundation is just two principles — **signal over noise + layered control** (guide §2): write only what Suno can parse into sound, put the strongest signal in the most prominent spot, and place each intent on its most reliable control layer. Everything below is a corollary; when unsure, return to the principles.
+
+- **Write every chorus out in full**: write out every chorus where it appears, **never "(repeat)" or "same as above"** — Suno generates literally.
+- **Chorus = the strongest signal spot**: the chorus repeats most, so **put the most anchored (personal image), most impactful words in the chorus**; the verse handles "why/setup," the chorus is responsible for "being remembered."
+- **Lock the rhyme + dense parallel couplets (the #1 lever for Chinese sounding "like a song")**: each chorus **locks one rhyme category to the end** (the thirteen rhyme categories of New Chinese Rhyme — 中华新韵十三辙), the verse rhymes on even lines; **the chorus defaults to densely paved parallel couplets (对仗)** (paired lines with matching structure and opposed imagery, e.g. "一碗甜粥／一缕晨光," "风吹不熄／雨打不凉"), and verses bury couplets as needed. Even line length (≤ ~10–12 chars), cut colloquial connectives. **Better tidy and densely paralleled than "colloquial prose with line breaks"** (guide §9.1). But **tidiness serves "catchy and pleasant"**: when the rhyme-lock/couplets force something stiff and tongue-twisting, or say everything for the listener, return to Prosody — being pleasant is itself an emotional carrier, so loosen a notch and favor negative space (especially on the lead's anchor lines).
+- **Use punctuation and line breaks for in-line rhythm, not bare spaces**: Suno reads punctuation/line breaks as breath instructions (period = breath and reset, comma = short pause, … = lingering hold, hyphen = drawn-out, line break = a longer pause, blank line = instrument continues while vocals stop); **in-line bare spaces are unreliable and often swallowed in connected reading**. Lines should be ≤ ~10–12 chars, split long lines, don't cram.
+- **All performance/arrangement cues go in English square-bracket metatags** (`[Verse: breathy, sparse]`, `[Chorus: full band, erhu accent]`), **the lyric body keeps only the words to be sung**; **strictly no Chinese parenthetical notes** (e.g. "(softly)") — Suno will sing them as lyrics.
+- **Each Style is 4–7 descriptors, three vocal layers first**: timbre + delivery + production (§15.4) go at the start of Style; you may add the **key** (`in A minor`) to boost album consistency (§15.5); name core instruments (for Chinese folk instruments use specific names like erhu/guzheng/pipa/dizi).
+- **Don't reproduce famous songs, don't write artist names** (filtered/banned, and an artist name is a placebo): treat the target singer as internal reference, **translate them into the three vocal-layer descriptors** before writing; do only "evocative likeness + original lyrics."
+- **Add or cut sections by function, don't fill the whole formula, don't fill every section**: the classic template is a toolbox, not a fill-in-the-blank; if 3 sections say it clearly, don't write 5; **lyrics: simpler over fuller** (form follows emotion).
+- **Don't write chord progressions into the lyric body** (they'd be sung as lyrics); to influence harmony use "mode + key + mood + genre," and put chord progressions only at the end of Style as a low-expectation supplement (§15.5).
+- **Complete structure tags**: `[Intro]…[Verse 1]…[Chorus]…[Bridge]…[Outro][End]`, with `[End]` to prevent a trailing tail.
+
+## References (read on demand, progressive disclosure)
+
+- `references/album-creation-guide.md`: the complete methodology engine (Album Creation Guide v3.5). **Read the relevant chapters before creating in Steps 3–4** (the two underlying principles §2, emotion→lever §3/§18, lyrics Part II [tidiness §9.1], music Part III, Suno practice Part IV [three vocal layers §15.4, key/chords §15.5, Style §21, punctuation-as-rhythm §22], the prompt framework Part V, QC Part VI, genre confidence §26). **Per-track subagents by default read only the Step 3 creative contract card and aren't forced to read the whole thing**; read a given § by path when a deep dive is needed; **for Step 6 cover design read §36 (the cover = Prosody at the visual layer)**. Suno and image-model capabilities change by version — verify against the current version before hands-on work.
+- `references/album-plan-template.md`: the structural skeleton and placeholders for the final plan. **Fill in by this structure from Step 3 on**, replacing each `{…}` placeholder, deleting inapplicable optional sections (e.g. delete the "real-person note" if not a real person). The template gives only the form; content and style all come from the material distillation.
+
+When everything is done, brief the user: where the working directory is, which files were generated (the album plan [including the 3 cover styles] / candidates and polish / QA report / creation summary + intermediate files), which two tracks are the lead and second lead, **the chosen cover direction**, **the suggested rework items in the QA report** and **the ignored/incomplete material in the creation summary**, and make clear: **whether to rework is the user's decision, the skill does no automatic rework**. For real-person material, additionally remind them to "have the family confirm before delivering the finished work."
