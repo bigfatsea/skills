@@ -3,7 +3,7 @@ name: audio-album-creator
 description: "Distill a pack of source material (audio / text / photos) into a complete, production-ready original emotional music album plan (a Markdown document). Use when the user wants to make an album for a person or a life experience, turn raw material into an album plan, create a life/memorial album, an Amber Ark-style custom album, or write an album following the creation guide. The user names which source files to use this time. For narrative, custom albums made for close family, a partner, a child, or a team/company. Not for plain lyric polishing, pure music-theory Q&A, or generic lyric-writing with no narrative material."
 ---
 
-<!-- Ver 2026-06-23 23:40, by Claude Opus 4.8 -->
+<!-- Ver 2026-06-24 00:21, by Claude Opus 4.8 -->
 
 # Audio Album Creator
 
@@ -136,8 +136,8 @@ The main context **no longer writes each track's lyrics itself**; instead it **d
 
 **The brief handed to each subagent**:
 
-- **Input** = the creative contract card (album-wide constitution) + this track's dossier (role / anchors / levers / throughline touchpoints) + the path to `references/album-creation-guide.md` for reference.
-- **Task** = produce ① 3 candidate song titles; ② several complete Chinese-lyric versions (each run through the "three-pass polish protocol" below); ③ the Suno Style; ④ self-evaluate and pick the recommended version, with a brief pick-rationale + a short 倒字/QC note.
+- **Input** = the creative contract card (album-wide constitution) + this track's dossier (role / anchors / levers / throughline touchpoints) + **`references/lyric-craft.md`** (the per-track creation kit: seven dimensions / three-pass polish / lead-forging) + the path to `references/album-creation-guide.md` for reference.
+- **Task** = produce ① 3 candidate song titles; ② several complete Chinese-lyric versions (each run through the "three-pass polish protocol" in `references/lyric-craft.md`); ③ the Suno Style; ④ self-evaluate and pick the recommended version, with a brief pick-rationale + a short 倒字/QC note.
 - **Constraints** = obey the contract card; don't invent Persona / style family / throughline; follow this SKILL's "hard writing discipline."
 
 **Tiered investment (three tiers; the meaning of "uneven" is in Core principles)**:
@@ -151,37 +151,10 @@ The main context **no longer writes each track's lyrics itself**; instead it **d
 
 > **Base tracks don't do 3 styles**: a base track's style is already locked by the style family + Persona; forcing 3 styles either breaks album consistency or is a cosmetic tweak (wasteful). **Style is not the base track's variable — lyrics are.**
 
-**For each lyric version, the subagent must write out all of the following (seven dimensions, fully landed)**:
+**The detailed creation kit** — the seven dimensions each lyric version must land, the three-pass polish protocol (run on every track, base included), and the extra forging for the lead / second lead (dual-track killer-line face-off + the three catchiness tests) — lives in **`references/lyric-craft.md`**, handed to each subagent alongside the contract card. Two cross-cutting reminders the main context keeps in view:
 
-1. **Dimension 1, lyrics and narrative**: material anchor → imagery (express emotion through the concrete, not bluntly venting grief) → chorus hook (short, repeatable, personal image + universal emotion) → perspective (§6) → structural placement (private details into verses, deep emotion held back into the chorus).
-2. **Dimension 2, emotion→lever** (§3/§18): set mode, tempo/meter, instrumentation, dynamics, vocals, and state for each value "why" it serves the emotion. The emotional arc (e.g. minor-key verse → major-key chorus) lands as in-section change in mode + dynamics.
-3. **Dimensions 3–7**: style / song form and dynamic arc / rhythm / vocals / instrumentation.
-4. **Suno Style field** (§21): 4–7 descriptors; **the three vocal layers (timbre + delivery + production) go first**, may add the **key** to boost consistency, name core instruments (for Chinese folk instruments use specific names like erhu/guzheng). Leave timbre to Style + Persona, and push the section-level vocal arc down to metatags. Attach Sliders (emotional song = Weirdness Safe + Style Influence Strong + Prompt Helper Off).
-5. **Complete Chinese lyrics** (see "hard writing discipline" below): put the strongest anchor in the chorus, use punctuation/line breaks for in-line breath points, don't fill every section just because the formula has one.
-6. **Chinese singability / 倒字 self-check** (§13/§22): check the hook keywords and personal names one by one for zero 倒字, flag the long lines that need watching.
-
-#### Three-pass polish protocol (turns guide §14 "rewriting = the gold standard" into executable steps, run on every track)
-
-Every lyric version must run all three passes, and **keep a brief polish log** (what each pass changed):
-
-```
-Pass 1 — concept/imagery focus: catch the personal anchor, cut clichéd prefab phrases, set the throughline landing point, set perspective and section roles
-Pass 2 — tidiness/rhyme: lock one rhyme category to the end, [dense parallel couplets in the chorus · bury couplets in verses as needed], even line length (≤10–12 chars),
-          cut colloquial connectives ("you all know," "I carried it alone"), use stable/unstable tools per the emotion
-Pass 3 — hook/singability: shorten the hook so it's repeatable, put the strongest anchor on the chorus's signal spot, 倒字 self-check (zero 倒字 on motif words/names),
-          breath points to punctuation (no bare spaces), dual-anchor the metatags, write every chorus out in full
-```
-
-> This protocol costs only text tokens, is **run on every track (base included)**, and is the single highest-ROI fix for lyric quality. Keep the three-pass log alongside each lyric version, to be written into the "candidates and polish" appendix in Step 5.
-
-#### Extra forging for the lead / second lead (hangs off this step, not a separate Step)
-
-Beyond the three-pass polish, the lead and second-lead subagents each do one more thing (the cost is just a few extra lines of text):
-
-- **Dual-track killer-line face-off (lead only)**: produce the core hook as **both a "minimalist, held-back version" and a "full, tidy version"**, pit them head-to-head, and pick the better — **forcing the tension to survive, preventing it from being diluted by one-way tidying** (this is exactly the switch that fixes "a good line dulled by rhyme"). The pick passes three tests: the **delete-the-adjectives test** (would deleting it hit harder), the **negative-space test** (did it say everything for the listener), the **sing-along test** (would an elder remember it after one listen).
-- **Three catchiness tests (lead + second lead)**: the catchy test / the sing-along test / **the melodic-hook test (can the hook be hummed)**. The second lead is verified primarily by this yardstick.
-
-> Boundary: **killer-line negative space is used only on the lead's 1–2 anchor lines, not pushed across the whole song** — full-song negative space thins out the lyrics and instead hurts catchiness.
+- The three-pass polish log travels with each lyric version into the Step 5 "candidates and polish" appendix (real iteration traces, not a one-shot draft with a label slapped on).
+- **Killer-line negative space is used only on the lead's 1–2 anchor lines, not pushed across the whole song** — full-song negative space thins out the lyrics and instead hurts catchiness.
 
 ### Step 5: Stitching and assembly (the consistency backstop after fan-out + assembly)
 
@@ -205,23 +178,11 @@ This goes after the stitched final draft — by now the album name, throughline,
 
 - **Give 3 genuinely divergent styles in one pass** (not reskins, echoing the three sketches of Step 2): **photorealistic photography / hand-drawn illustration / abstract minimalism (or collage) are the default archetypes, swappable per the album's character**, or the same subject in different color and typography; only the three need to genuinely diverge. For each write: ① a one-line visual concept; ② the four-element values; ③ a prompt that can be fed straight to an image model. Fill in the template's "cover design (3 style candidates)" section.
 - **Subject = the throughline image / strongest personal anchor** (prefer a concrete object, sense-bound), don't use a generic abstract image; **when the throughline can't be visualized, fall back to the anchor object**. Leave **negative space for overlaying the title** in the composition, and the thumbnail (the streaming first image is tiny) needs a strong focal point and little information.
-- **Two prompt styles**: Midjourney uses "subject + style/medium + lighting + color mood + composition" with `--ar 1:1` (≤ ~60 words); Nano Banana / GPT Image use natural-language sentences (Subject + Action + Scene + mood). **Always add `no text` / "do not render any text"** to the prompt, to stop the model from smearing fake letters into the space.
-- **AI text rendering is unreliable**: prefer **overlaying the title in post** for the album name / subject name, or use a model strong at text rendering (Nano Banana Pro / GPT Image); don't count on Midjourney to spell the title right.
-- **Specs**: streaming master **3000×3000, 1:1, sRGB, JPG/PNG**; for a physical CD, also produce **126×126mm (incl. 3mm bleed), 300 DPI (≥1417px), CMYK**, with text in the safe area. AI first outputs the highest-resolution square, then upscale to 3000².
+- **Prompt-writing rules + output specs** (two prompt styles per image model, always add `no text`, AI text-rendering is unreliable so overlay the title in post, streaming master 3000×3000 + physical-CD specs): see **`references/cover-production.md`**.
 - **Real / living subjects**: **don't rely on a recognizable face by default** — use the throughline object, a hand/back-of-figure or other crop, or illustration (this both sidesteps likeness rights and works because AI can't actually render a specific real person); a genuine portrait of the person requires family authorization. Abstract sensitive imagery per guide §27.
 - **Interactive mode** may use `AskUserQuestion` to have the user pick 1 main cover (the rest kept as alternates); **auto mode** picks the one best fitting the album's character and explains why.
 
-Write the 3 style designs and prompts into the cover section of the album-plan document (the template already includes it). **If you want to actually generate the image** (Production, not pure Design), use the helper script `scripts/gen_cover.py` (UV + Python 3.12, multi-provider/multi-model, default `grsai:gpt-image-2`).
-
-**Zero-config environment (prerequisite: uv is installed)**: the script carries an inline PEP 723 dependency block (`certifi`+`pillow`), so the first `uv run` will **auto-lock Python 3.12 and install the deps**, with no setup. **Run it inside the working directory** and images land in `{working dir}/covers/` (the script defaults to `--out-dir covers`):
-
-```
-cd {working dir} && uv run {skill}/scripts/gen_cover.py "<prompt>" -o covers/these-hands-A-still-life.png
-```
-
-> Note: the above **runs by path from the working directory**, with the env bootstrapped by the script's inline block — this is the recommended path. If you want a reproducible, lockable persistent env (e.g. for IDE/contributor use), `scripts/` also ships a `pyproject.toml` + `uv.lock` + `.python-version`; run `uv sync` once in that directory to set up `.venv`, then `uv run python gen_cover.py …`. The two paths have identical dependencies.
-
-`--list` shows the available `provider:model`, keys are read from environment variables (GRSAI_API_KEY/GOOGLE_API_KEY/OPENAI_API_KEY). The script **defaults to `--upscale 3000`** (Lanczos upscaling to the streaming master; change the value or `0` to disable), with built-in PNG validation + retry. **Put all output images in the target project's (working) directory — don't scatter them elsewhere.**
+Write the 3 style designs and prompts into the cover section of the album-plan document (the template already includes it). **Actually generating the image is Production, not pure Design** — the helper script `scripts/gen_cover.py`, its zero-config UV env, flags, and API keys are documented in **`references/cover-production.md`**; the Step 9 handoff splices the chosen prompt into a ready-to-run command.
 
 ### Step 7: QA Report (a fresh-eyes subagent's adversarial re-check)
 
@@ -255,7 +216,7 @@ Write an **overall project summary** (a separate thing from the QA report, its o
 
 This goes after QA — by now the album plan, the cover's 3-style design, and the to-verify-at-listening items are all locked. **Converge in one pass** the executable recipes scattered across the long document into one ready-to-execute sheet `production-handoff-{album}-{model name}.md`, so the user can roll songs / generate covers straight from it without going back to re-extract. **All content comes from the already-produced album plan and QA report — no new creation.** Three sections:
 
-1. **Suno roll section (one block per track, copy-paste ready)**: each track a delimited block — title + role (lead / second lead / base / interlude) + target score; `Style` (4–7 descriptors, three vocal layers first, key included) + `Exclude` + `Sliders`, each on a copyable line; full lyrics (English metatags, every chorus written out) as one paste-into-Suno-Lyrics block; this track's roll SOP (N value, Inpainting count, what to listen for — lead: 倒字 on anchor lines / second lead: the melodic hook / base: accept once it passes). The instrumental interlude listed separately (turn on Instrumental, leave Lyrics empty, give Style + a structure note). **Sliders notation must be unified album-wide into one form** (pick qualitative Safe/Strong OR percentages, not mixed per track), killing the scatter.
+1. **Suno roll section (one block per track, copy-paste ready)**: each track a delimited block — title + role (lead / second lead / base / interlude) + target score; `Style` (4–7 descriptors, three vocal layers first, key included) + `Exclude` (only if the album plan specified one — it's an optional negative field, guide §23) + `Sliders`, each on a copyable line; full lyrics (English metatags, every chorus written out) as one paste-into-Suno-Lyrics block; this track's roll SOP (N value, Inpainting count, what to listen for — lead: 倒字 on anchor lines / second lead: the melodic hook / base: accept once it passes). The instrumental interlude listed separately (turn on Instrumental, leave Lyrics empty, give Style + a structure note). **Sliders notation must be unified album-wide into one form** (pick qualitative Safe/Strong OR percentages, not mixed per track), killing the scatter.
 2. **Cover-gen section (commands ready to run)**: splice the chosen main-cover prompt straight into the full command `cd {working dir} && uv run {skill}/scripts/gen_cover.py "<chosen prompt>" -o covers/{album}-{style}.png`, plus one line each for alternates B/C; note the key requirement (any of `GRSAI_API_KEY`/`GOOGLE_API_KEY`/`OPENAI_API_KEY`) and the output dir `covers/`.
 3. **Post-roll acceptance checklist (checkbox list)**: distill QA's "to be verified at the listening stage" items into a checkable list (倒字 on a real listen, AI artifacts, pitch/dynamics, overall catchiness, whether a legal-exception parallelism/rhyme-break holds up); append the **post-roll delivery specs** (from template §0.6: WAV master + 320k MP3, unified **-14 LUFS**, verify volume and track order separately for the physical version) to give Production specs a landing spot.
 
@@ -291,5 +252,7 @@ All final outputs are stored in the working directory, each with a version-heade
 
 - `references/album-creation-guide.md`: the complete methodology engine (Album Creation Guide v3.5). **Read the relevant chapters before creating in Steps 3–4** (the two underlying principles §2, emotion→lever §3/§18, lyrics Part II [tidiness §9.1], music Part III, Suno practice Part IV [three vocal layers §15.4, key/chords §15.5, Style §21, punctuation-as-rhythm §22], the prompt framework Part V, QC Part VI, genre confidence §26). **Per-track subagents by default read only the Step 3 creative contract card and aren't forced to read the whole thing**; read a given § by path when a deep dive is needed; **for Step 6 cover design read §36 (the cover = Prosody at the visual layer)**. Suno and image-model capabilities change by version — verify against the current version before hands-on work.
 - `references/album-plan-template.md`: the structural skeleton and placeholders for the final plan. **Fill in by this structure from Step 3 on**, replacing each `{…}` placeholder, deleting inapplicable optional sections (e.g. delete the "real-person note" if not a real person). The template gives only the form; content and style all come from the material distillation.
+- `references/lyric-craft.md`: the per-track creation kit (seven dimensions / three-pass polish protocol / lead-forging) — **handed to each Step 4 subagent alongside the contract card**, so it doesn't have to read the whole engine guide.
+- `references/cover-production.md`: Step 6 cover production detail (prompt-writing rules per image model, output specs, the `gen_cover.py` zero-config UV env + flags + API keys) — **read at Step 6 when writing prompts / generating the image**.
 
 When everything is done, brief the user: where the working directory is, which files were generated (the album plan [including the 3 cover styles] / candidates and polish / **production handoff** / QA report / creation summary + intermediate files), which two tracks are the lead and second lead, **the chosen cover direction**, **the suggested rework items in the QA report** and **the ignored/incomplete material in the creation summary**, and **point them to the production handoff**: roll the Suno tracks and generate the cover by following it item by item. Make clear: **whether to rework is the user's decision, the skill does no automatic rework**. For real-person material, additionally remind them to "have the family confirm before delivering the finished work."
