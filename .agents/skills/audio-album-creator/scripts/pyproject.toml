@@ -1,0 +1,9 @@
+[project]
+name = "gen-cover"
+version = "0.1.0"
+description = "audio-album-creator 辅助工具：多供应商/多模型 CD 封面图像生成器"
+requires-python = ">=3.12"
+dependencies = [
+    "certifi",
+    "pillow",
+]
