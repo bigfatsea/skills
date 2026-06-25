@@ -10,8 +10,8 @@
 
 ## 0. Album-level coordination
 
-### 0.1 Concept and emotional arc
-State in one line what kind of album this is (perspective choice + core emotion). The emotional arc is the track order:
+### 0.1 Concept, spine and emotional arc
+State in one line what kind of album this is (perspective choice + core emotion) **and the spine — how the subject changed (the throughline)**. The **emotional curve** (valence over time) is the track order and shapes the tempo (tempo inverted-U, valence opposite; §34):
 
 ```
 {node 1} → {node 2} → [{signature-track node} · signature track] → {descent node} → {closing node}
@@ -21,17 +21,17 @@ State in one line what kind of album this is (perspective choice + core emotion)
 > Put the signature track at the album's climax (center-back), leaving 1–2 tracks of descent and release after it.
 
 ### 0.2 Persona lock (v3.5 §24)
-- **Main Persona "{lead-voice name}"**: {gender + register + timbre texture, e.g. warm mezzo, slightly raspy, breathy, no showing-off}. All first-person tracks across the album use this one voice.
-- **Backup Persona "{backup-voice name}" (optional)**: {use, e.g. only for the final track, where the next generation takes over the singing to complete "passing it on"}.
+- **Main Persona "{lead-voice name}"**: {gender + register + timbre texture + delivery + production, per §15.4}. All first-person tracks across the album use this one voice.
+- **Backup Persona "{backup-voice name}" (optional)**: {use — e.g. a second voice entering on one track for a duet or a hand-off}.
 - Procedure: audition and lock the main voice on the signature track first, reuse it for the rest (Persona keeps the timbre, not the melody).
 
 ### 0.3 Thematic motif (v3.5 §34)
-- **Lyric motif: "{throughline image}"** — the throughline of a whole life, recurring in tracks {x, x, x}, completing the passing-on/closing-the-loop in track {final track}.
+- **Lyric motif: "{throughline image}"** — the album throughline, recurring in tracks {x, x, x}, closing the loop in track {final track}.
 - **Subplot image: "{subplot image}"**, echoed in tracks {x, x}.
 - **Melodic motif**: the signature track's chorus melodic line, recurring in track {x}'s instrumental interlude / track {x}'s humming, forming an aural echo.
 
-### 0.4 Style family (v3.5 §34)
-Anchored uniformly to **"{style-family description, e.g. Jiangnan + warm acoustic + folk-instrument accents}"**: {core instrumentation} as the base, {color instruments} for color; production unified to **{warm analog, etc.}**. Variation is allowed within the family, with instrumentation and production of one lineage.
+### 0.4 Style-family default + per-track genre variable (v3.5 §24/§34)
+**Invariant binder (what makes it one album — not a uniform genre): Persona voice + thematic motif + unified key.** The style-family here is only the **default**: **"{style-family description}"**, {core instrumentation} as the base, {color instruments} for color, production **{production}**. **A track may swap genre / era-color to match its narrative beat** (the Genre column in 0.5 may differ per track — e.g. a faster, harder genre at a turning point, or a sound the listener associates with a moment via its era/place/event/cultural touchstone); heavy diversity → rely on Persona, not a Custom Model (§24).
 
 ### 0.5 Tracklist arrangement table
 
@@ -57,22 +57,22 @@ WAV master + 320k MP3; unified **-14 LUFS**; verify loudness and track order sep
 > **Specs**: streaming master **3000×3000 · 1:1 · sRGB · JPG/PNG**; for a physical CD also produce **126×126mm (incl. 3mm bleed) · 300 DPI (≥1417px) · CMYK**, with text in the safe area. **Avoid** platform logos / prices / URLs; leave negative space for the overlaid title in the composition; keep the thumbnail legible (strong focal point, little information).
 > **AI text rendering is unreliable**: prefer **overlaying the title in post** for the album name "{album name}"{ + subject name}, or use a model strong at text (Nano Banana Pro / GPT Image); the prompts **already uniformly add `no text`** to stop the model from smearing fake letters into the space. Replace the `{…}` in the prompts for this album.
 
-#### Style A · Photorealistic photography · still-life object (most sense-bound, suits life/memorial albums)
-- **Visual concept**: {one line — e.g. "a close-up of those hands in morning light, warm tones, negative space for the title"}
-- **Four elements**: subject {throughline object / anchor object} | color {warm tones / low-saturation earth tones, matching the emotional tone} | typography {serif/handwriting, calm} | composition {close-up + rule of thirds + top-right negative space}
-- **Midjourney**: `{subject object, e.g. a pair of weathered aged hands holding {anchor}}, close-up still life, warm analog film photography, 35mm, soft window light golden hour, {muted warm earth tones}, shallow depth of field, centered focal point, negative space top-right for title, intimate evocative, no text, no lettering --ar 1:1 --style raw`
-- **Nano Banana / GPT Image**: `A close-up still-life photograph of {subject object}, lit by soft warm window light, {color} palette, shallow depth of field, calm and intimate mood; leave clean negative space in the upper area for an album title; do not render any text; square 1:1, photorealistic.`
+#### Style A · Photorealistic photography · still-life object (most sense-bound, object-anchored)
+- **Visual concept**: {one line — e.g. "a close-up of the {throughline/anchor object} in {lighting}, {color tone}, negative space for the title"}
+- **Four elements**: subject {throughline object / anchor object} | color {matching the emotional tone} | typography {serif/handwriting/sans — match the Persona character} | composition {close-up + rule of thirds + top-right negative space}
+- **Midjourney**: `{subject object — the throughline / anchor object}, close-up still life, {photographic style, e.g. analog film / clean studio}, 35mm, {lighting}, {color palette}, shallow depth of field, centered focal point, negative space top-right for title, {mood}, no text, no lettering --ar 1:1 --style raw`
+- **Nano Banana / GPT Image**: `A close-up still-life photograph of {subject object}, {lighting}, {color} palette, shallow depth of field, {mood}; leave clean negative space in the upper area for an album title; do not render any text; square 1:1, photorealistic.`
 
-#### Style B · Illustration · hand-drawn (warm and enduring, sidesteps real-likeness rights)
-- **Visual concept**: {one line — e.g. "a watercolor hand-drawn throughline image, soft warm light"}
-- **Four elements**: subject {an illustrated version of the throughline image} | color {soft warm tones / watercolor wash} | typography {handwriting / rounded sans-serif, approachable} | composition {central image + large negative space}
-- **Midjourney**: `{throughline image} illustration, soft watercolor and gouache, hand-painted storybook style, {warm tender color palette}, gentle diffused light, simple composition with generous negative space, nostalgic and warm, no text, no lettering --ar 1:1`
-- **Nano Banana / GPT Image**: `A hand-painted watercolor illustration of {throughline image}, soft {color} tones, gentle light, tender nostalgic mood, minimal composition with empty space for a title; do not render any text; square 1:1.`
+#### Style B · Illustration · hand-drawn (sidesteps real-likeness rights)
+- **Visual concept**: {one line — e.g. "a watercolor hand-drawn {throughline image}, {lighting}"}
+- **Four elements**: subject {an illustrated version of the throughline image} | color {watercolor wash, matching the tone} | typography {handwriting / rounded sans-serif, approachable} | composition {central image + large negative space}
+- **Midjourney**: `{throughline image} illustration, soft watercolor and gouache, hand-painted storybook style, {color palette}, {lighting}, simple composition with generous negative space, {mood}, no text, no lettering --ar 1:1`
+- **Nano Banana / GPT Image**: `A hand-painted watercolor illustration of {throughline image}, {color} tones, {lighting}, {mood}, minimal composition with empty space for a title; do not render any text; square 1:1.`
 
 #### Style C · Abstract · minimalism/collage (mood carried by color and composition, typography-led)
 - **Visual concept**: {one line — e.g. "convey emotion through color blocks and texture, the subject name in large typography"}
 - **Four elements**: subject {an abstract symbol / texture / old-photo collage of the throughline} | color {two or three high-contrast colors or a monochrome scheme, matching the emotional arc} | typography {large type / geometric, dominating the frame} | composition {asymmetric / geometric division + a strong focal point}
-- **Midjourney**: `abstract minimal album cover, {abstract image / geometric symbol of the throughline}, {two-or-three color palette, high contrast}, {textured paper / risograph / collage} aesthetic, bold asymmetric composition, lots of negative space, modern and emotive, no text, no lettering --ar 1:1`
+- **Midjourney**: `abstract minimal album cover, {abstract image / geometric symbol of the throughline}, {two-or-three color palette, high contrast}, {textured paper / risograph / collage} aesthetic, bold asymmetric composition, lots of negative space, {mood}, no text, no lettering --ar 1:1`
 - **Nano Banana / GPT Image**: `A minimalist abstract album cover evoking {emotion} through {color} color and {texture/geometric} forms, bold asymmetric layout with strong negative space for large title typography; do not render any text; square 1:1.`
 
 - **Selected**: main cover = Style {A/B/C} (reason: {why it best fits the album's character}); the rest kept as alternates.

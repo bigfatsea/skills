@@ -1,4 +1,4 @@
-<!-- Ver 2026-06-23, by Claude Opus 4.8 -->
+<!-- Ver 2026-06-25 11:36, by Claude Opus 4.8 -->
 
 # Album Creation Guide v3.5 (condensed)
 
@@ -50,8 +50,12 @@ Lyric syllable count/phrasing → strongly constrains melodic rhythm and singabi
 
 # Part II — Lyrics (50%+ of the emotional load)
 
+> **Lyrics are not poetry**: a poem is read and re-read; a lyric is *heard once, in time, and must be sung* — so it has to land on the first listen at singing speed (linear, plain-clear, repetition-tolerant). Every discipline below serves that one test. And **word leads, music serves** (§4): write the lyric first (its syllables and phrasing constrain the melody), then arrange the music to it — base tracks word-first; only the catchiness-first second lead may go melody-first.
+
 ## 5. Sourcing and concept: making the song "be about the listener"
 The more specific and sense-bound, the more it activates the listener's memory and turns them from bystander into participant. **Object Writing**: 10–20 minutes a day, free-writing around one object using the seven senses (sight/sound/smell/taste/touch/organic sense/kinesthetic). Catch personal anchors from the material — specific objects, smells, catchphrases, key scenes, signature details (irreplaceable). **Avoid clichés**: the language can be simple and fresh, but it can't be prefab.
+
+> **The album's spine = the subject's arc (the change), not a list of events**: distill *how the subject changed* (what they wanted vs. needed, the turning point) as the throughline, and draw the **emotional curve** — a valence-over-time line of the key beats. This curve is a first-class artifact: it later drives track order and tempo (§34). **Golden-line restraint**: capture catchphrases verbatim, but you needn't use them all — a beat may hold five quotable lines, and landing the one or two that hit hardest is usually enough (pick by most sense-bound + shortest/most singable + most universal; the rest stay as texture). Don't stack quotes just to use them up (mechanical stacking is noise, §2 ②) — keep more only when they genuinely earn their place.
 
 ## 6. Perspective (choose by the emotional distance you want)
 - **First person (I)**: autobiography/looking back, the most intimate, but it must mean something to the world.
@@ -86,7 +90,7 @@ Perfect rhyme (most stable, certainty/resolution) → Family rhyme (same consona
 > **But tidiness is a means in service of "catchy and pleasant," not an end**: when the rhyme-lock/couplets force something stiff and tongue-twisting, or say everything for the listener, return to Prosody — being pleasant is itself an emotional carrier, so loosen a notch and favor negative space (especially on the signature track's anchor lines).
 - **Lock the rhyme (锁辙)**: the thirteen rhyme categories of New Chinese Rhyme — 中华新韵十三辙 (characters in the same category, 同辙, rhyme). **Each chorus locks one rhyme category to the end**; the verse rhymes on even lines; spoken-word/bridge sections may go unrhymed. Common categories: 发花(a/ia/ua) · 江阳(ang) · 一七(i/ü) · 由求(ou/iu) · 言前(an/ian/uan) · 人辰(en/in/un) · 中东(eng/ing/ong) · 怀来(ai/uai) · 灰堆(ei/ui) · 遥条(ao/iao) · 梭波(o/e/uo) · 姑苏(u) · 也斜(ie/üe).
 - **Parallel couplets (对仗)**: paired lines with matching structure and opposed imagery — the strongest tool for Chinese to "sound like a song." Bury at least one couplet in each chorus ("锅里有米／灯下有衣").
-- **Even line length**: lines in a section have similar character counts (mostly 4+3 / 4+4), no 10+-character long lines in the chorus; cut colloquial connectives ("你们都知道," "我自己扛"), refine narration into imagery.
+- **Even line length**: lines in a section have similar character counts (mostly 4+3 / 4+4), no 10+-character long lines in the chorus; cut colloquial prose phrases (e.g. "你们都知道" / "我自己扛"), refine narration into imagery.
 - **Recurring motif (题眼复现)**: the core character/image recurs at the end of multiple choruses, threading the album's motif line.
 
 ## 10. Stable / unstable
@@ -112,8 +116,13 @@ The verb is the "power amp" — use high-wattage action verbs, use few be-verbs 
 - **Colloquial exception**: interludes/spoken-word/Pre-Chorus/Bridge/insert sections may go colloquial, marked with metatags (`[Pre-Chorus: half-spoken]`, `[Bridge: spoken word]`).
 - **Free-verse exception (optional)**: an album allows 0–2 tracks to go free-verse (loose language, free structure, mood-first), **and 0 is fine** — the creator judges by subject. If a whole track goes free-verse, pick the most inward/repressed one (grievance, numbness, mourning), which is most natural.
 
-## 14. Rewriting = the gold standard
-"You write it down so you have something to change." Don't believe in inspiration-supremacy / writer's block — write a bad draft first (the best fertilizer), then ask "can it be more specific? does the rhyme fit the emotion better? can the lines be shorter?" In the AI era, rewriting = revise the brief/seven dimensions/lyrics + roll generations + local fine-fixes, not repeatedly regenerating the same take.
+## 14. Rewriting = the gold standard (the three-stage drafting protocol)
+"You write it down so you have something to change." Don't believe in inspiration-supremacy / writer's block — write a bad draft first (the best fertilizer). Run rewriting as **three deliberate stages, in order** — don't attempt all three at once, that's what produces stiff, tongue-twisting lines:
+- **Stage 1 — narrative first (rules off)**: tell this song's emotional truth and its scenes plainly, prose-like; get the *story* right. **Ignore rhyme, meter, and tidiness entirely at this stage.**
+- **Stage 2 — make it a lyric (prosodic shaping)**: impose song-form on the prose-truth — section function (verse = show/setup, chorus = the felt point/hook), lock one rhyme category to the end, even line length, bury a parallel couplet where it serves, compress the hook, write every chorus out in full. Use unstable tools in the verse to pull toward the chorus (§10).
+- **Stage 3 — polish + gate (word level)**: open vowels on held/high notes, kill tongue-twisters, **zero 倒字 on hook words and names**; apply the delete-the-adjective / negative-space / sing-along tests; then a **fresh-eyes pass** (ideally a different context, not the writer's own) confirms singability and that golden lines weren't over-stacked (§5).
+
+In the AI era, each stage's revision = revise the brief/seven dimensions/lyrics + roll generations + local fine-fixes, not repeatedly regenerating the same take.
 
 ---
 
@@ -130,7 +139,7 @@ Dimension 1 (lyrics) is in Part II, dimension 2 (emotion→lever) is in §3/§18
 | 6 Voice | "baritone/warm breathy/belt in chorus/lead" |
 | 7 Instrumentation | core 3–4 pieces + section change |
 
-**15.1 Style**: main(1)+sub/fusion+era+region. Families: Pop/Rock/Hip-Hop/EDM/R&B-Soul/Country-Folk/Jazz/Latin/Classical/guofeng neo-folk/opera (low confidence). **Fusion formula** `[main style],[main core element],[sub style],[sub characteristic element]`, must echo at the element layer. Valid: Mandopop+HipHop (Jay Chou), Jazz+HipHop (NeoSoul), Folk+Electronic, Classical+Trap; invalid: Opera+Trap, Gregorian+Dubstep. **Era anchor words** (stack 1–2): 60s tape saturation/analog warmth; 70s phaser/disco strings/funky bass; 80s gated reverb/LinnDrum/DX7; 90s TR-909/MPC/lo-fi vinyl/grunge; 2000s Auto-Tune/snap/emo; 2010s lo-fi hip hop/bedroom pop/tropical house; 2020s hyperpop/glitch/drill.
+**15.1 Style**: main(1)+sub/fusion+era+region. Families: Pop/Rock/Hip-Hop/EDM/R&B-Soul/Country-Folk/Jazz/Latin/Classical/guofeng neo-folk/opera (low confidence). **Fusion formula** `[main style],[main core element],[sub style],[sub characteristic element]`, must echo at the element layer. Valid: Mandopop+HipHop (Jay Chou), Jazz+HipHop (NeoSoul), Folk+Electronic, Classical+Trap; invalid: Opera+Trap, Gregorian+Dubstep. **Era anchor words** (stack 1–2; era is one way a track can evoke a moment — but the deeper move is to match the sound the listener *associates* with that moment, an association that may run through its era, place, event, or a shared cultural touchstone, never a hard-coded era→genre rule): 60s tape saturation/analog warmth; 70s phaser/disco strings/funky bass; 80s gated reverb/LinnDrum/DX7; 90s TR-909/MPC/lo-fi vinyl/grunge; 2000s Auto-Tune/snap/emo; 2010s lo-fi hip hop/bedroom pop/tropical house; 2020s hyperpop/glitch/drill.
 
 **15.2 Rhythm**: BPM (integer, approximate) lyrical 60–85 / mid 90–120 / fast 120–168. Terms: Adagio(66–76) · Andante(76–108) · Allegro(120–168) · Presto(168–200) · Rubato (free, opera/lyrical). Meter (a core emotional variable): 4/4 square · 3/4 waltz · **6/8 lullaby/lyrical sway** · 2/4 march. Fill **subdivision** (Straight/Swing/Shuffle) and **groove** (Laid-back behind / Pushed ahead / Bouncy) as two separate layers. Rhythm patterns: four-on-the-floor · boom bap · trap hi-hat rolls · shuffle · bossa clave · waltz · dembow · breakbeat · straight 16ths.
 
@@ -206,7 +215,7 @@ Fields: **Style** (the musical worldview) · **Lyrics** (words + structure tags 
 - **Custom Models** (V5.5 up to 3): train a "voice fingerprint" on ≥6 stylistically consistent songs as the album's base model. The material must be stylistically uniform (mixing genres teaches mud).
 - **Voice Cloning** (V5.5): cloning a real person's voice requires verified authorization; valuable for "the firsthand person's original voice," with ethics-authorization as a hard constraint — proceed with care.
 - **My Taste**: an adaptive bias; an explicit Style still overrides it.
-- **Stacking order**: Custom Model (base) > Persona (voice) > the style-family trio (era + genre + production) + a unified key.
+- **Stacking order — separate the invariant binder from the per-track variable**: an album's coherence comes from the **invariant binder** — Persona (voice) + thematic motif + a unified key — held identical across every track. **Genre / era-color / instrumentation are per-track variables**: they may shift by narrative beat (a faster, harder genre at a turning point; or the sound the listener *associates* with a moment — through its era, place, event, or a shared cultural touchstone, §15.1) and the album still sounds whole, because the voice and motif never move. **State the tradeoff honestly**: training one Custom Model needs ≥6 *stylistically uniform* tracks (mixing genres teaches mud, above) — so heavy per-track genre diversity means leaning on **Persona (genre-tolerant) instead of a Custom Model**. When you *do* want one uniform sound, the stacking is: Custom Model (base) > Persona (voice) > the style-family trio (era + genre + production) + a unified key.
 
 ## 25. Song Editor fine-fixing
 **Inpainting/Replace Section** redoes a section (weak chorus / good verse / bridge in the wrong key); **Extend** continues 30–60 seconds (put structure tags at the start); **Crop** trims a trailing tail; **Fade In/Out** for head and tail. Inpainting is iterative — budget 2–5 passes for the seam to feel natural.
@@ -266,7 +275,7 @@ Training data is ~86% Global North, local instruments <3%. **High (stable)**: Po
 |---|---|
 | Ten generations all unrelated | fill Style to 4–7, raise Style Influence |
 | Generic AI voice / timbre changes each time | translate the voice into three layers and put it first, restate it in the section metatag |
-| Lyrics read like prose | lock one rhyme category to the end, even out line length, bury couplets in each chorus, cut colloquial connectives |
+| Lyrics read like prose | lock one rhyme category to the end, even out line length, bury couplets in each chorus, cut colloquial prose phrases |
 | Output is muddy | cut to 4–7, remove conflicting items |
 | The chorus doesn't burst | parameterize `[Chorus: full band…]`, Replace Section |
 | Chorus differs each time / robotic | shorten and repeat, remove internal rhyme, add an anchor line |
@@ -280,7 +289,7 @@ Training data is ~86% Global North, local instruments <3%. **High (stable)**: Po
 | "Heartbreak" but not moving | Prosody is wrong → use unstable tools (odd line counts/shrink the last line/distant rhyme/ABBA) |
 
 ## 34. Album coordination
-The consistency stack: Custom Model > Persona > the style-family trio + a unified key. Thematic motif: the signature track's melody / a line of its lyric varied in another track or recurring in the instrumental; recurring motif word threads the motif line. Arrangement: order by emotional arc, put the signature track at the climax, an instrumental interlude as a breath, `[End]` to close, total runtime 26–30 min (8 tracks). The tidy-vs-free baseline (§13.7): set the tidy baseline first, free-verse latitude 0–2 tracks at the creator's discretion. Use perspective changes to create breath.
+**Coherence comes from the invariant binder (Persona + thematic motif + unified key), not from a single uniform genre** (§24) — so genre/era-color may vary track to track by narrative beat. Thematic motif: the signature track's melody / a line of its lyric varied in another track or recurring in the instrumental; recurring motif word threads the motif line. **Sequencing is driven by the subject's emotional curve** (the valence-over-time line distilled from the material, §5): map each beat to a track, then shape the curve — research on album sequencing finds **tempo follows an inverted-U while valence/arousal run opposite**, so place the signature track at the emotional climax (center-back), leave 1–2 tracks of descent/release after it, an instrumental interlude as a breath, `[End]` to close, total runtime 26–30 min (8 tracks). The tidy-vs-free baseline (§13.7): set the tidy baseline first, free-verse latitude 0–2 tracks at the creator's discretion. Use perspective changes to create breath.
 
 ## 35. Delivery specs
 WAV master + 320k MP3; unified **-14 LUFS**; verify loudness and track order separately for a physical carrier; include the cover (§36)/tracklist/handwritten card. For Pro + commercial rights, check the current terms first.

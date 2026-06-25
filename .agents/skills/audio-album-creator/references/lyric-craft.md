@@ -1,4 +1,4 @@
-<!-- Ver 2026-06-24 00:21, by Claude Opus 4.8 -->
+<!-- Ver 2026-06-25 11:36, by Claude Opus 4.8 -->
 
 # Per-track lyric craft kit
 
@@ -15,14 +15,16 @@ The creation kit handed to each per-track subagent in Step 4, **alongside the cr
 
 ## Three-pass polish protocol (run on every track, base included)
 
-Turns guide §14 "rewriting = the gold standard" into executable steps. Every lyric version must run all three passes, and **keep a brief polish log** (what each pass changed):
+The three stages of guide §14, made executable. Do the passes **in order — never all at once** (doing them together is what makes lines stiff and tongue-twisting). Every lyric version runs all three and **keeps a brief polish log** (what each pass changed):
 
 ```
-Pass 1 — concept/imagery focus: catch the personal anchor, cut clichéd prefab phrases, set the throughline landing point, set perspective and section roles
-Pass 2 — tidiness/rhyme: lock one rhyme category to the end, [dense parallel couplets in the chorus · bury couplets in verses as needed], even line length (≤10–12 chars),
-          cut colloquial connectives ("you all know," "I carried it alone"), use stable/unstable tools per the emotion
-Pass 3 — hook/singability: shorten the hook so it's repeatable, put the strongest anchor on the chorus's signal spot, 倒字 self-check (zero 倒字 on motif words/names),
-          breath points to punctuation (no bare spaces), dual-anchor the metatags, write every chorus out in full
+Pass 1 — narrative first (rules OFF): tell this song's emotional truth and its scenes plainly, prose-like; get the story and the personal anchor right.
+          Note which verbatim golden lines this beat could land — you needn't use them all; the 1–2 that hit hardest are usually enough (pick most sense-bound + shortest/singable + most universal), keep more only if they genuinely earn their place. Ignore rhyme/meter/tidiness here.
+Pass 2 — make it a lyric (prosodic shaping): section function (verse = show/setup, chorus = the point/hook), lock one rhyme category to the end,
+          [dense parallel couplets in the chorus · bury couplets in verses as needed], even line length (≤10–12 chars), cut colloquial prose phrases (e.g. "你们都知道" / "我自己扛"),
+          compress the hook, use stable/unstable tools per the emotion, write every chorus out in full
+Pass 3 — polish + gate (word level): strongest anchor on the chorus's signal spot, 倒字 self-check (zero on motif words/names), open vowels on held/high notes,
+          breath points to punctuation (no bare spaces), dual-anchor the metatags; run the delete-the-adjective / negative-space / sing-along tests
 ```
 
 > This protocol costs only text tokens and is the single highest-ROI fix for lyric quality. Keep the three-pass log alongside each lyric version, to be written into the "candidates and polish" appendix in Step 5.
@@ -31,7 +33,7 @@ Pass 3 — hook/singability: shorten the hook so it's repeatable, put the strong
 
 Beyond the three-pass polish, the lead and second-lead subagents each do one more thing:
 
-- **Dual-track killer-line face-off (lead only)**: produce the core hook as **both a "minimalist, held-back version" and a "full, tidy version"**, pit them head-to-head, and pick the better — **forcing the tension to survive, preventing it from being diluted by one-way tidying** (this is exactly the switch that fixes "a good line dulled by rhyme"). The pick passes three tests: the **delete-the-adjectives test** (would deleting it hit harder), the **negative-space test** (did it say everything for the listener), the **sing-along test** (would an elder remember it after one listen).
+- **Dual-track killer-line face-off (lead only)**: produce the core hook as **both a "minimalist, held-back version" and a "full, tidy version"**, pit them head-to-head, and pick the better — **forcing the tension to survive, preventing it from being diluted by one-way tidying** (this is exactly the switch that fixes "a good line dulled by rhyme"). The pick passes three tests: the **delete-the-adjectives test** (would deleting it hit harder), the **negative-space test** (did it say everything for the listener), the **sing-along test** (could someone sing it back after one listen).
 - **Three catchiness tests (lead + second lead)**: the catchy test / the sing-along test / **the melodic-hook test (can the hook be hummed)**. The second lead is verified primarily by this yardstick.
 
 > Boundary: **killer-line negative space is used only on the lead's 1–2 anchor lines, not pushed across the whole song** — full-song negative space thins out the lyrics and instead hurts catchiness.

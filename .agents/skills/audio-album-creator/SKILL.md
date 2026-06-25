@@ -3,7 +3,7 @@ name: audio-album-creator
 description: "Distill a pack of source material (audio / text / photos) into a complete, production-ready original emotional music album plan (a Markdown document). Use when the user wants to make an album for a person or a life experience, turn raw material into an album plan, create a life/memorial album, an Amber Ark-style custom album, or write an album following the creation guide. The user names which source files to use this time. For narrative, custom albums made for close family, a partner, a child, or a team/company. Not for plain lyric polishing, pure music-theory Q&A, or generic lyric-writing with no narrative material."
 ---
 
-<!-- Ver 2026-06-24 00:21, by Claude Opus 4.8 -->
+<!-- Ver 2026-06-25 11:36, by Claude Opus 4.8 -->
 
 # Audio Album Creator
 
@@ -17,7 +17,7 @@ The engine behind this method is `references/album-creation-guide.md` (the Album
 - **Quality resources are deliberately uneven (stated clearly only here)**: "uneven" applies to **Suno roll-generation (抽卡) compute and style exploration** (audio generation is expensive) — **not to lyric-text polishing**. Lyrics are pure text, iteration is nearly free, and the three-pass polish is run on **every track** (base tracks included; see Step 4).
 - **Two-layer quality model (each track's pass line and ceiling)**: the **threshold layer** (every track must pass) = melodically pleasant, smooth, singable, easy to sing along to, no 倒字 (tonal mismatch — a character whose tone contour fights the melody so it's misheard as another word), the story checks out, not maudlin. The **anchor layer** (required for the lead single — 1–2 spots; optional for the second lead) = the emotional moment that makes the customer feel "this is about me." **Metrical tidiness (工整) is a means in service of "catchy and pleasant," not an end — when over-tidiness hurts natural flow, pleasant wins.**
 - **The 60-point commercial standard**: share-with-friends quality, not publication quality. Outside the two singles, don't chase artistic height — chase "the customer feels it was worth it."
-- **Prosody (form matches meaning) is the first principle**: lyrics, music, voice, and production — all four layers serve one emotional intent. Paired with two underlying principles (guide §2): **signal over noise** (write only what the model can parse into sound, and put the strongest signal in the chorus) + **layered control** (put each intent on its most reliable layer: global sound → Style; section-level change → metatag; in-line breath points → punctuation and line breaks). The "hard writing discipline" below is mostly corollaries of these two.
+- **Prosody (form matches meaning) is the first principle**: lyrics, music, voice, and production — all four layers serve one emotional intent. Paired with two underlying principles (guide §2): **signal over noise** (write only what the model can parse into sound, and put the strongest signal in the chorus) + **layered control** (put each intent on its most reliable layer: global sound → Style; section-level change → metatag; in-line breath points → punctuation and line breaks). The "hard writing discipline" below is mostly corollaries of these two. **There are no rules, only tools — when a discipline fights the emotion, return to Prosody rather than bolt on a new rule** (guide §2); abstract the underlying signifier instead of stacking "if X then Y" rules.
 - **Sense-bound sourcing**: an album's soul is the **personal anchors** caught from the source material (specific objects, smells, catchphrases, scenes, key events), not abstract sentiment. The more specific, the more the listener feels "this song is about me."
 - **A real person means ethics**: if the subject is a real person, handle them with dignity; abstract away or cut sensitive content (politics / illness / the deceased / privacy) per guide §27; before delivering the finished work, remind the family to confirm it.
 - **The cover art is Prosody at the visual layer**: the CD cover shares a source with the lyric/music/voice/production work — subject imagery, color, typography, and composition all obey the same emotional intent, reusing the blueprint's throughline imagery + strongest personal anchor + emotional tone + style family + Persona character, so "the cover looks like the album sounds." Produce **3 genuinely divergent styles** in one pass (echoing the three-sketch spirit of Step 2); details in guide §36.
@@ -61,8 +61,8 @@ This skill runs on a **multimodal model** by default: it reads and understands t
 After distilling, **write an intermediate file** `material-distillation-{subject}.md` into the working directory, containing:
 
 - Character bio / timeline (key life milestones)
-- **Personal-anchor list** (the crux of guide §5: objects, smells, catchphrases, scenes, key events — list each one, the more specific the better)
-- Emotional-arc candidates (bitter→sweet, loss→gain, parting→return, etc.)
+- **Personal-anchor & golden-line list** (the crux of guide §5: objects, smells, catchphrases, scenes, key events — list each, the more specific the better; **tag verbatim catchphrases as hook-candidate vs. texture**, so Step 4 can land the 1–2 that hit hardest per beat rather than stacking quotes to use them up)
+- **The spine + emotional curve** (guide §5): the subject's *arc* — how they changed (wanted vs. needed, the turning point) as the album throughline — plus a **valence-over-time curve** of the key beats (this curve drives track order and tempo in Step 3, guide §34). List bitter→sweet / loss→gain / parting→return etc. as candidate shapes.
 - Family members and relationships, important dates (seeding later family-memory and repeat-purchase hooks; also serving the perspective choice)
 - **Sensitive-content flags and handling plan** (which to abstract, which are too dark and must be cut)
 - **Ingestion status** (what was read, what was ignored as unsupported, any obvious gaps) — to be cited in the creation summary
@@ -72,9 +72,9 @@ After distilling, **write an intermediate file** `material-distillation-{subject
 
 Based on the Step 1 distillation, **offer 3 fundamentally different draft directions** for the user to decide. The three should **genuinely diverge** (determined by the material's content, not reskins) along these dimensions:
 
-- **Stylistic leaning** (e.g. Jiangnan folk vs. lyrical soul vs. neo-folk);
+- **Stylistic leaning** (e.g. neo-folk vs. lyrical soul vs. synth-pop — whatever genuinely diverges for this material);
 - **Emotional tone** (e.g. the warmth of bitterness-released vs. the restrained ache of holding back vs. the lightness of serene clarity);
-- **Story core / throughline** (which throughline governs a whole life — e.g. "a pair of hands" vs. "a single lamp" vs. "the road home").
+- **Story core / throughline** (which single image threads the whole album — e.g. "a kept ticket" vs. "a single lamp" vs. "the road home").
 
 Give each draft (**only at "sketch" granularity — don't expand a full 8-track blueprint**, which is Step 3's job, to avoid 3× blueprint cost with 2 discarded):
 
@@ -96,7 +96,7 @@ Record "three sketches + recommendation rationale + final choice and notes" into
 Read §34 (album coordination), §24 (consistency), Part I §3 (emotion→lever) of `references/album-creation-guide.md`, and cross-reference template §0. **Expand along the direction the user chose** and write into the intermediate file `album-blueprint.md`:
 
 1. **Concept and emotional arc**: state in one line what kind of album this is; the emotional arc is the track order.
-2. **Persona lock**: describe the lead voice with the **three vocal layers** (timbre texture + delivery + production, guide §15.4, e.g. "warm aged mezzo, breathy to opened-up, close-mic"), and set a backup voice if needed (e.g. the next generation taking over the singing to complete "passing it on"). **Artist names are for internal reference only and never enter a prompt** (translate them into the three-layer descriptors). You may set 1–2 **keys** for the whole album to rein in drift.
+2. **Persona lock**: describe the lead voice with the **three vocal layers** (timbre texture + delivery + production, guide §15.4), and set a backup voice if needed (e.g. a contrasting voice that enters on one track for a duet or a hand-off). **Artist names are for internal reference only and never enter a prompt** (translate them into the three-layer descriptors). You may set 1–2 **keys** for the whole album to rein in drift.
 3. **Thematic motif**: one throughline image running through the whole album + one one-line subplot image + one melodic motif that recurs in the instrumental / at closings.
 4. **Style family**: a unified instrumentation and production baseline, with variation allowed within the family.
 5. **Tracklist arrangement table** (6–8 tracks, may include 1 instrumental as a "breath"): list # / title / subject / genre / mode / BPM·meter / role (lead / second lead / base / interlude) / Persona.
@@ -111,21 +111,23 @@ After the blueprint is finalized, **freeze a roughly 1–2KB creative contract c
 
 ```
 ## Creative contract card (inviolable album-wide)
-- Persona "{name}" three vocal layers: {warm aged mezzo, breathy→opened-up with a catch, close-mic warm analog}
-- Backup voice (if any): {young warm female}
-- Unified key: main {A minor} / closing {C major}
-- Style family: {Jiangnan folk / guofeng lyrical}; core instrumentation {erhu+guzheng+piano+soft strings}; production {warm analog, close-mic}
-- Throughline image: {a pair of hands}; recurring motif words: {hand / scar / warm}
-- Subplot image: {brass foot-warmer} (recur the motif in #5 instrumental, #8 finale)
-- Perspective baseline: {first-person looking back}; breath points: {lead single Bridge / finale cuts to the next generation}
-- Tidy vs. free: tidy by default; free-verse latitude {0–1 track, on the most repressed one}
+# An album reads as ONE album because the INVARIANT BINDER (Persona voice + throughline/motif + unified key) never moves — NOT because every track shares one genre. Genre / era-color / instrumentation are per-track variables, shifting by narrative beat (guide §24/§34).
+- Persona "{name}" three vocal layers: {timbre texture + delivery + production — see §15.4}
+- Backup voice (if any): {a second voice + where it is used}
+- Unified key: main {key} / closing {key, if it resolves elsewhere}
+- Style-family DEFAULT (a track may override by beat): {style family} + {core instrumentation} + {production} — a track may swap genre/era-color to match its beat; heavy diversity → lean on Persona, not a Custom Model (§24)
+- Throughline image: {throughline image}; recurring motif words: {2–3 motif words}
+- Subplot image (if any): {subplot image} (recur the motif in {which tracks})
+- Perspective baseline: {perspective}; breath points: {where the album shifts perspective to "breathe"}
+- Tidy vs. free: tidy by default; free-verse latitude {0–N tracks, and which}
 - Writing-discipline card: see the full "hard writing discipline" in this SKILL (punctuation controls breath / no bare spaces / write every chorus out in full / dense parallel couplets in chorus / metatags all in English / zero 倒字 on motif words …)
 
 ## Per-track dossiers (one per track, handed to the matching subagent)
 - # / title / role (lead · second lead · base · interlude) / position in the emotional arc
 - Subject and material anchors (from the distillation, the more specific the better)
 - Emotion→lever suggestions (mode / BPM / meter / instrumentation / dynamics / vocals)
-- Throughline points that must be hit (e.g. the "hand" image must appear in the chorus)
+- This track's GENRE / era-color slot — driven by its narrative beat (the sound that fits this beat: its emotion, plus any era/place/event/cultural association the story carries; guide §15.1/§34); default to the style-family unless the beat calls for a shift
+- Throughline points that must be hit (e.g. the throughline image must appear in the chorus)
 ```
 
 > A subagent has free rein within its own track, but **may not invent its own Persona / style family / throughline**. When it needs to dig deep into the engine, give it the path to `references/album-creation-guide.md` to read the relevant § on demand.
@@ -154,7 +156,7 @@ The main context **no longer writes each track's lyrics itself**; instead it **d
 **The detailed creation kit** — the seven dimensions each lyric version must land, the three-pass polish protocol (run on every track, base included), and the extra forging for the lead / second lead (dual-track killer-line face-off + the three catchiness tests) — lives in **`references/lyric-craft.md`**, handed to each subagent alongside the contract card. Two cross-cutting reminders the main context keeps in view:
 
 - The three-pass polish log travels with each lyric version into the Step 5 "candidates and polish" appendix (real iteration traces, not a one-shot draft with a label slapped on).
-- **Killer-line negative space is used only on the lead's 1–2 anchor lines, not pushed across the whole song** — full-song negative space thins out the lyrics and instead hurts catchiness.
+- **Restraint on the strongest material**: keep killer-line negative space to the lead's 1–2 anchor lines (full-song negative space thins the lyrics and hurts catchiness); and you needn't land every quotable source line — the 1–2 that hit hardest are usually enough (the rest stay as texture), so don't stack quotes just to use them up, though more may stay if they genuinely earn their place (guide §5).
 
 ### Step 5: Stitching and assembly (the consistency backstop after fan-out + assembly)
 
@@ -192,12 +194,13 @@ Write the 3 style designs and prompts into the cover section of the album-plan d
 - **Lead-single anchor**: are there 1–2 "this is about me" emotional moments; has the killer line been dulled by rhyme (self-check against the "minimalist held-back version")
 - 倒字 / Chinese singability re-checked per track; does the hook hold up, short and repeatable
 - **Parallel-couplet density**: is the chorus densely paved with parallel couplets, or has it degraded into "colloquial prose with line breaks"
+- **Golden-line restraint**: does any track stack source quotes that dilute the memory point (quotes that don't earn their place) — restraint means you needn't use every quote, not a hard cap on how many (guide §5)
 - **Rhyme-label cross-check**: per track, check the tracklist's chorus rhyme label against the lyrics' **actual end-rhyme**; if the lead / signature line takes the "legal exception" and drops the rhyme-lock for parallelism, the label must honestly say "parallelism / rhyme-break," not vaguely name a rhyme category (catches mislabels — see "legal rhyme-lock exception" in the hard writing discipline)
 - **Were the three passes actually done**: does each lyric version have a polish log, are there real iteration traces (not a one-shot draft with a label slapped on)
 - **Bare-space violations**: are in-line breath points done with punctuation/line breaks, any bare spaces used as pauses (never allowed)
 - Is every chorus written out in full, any "(repeat)" violation; are metatags all in English, any Chinese parenthetical notes in the lyric body
 - Is each Style 4–7 descriptors, **are the three vocal layers up front, is the key marked**, any mutually conflicting descriptors; any misuse of an artist name / reproduction of a famous song
-- Prosody form-meaning match (does structure match emotion); album consistency (Persona / style family / thematic motif running through)
+- Prosody form-meaning match (does structure match emotion); **album consistency via the invariant binder** — does the Persona voice / unified key / thematic motif run through (the real source of coherence); where genre/era-color varies by beat, is it a deliberate narrative signifier rather than drift, and conversely not a monotone single-genre album (guide §24/§34)
 - Does the emotional arc and track order hold up; is total runtime in the 26–30 minute range
 - Is the genre-confidence expectation noted (opera/folk-instrument and other low-confidence cases only promise "approximate flavor")
 - **The 3 cover styles**: genuinely divergent (not reskins), subject anchored to the throughline image/personal anchor, color and typography matching the emotional tone and Persona character, negative space left for the overlaid title, specs met (3000×3000 1:1); any platform logo/artist name wrongly stuffed into the prompt
@@ -238,7 +241,7 @@ All final outputs are stored in the working directory, each with a version-heade
 
 - **Write every chorus out in full**: write out every chorus where it appears, **never "(repeat)" or "same as above"** — Suno generates literally.
 - **Chorus = the strongest signal spot**: the chorus repeats most, so **put the most anchored (personal image), most impactful words in the chorus**; the verse handles "why/setup," the chorus is responsible for "being remembered."
-- **Lock the rhyme + dense parallel couplets (the #1 lever for Chinese sounding "like a song")**: each chorus **locks one rhyme category to the end** (the thirteen rhyme categories of New Chinese Rhyme — 中华新韵十三辙), the verse rhymes on even lines; **the chorus defaults to densely paved parallel couplets (对仗)** (paired lines with matching structure and opposed imagery, e.g. "一碗甜粥／一缕晨光," "风吹不熄／雨打不凉"), and verses bury couplets as needed. Even line length (≤ ~10–12 chars), cut colloquial connectives. **Better tidy and densely paralleled than "colloquial prose with line breaks"** (guide §9.1). But **tidiness serves "catchy and pleasant"**: when the rhyme-lock/couplets force something stiff and tongue-twisting, or say everything for the listener, return to Prosody — being pleasant is itself an emotional carrier, so loosen a notch and favor negative space (especially on the lead's anchor lines).
+- **Lock the rhyme + dense parallel couplets (the #1 lever for Chinese sounding "like a song")**: each chorus **locks one rhyme category to the end** (the thirteen rhyme categories of New Chinese Rhyme — 中华新韵十三辙), the verse rhymes on even lines; **the chorus defaults to densely paved parallel couplets (对仗)** (paired lines with matching structure and opposed imagery, e.g. "一碗甜粥／一缕晨光," "风吹不熄／雨打不凉"), and verses bury couplets as needed. Even line length (≤ ~10–12 chars), cut colloquial prose phrases. **Better tidy and densely paralleled than "colloquial prose with line breaks"** (guide §9.1). But **tidiness serves "catchy and pleasant"**: when the rhyme-lock/couplets force something stiff and tongue-twisting, or say everything for the listener, return to Prosody — being pleasant is itself an emotional carrier, so loosen a notch and favor negative space (especially on the lead's anchor lines).
 - **Legal rhyme-lock exception (lock by default; break with discipline)**: the lead's anchor lines / the signature hook's opening line may drop the end-rhyme and use **strong parallelism** or another binding device instead (e.g. "these hands cut grass / sewed clothes / carried the load" — parallelism is itself catchy, a legitimate strong binder in Chinese song). But a break must: ① **stay within 1–2 lines**, never spreading across the whole song (a fully rhyme-less song falls apart); ② be **labeled honestly as "parallelism / rhyme-break" in the tracklist rhyme label**, never vaguely tagged as some rhyme category (else it misleads, and QA checks it — see Step 7); ③ be **listed under "to be verified at the listening stage,"** confirmed by rolling and a listen. Every other line still locks one rhyme to the end.
 - **Use punctuation and line breaks for in-line rhythm, not bare spaces**: Suno reads punctuation/line breaks as breath instructions (period = breath and reset, comma = short pause, … = lingering hold, hyphen = drawn-out, line break = a longer pause, blank line = instrument continues while vocals stop); **in-line bare spaces are unreliable and often swallowed in connected reading**. Lines should be ≤ ~10–12 chars, split long lines, don't cram.
 - **All performance/arrangement cues go in English square-bracket metatags** (`[Verse: breathy, sparse]`, `[Chorus: full band, erhu accent]`), **the lyric body keeps only the words to be sung**; **strictly no Chinese parenthetical notes** (e.g. "(softly)") — Suno will sing them as lyrics.
