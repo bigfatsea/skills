@@ -1,4 +1,4 @@
-<!-- Ver 2026-06-25 11:36, by Claude Opus 4.8 -->
+<!-- Ver 2026-06-26 17:36, by Claude Opus 4.8 -->
 
 # Per-track lyric craft kit
 
@@ -23,7 +23,9 @@ Pass 1 — narrative first (rules OFF): tell this song's emotional truth and its
 Pass 2 — make it a lyric (prosodic shaping): section function (verse = show/setup, chorus = the point/hook), lock one rhyme category to the end,
           [dense parallel couplets in the chorus · bury couplets in verses as needed], even line length (≤10–12 chars), cut colloquial prose phrases (e.g. "你们都知道" / "我自己扛"),
           compress the hook, use stable/unstable tools per the emotion, write every chorus out in full
-Pass 3 — polish + gate (word level): strongest anchor on the chorus's signal spot, 倒字 self-check (zero on motif words/names), open vowels on held/high notes,
+Pass 3 — polish + gate (word level): plain-reading FIRST (read cold, as a native listener who doesn't know your intent — every line and every adjacent pair must read through:
+          a question and its answer on the same axis, no construction opened-but-never-closed, no word forced into two senses, no dangling fragment; this gate precedes all form-work, and any rhyme/character fix is a re-write to be re-read),
+          then: strongest anchor on the chorus's signal spot, 倒字 self-check (zero on motif words/names), open vowels on held/high notes,
           breath points to punctuation (no bare spaces), dual-anchor the metatags; run the delete-the-adjective / negative-space / sing-along tests
 ```
 
@@ -33,7 +35,7 @@ Pass 3 — polish + gate (word level): strongest anchor on the chorus's signal s
 
 Beyond the three-pass polish, the lead and second-lead subagents each do one more thing:
 
-- **Dual-track killer-line face-off (lead only)**: produce the core hook as **both a "minimalist, held-back version" and a "full, tidy version"**, pit them head-to-head, and pick the better — **forcing the tension to survive, preventing it from being diluted by one-way tidying** (this is exactly the switch that fixes "a good line dulled by rhyme"). The pick passes three tests: the **delete-the-adjectives test** (would deleting it hit harder), the **negative-space test** (did it say everything for the listener), the **sing-along test** (could someone sing it back after one listen).
+- **Dual-track killer-line face-off (lead only)**: produce the core hook as **both a "minimalist, held-back version" and a "full, tidy version"**, pit them head-to-head, and pick the better — **forcing the tension to survive, preventing it from being diluted by one-way tidying** (this is exactly the switch that fixes "a good line dulled by rhyme"). **Before the three tests, the killer line must pass the plain-reading** — its punch comes from the line actually reading, so if it's a Q&A the answer must sit on the question's axis (问"疼不疼" answered by a satisfaction verdict like "我非常满意" fails — answer the *pain* axis: "不疼了" / "值了" / "无怨无悔"). Then the pick passes three tests: the **delete-the-adjectives test** (would deleting it hit harder), the **negative-space test** (did it say everything for the listener), the **sing-along test** (could someone sing it back after one listen).
 - **Three catchiness tests (lead + second lead)**: the catchy test / the sing-along test / **the melodic-hook test (can the hook be hummed)**. The second lead is verified primarily by this yardstick.
 
 > Boundary: **killer-line negative space is used only on the lead's 1–2 anchor lines, not pushed across the whole song** — full-song negative space thins out the lyrics and instead hurts catchiness.

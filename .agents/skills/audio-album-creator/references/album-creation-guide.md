@@ -1,4 +1,4 @@
-<!-- Ver 2026-06-25 11:36, by Claude Opus 4.8 -->
+<!-- Ver 2026-06-26 17:36, by Claude Opus 4.8 -->
 
 # Album Creation Guide v3.5 (condensed)
 
@@ -120,7 +120,7 @@ The verb is the "power amp" — use high-wattage action verbs, use few be-verbs 
 "You write it down so you have something to change." Don't believe in inspiration-supremacy / writer's block — write a bad draft first (the best fertilizer). Run rewriting as **three deliberate stages, in order** — don't attempt all three at once, that's what produces stiff, tongue-twisting lines:
 - **Stage 1 — narrative first (rules off)**: tell this song's emotional truth and its scenes plainly, prose-like; get the *story* right. **Ignore rhyme, meter, and tidiness entirely at this stage.**
 - **Stage 2 — make it a lyric (prosodic shaping)**: impose song-form on the prose-truth — section function (verse = show/setup, chorus = the felt point/hook), lock one rhyme category to the end, even line length, bury a parallel couplet where it serves, compress the hook, write every chorus out in full. Use unstable tools in the verse to pull toward the chorus (§10).
-- **Stage 3 — polish + gate (word level)**: open vowels on held/high notes, kill tongue-twisters, **zero 倒字 on hook words and names**; apply the delete-the-adjective / negative-space / sing-along tests; then a **fresh-eyes pass** (ideally a different context, not the writer's own) confirms singability and that golden lines weren't over-stacked (§5).
+- **Stage 3 — polish + gate (word level)**: **plain-reading first** (read cold, as a native listener who doesn't know the intent — every line and adjacent pair must read through in plain language: a question and its answer on the same axis, no construction opened-but-never-closed, no word forced into two senses, no dangling fragment; this is a meaning gate, prior to and distinct from killing tongue-twisters, which is a *sound* gate); then open vowels on held/high notes, kill tongue-twisters, **zero 倒字 on hook words and names**; apply the delete-the-adjective / negative-space / sing-along tests; then a **fresh-eyes pass** (ideally a different context, not the writer's own) confirms it reads through, is singable, and that golden lines weren't over-stacked (§5). **Any rhyme/character fix is itself a re-write** — re-run the plain-reading on whatever you touched, never assume "form-only."
 
 In the AI era, each stage's revision = revise the brief/seven dimensions/lyrics + roll generations + local fine-fixes, not repeatedly regenerating the same take.
 
@@ -268,7 +268,7 @@ Training data is ~86% Global North, local instruments <3%. **High (stable)**: Po
 - **Application-layer extensible**: a specific project may add a "second lead" on top of the "signature track" (melody/style-first, catchiness winning first impressions) with tiered investment — see the skill that calls this guide.
 
 ## 32. Finished-product QC rubric (10-item checklist)
-① stable pitch ② clear diction, no 倒字 ③ complete structure, no botched ending ④ no AI artifacts (metallic/electric/drift) ⑤ the hook holds up ⑥ emotion matches intent ⑦ clear instrumentation ⑧ dynamics rise and fall ⑨ consistent with the album/Persona ⑩ usable runtime. **Signature track ≥9, base track ≥7.** Below the bar → fine-fix or go back and change a dimension.
+① stable pitch ② clear diction, the words read through (no answer-off-axis / opened-but-unclosed construction / one-word-two-senses / dangling fragment), no 倒字 ③ complete structure, no botched ending ④ no AI artifacts (metallic/electric/drift) ⑤ the hook holds up ⑥ emotion matches intent ⑦ clear instrumentation ⑧ dynamics rise and fall ⑨ consistent with the album/Persona ⑩ usable runtime. **Signature track ≥9, base track ≥7.** Below the bar → fine-fix or go back and change a dimension.
 
 ## 33. Symptom → cause → prescription
 | Symptom | Prescription |
