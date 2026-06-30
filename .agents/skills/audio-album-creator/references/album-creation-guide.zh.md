@@ -1,4 +1,4 @@
-<!-- Ver 2026-06-26 17:36, by Claude Opus 4.8 -->
+<!-- Ver 2026-06-30 16:42, by Claude Sonnet 4.6 -->
 
 # Album Creation Guide · 专辑创作指南 v3.5（精简版）
 
@@ -19,7 +19,8 @@
   | 控制对象 | 放哪层（最可靠） | 别放 |
   |---|---|---|
   | 全局声音身份：性别/音色/唱法基调/制作/流派/调性/BPM | **Style 字段** | 别靠歌词带 |
-  | 段落级变化：唱法切换/动态/配器进出 | **歌词 metatag** `[Chorus: full band, belted]` | 别改全局 Style |
+  | 段落级变化：唱法/动态/配器/质感/情绪（整段生效） | **参数化段落 metatag** `[Chorus: full band, erhu accent, belted]`——叠加在全局 Style 上，非替换 | 别改全局 Style |
+  | 逐行演唱风格：人声强弱/气息/唱腔（仅限人声，逐行生效） | **歌词行前 delivery tag** `[Whispered]`·`[Belted]`·`[Breathy]` | 配器/制作变化别放这层——那归段落 metatag |
   | 句内节奏：气口/停顿/拖字/断句 | **歌词标点与换行** | **别用行内裸空格**（常被连读吞） |
   | 不可靠项：精确数值/复杂和弦/艺人名 | **不写，或降级为方向描述**（"小调暖慢"非和弦谱） | 别当硬指令 |
 
@@ -190,12 +191,30 @@ AI 时代每阶段的修订=改 brief/七维/歌词+抽卡+局部精修，非反
 - **人声三层叠**(Character+Delivery+Effects)缺一即用统计平均填空=AI味。
 - **数量铁律 4–7个**：<4太泛，>7竞争出"糊"(如"1960s Detroit"撞"145 BPM"、"reverb"撞"lo-fi")。
 - **该放**：人声三层(最前)、流派、速度、核心乐器(民乐点名)、制作、情绪、时代、调性。
-- **避坑**：①别写打架描述符(`soft powerful belting`)；②参数/百分比=安慰剂(`[Reverb:30%]`)，用词不用数；③艺人名翻三层；④和弦进行；⑤否定式用 Exclude。
+- **避坑**：①别写打架描述符(`soft powerful belting`)；②参数/百分比=安慰剂(`[Reverb:30%]`)，用词不用数——**BPM数值（如`66 BPM`）是有效的速度方向指引，但模型将其视为近似参考而非节拍器精确锁定**；③艺人名翻三层；④和弦进行；⑤否定式用 Exclude。
 
 ## 22. Lyrics + Metatags + 可唱性
-**A. 永远用结构标签**：`[Intro][Verse 1][Pre-Chorus][Chorus][Post-Chorus][Bridge][Breakdown][Build][Drop][Hook][Interlude][Outro][End]`。大小写不敏感；`[End]`防拖尾；`[Verse 1][Verse 2]`让AI懂主歌旋律各异、副歌重复。
-**B. 参数化 metatag(最强)**：冒号语法逐段控制无需改全局——`[Verse: whispered, acoustic guitar only]``[Chorus: full band, erhu accent, powerful vocals]``[Bridge: piano only, vulnerable]``[Outro: fade out]`。
-**C. 人声/动态标签**：`[Whisper][Humming][Spoken Word][Duet][Choir][Harmony][Ad-lib][Fade In/Out][Crescendo][Key Change]`。一段最多一个cue。**双重锚定**：Style句首人声质地词在段落metatag复述(`[Verse: husky near-spoken]`)，依从度更高。念白用`[…: half-spoken]`/`[Spoken Word]`。
+**A. 永远用结构标签**：`[Intro][Verse 1][Pre-Chorus][Chorus][Post-Chorus][Bridge][Breakdown][Build][Drop][Hook][Interlude][Break][Solo][Outro][End]`。大小写不敏感；`[End]`防拖尾；`[Verse 1][Verse 2]`让AI懂主歌旋律各异、副歌重复。`[Break]`=短暂中断或鼓点间奏；`[Solo]`可指定乐器：`[Guitar Solo]`、`[Piano Solo]`、`[Erhu Solo]`、`[Synth Solo]`。
+**B. 参数化 metatag（最强的段落覆盖工具）**：冒号语法让该段覆盖全局 Style，但不改变全局——单个 tag 里可以同时塞入**人声唱法 + 配器 + 动态 + 质感 + 情绪**：`[Verse: breathy, sparse piano, intimate]`、`[Chorus: full band, erhu accent, powerful vocals]`、`[Bridge: stripped down, piano only, vulnerable]`、`[Outro: fade out, ambient]`。metatag 是**叠加**（而非替换）全局 Style——在"full band folk rock"风格里写 `[Bridge: piano only]`，会保留全局调性/声线，只把该桥段配器缩到钢琴。
+**C. 人声/delivery 标签——两种用法层级**：
+- **段落级**（单独一行放在段落所有歌词之上）：tag 作用于整个段落。可独立使用（`[Choir]`、`[Spoken Word]`、`[Rap]`），也可折进冒号语法（`[Chorus: choir, full band]`）。
+- **行级**（单独一行放在某句歌词正前面）：tag 只作用于紧跟的那一行——**此层仅管人声演唱风格；配器/制作变化请用段落级 metatag，不要放行级 tag**。两种层级可以在同一段落里并用：段落 metatag 设定该段的配器/制作基线，行级 tag 在段落内逐行调整人声演唱风格：
+  ```
+  [Verse 1: breathy, sparse piano, intimate]   ← 段落级：配器+制作基线
+  [Whispered] 有时候我坐在田埂上              ← 行级：只这一句耳语
+  [Soft] 想小时候 那个我                       ← 行级：略有变化的演唱
+  [Building] 没有人帮她                         ← 行级：情绪渐进
+
+  [Chorus: full band, erhu accent, powerful vocals]   ← 只用段落级，无需行级
+  说不哭 心里也想哭
+  想哭的时候 我就哭出来
+  ```
+
+**已确认的 delivery 标签**（段落级与行级均可使用）：`[Whispered]` · `[Soft]` · `[Breathy]` · `[Powerful]` · `[Belted]` · `[Falsetto]` · `[Raspy]` · `[Soulful]` · `[Spoken Word]` · `[Spoken]` · `[Humming]` · `[Rap]` / `[Rapped]` · `[Melodic Rap]` · `[Fast Rap]` · `[Male Vocal]` · `[Female Vocal]` · `[Duet]` · `[Choir]` · `[Harmony]` · `[Ad-lib]` · `[Fade In/Out]` · `[Crescendo]` · `[Silence]` · `[Key Change]`。
+
+**双重锚定**提升依从度：把 Style 句首的人声质地词在段落 metatag 里复述一遍——如 Style 开头是 `warm breathy mezzo`，就写 `[Verse: breathy, intimate]` 而非光 `[Verse]`。
+
+**未经验证的社区标签**（慎用——官方文档及主流社区资料均未记录）：`[Sung]`（据称从念白切回旋律）、`[Dialogue]`、`[Call]`/`[Response]`、`[Child's voice]`——行为不可预测，建议优先用已确认的等效手段替代（`[Spoken Word]`、冒号语法、`[Female Vocal]` 等）。
 **D. 可唱性(把歌词当人声引擎的乐谱)**：
 - **标点即节奏，裸空格不可靠**：句号=完整停顿换气复位；逗号=句内短停；省略号=飘远延留；连字符=拖长(`Lo-o-ove`/中文"暖——")；换行=较长停顿；空行=器乐继续人声停一拍；叹号=加能量(勿滥用)。**行内裸空格常被连读吞，切气口用标点或换行。**
 - **行宜短**(≤10–12字/词)，长句拆多行。排成歌词单(分段+段间空行)非文字墙。

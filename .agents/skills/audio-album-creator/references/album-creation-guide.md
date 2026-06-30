@@ -1,4 +1,4 @@
-<!-- Ver 2026-06-26 17:36, by Claude Opus 4.8 -->
+<!-- Ver 2026-06-30 16:42, by Claude Sonnet 4.6 -->
 
 # Album Creation Guide v3.5 (condensed)
 
@@ -19,7 +19,8 @@
   | Control target | Which layer (most reliable) | Don't put it |
   |---|---|---|
   | Global sound identity: gender/timbre/delivery baseline/production/genre/key/BPM | **the Style field** | don't carry it in the lyrics |
-  | Section-level change: delivery switch/dynamics/instruments in and out | **lyric metatags** `[Chorus: full band, belted]` | don't change the global Style |
+  | Section-level change: delivery/dynamics/instruments/texture for one section | **parameterized section metatag** `[Chorus: full band, erhu accent, belted]` — augments Global Style for that section, not replaces it | don't change the global Style |
+  | Per-line vocal delivery: singing dynamics/breath/style on a single line | **delivery tag on its own line before that lyric** `[Whispered]`·`[Belted]`·`[Breathy]` — vocal-layer only at this granularity | instrument/production changes belong in the section metatag, not per-line tags |
   | In-line rhythm: breath points/pauses/drawn-out/phrasing | **lyric punctuation and line breaks** | **don't use in-line bare spaces** (often swallowed in connected reading) |
   | Unreliable items: precise numbers/complex chords/artist names | **don't write them, or downgrade to a directional description** ("warm slow minor," not a chord chart) | don't treat as a hard instruction |
 
@@ -190,12 +191,30 @@ Fields: **Style** (the musical worldview) · **Lyrics** (words + structure tags 
 - **Stack the three vocal layers** (Character+Delivery+Effects) — leave one out and it fills the blank with a statistical average = AI flavor.
 - **The 4–7 iron rule**: <4 too vague, >7 competing descriptors produce "mud" (e.g. "1960s Detroit" clashing with "145 BPM," "reverb" clashing with "lo-fi").
 - **What to put**: three vocal layers (first), genre, tempo, core instruments (name folk instruments), production, mood, era, key.
-- **Pitfalls**: ① don't write fighting descriptors (`soft powerful belting`); ② parameters/percentages = a placebo (`[Reverb:30%]`), use words not numbers; ③ translate artist names into the three layers; ④ chord progressions; ⑤ use Exclude for negatives.
+- **Pitfalls**: ① don't write fighting descriptors (`soft powerful belting`); ② parameters/percentages = a placebo (`[Reverb:30%]`), use words not numbers — **BPM values (e.g., `66 BPM`) are valid tempo guidance but treated as approximate direction by the model, not a metronome lock**; ③ translate artist names into the three layers; ④ chord progressions; ⑤ use Exclude for negatives.
 
 ## 22. Lyrics + Metatags + singability
-**A. Always use structure tags**: `[Intro][Verse 1][Pre-Chorus][Chorus][Post-Chorus][Bridge][Breakdown][Build][Drop][Hook][Interlude][Outro][End]`. Case-insensitive; `[End]` prevents a trailing tail; `[Verse 1][Verse 2]` make the AI understand the verses have different melodies while the chorus repeats.
-**B. Parameterized metatags (the strongest)**: colon syntax controls each section without changing the global — `[Verse: whispered, acoustic guitar only]`, `[Chorus: full band, erhu accent, powerful vocals]`, `[Bridge: piano only, vulnerable]`, `[Outro: fade out]`.
-**C. Voice/dynamics tags**: `[Whisper][Humming][Spoken Word][Duet][Choir][Harmony][Ad-lib][Fade In/Out][Crescendo][Key Change]`. At most one cue per section. **Dual anchoring**: restate the voice-texture word from the head of Style in the section metatag (`[Verse: husky near-spoken]`) for higher compliance. Use `[…: half-spoken]`/`[Spoken Word]` for spoken sections.
+**A. Always use structure tags**: `[Intro][Verse 1][Pre-Chorus][Chorus][Post-Chorus][Bridge][Breakdown][Build][Drop][Hook][Interlude][Break][Solo][Outro][End]`. Case-insensitive; `[End]` prevents a trailing tail; `[Verse 1][Verse 2]` make the AI understand the verses have different melodies while the chorus repeats. `[Break]` = a brief mid-song pause or drum-fill interlude; `[Solo]` can be instrument-specified: `[Guitar Solo]`, `[Piano Solo]`, `[Erhu Solo]`, `[Synth Solo]`.
+**B. Parameterized metatags (the strongest section-override tool)**: colon syntax overrides Style *for that section only* without changing the global — you can pack any mix of **vocal delivery + instrumentation + dynamics + texture + mood** in one tag: `[Verse: breathy, sparse piano, intimate]`, `[Chorus: full band, erhu accent, powerful vocals]`, `[Bridge: stripped down, piano only, vulnerable]`, `[Outro: fade out, ambient]`. The metatag *augments* (not replaces) the global Style — a `[Bridge: piano only]` in a "full band folk rock" song keeps the genre/key/vocal baseline from Style and narrows just the instrumentation for that bridge.
+**C. Voice/delivery tags — two usage levels**:
+- **Section-level** (place on its own line above all the section's lyrics): the tag applies to the entire section. Can be a standalone tag (`[Choir]`, `[Spoken Word]`, `[Rap]`) or folded into the colon syntax (`[Chorus: choir, full band]`).
+- **Per-line** (place on its own line immediately before a single lyric line): the tag applies to that line only — **vocal delivery layer only; instrument/production changes belong in the section metatag, not here**. Both levels can coexist in the same section: the section metatag sets the instrumentation/production baseline, per-line tags vary vocal delivery within it:
+  ```
+  [Verse 1: breathy, sparse piano, intimate]   ← section sets instrument + production baseline
+  [Whispered] In the silence of the night      ← per-line: delivery this line only
+  [Soft] I feel you somewhere near             ← per-line: slightly different delivery
+  [Building] And I can't breathe               ← per-line: rising intensity
+
+  [Chorus: full band, erhu accent, powerful vocals]   ← section only, no per-line tags needed
+  AND I CAN'T LET GO
+  I never could
+  ```
+
+**Confirmed vocal delivery tags** (work at both section and per-line level): `[Whispered]` · `[Soft]` · `[Breathy]` · `[Powerful]` · `[Belted]` · `[Falsetto]` · `[Raspy]` · `[Soulful]` · `[Spoken Word]` · `[Spoken]` · `[Humming]` · `[Rap]` / `[Rapped]` · `[Melodic Rap]` · `[Fast Rap]` · `[Male Vocal]` · `[Female Vocal]` · `[Duet]` · `[Choir]` · `[Harmony]` · `[Ad-lib]` · `[Fade In/Out]` · `[Crescendo]` · `[Silence]` · `[Key Change]`.
+
+**Dual anchoring** for higher compliance: restate the voice-texture word from the head of Style in the section metatag — e.g., if Style opens with `warm breathy mezzo`, write `[Verse: breathy, intimate]` (not just `[Verse]`).
+
+**Unverified community tags** (proceed with caution — not confirmed by official docs or major community references): `[Sung]` (purported return-from-spoken), `[Dialogue]`, `[Call]`/`[Response]`, `[Child's voice]` — behavior is unpredictable; prefer confirmed equivalents (`[Spoken Word]`, colon-syntax modifiers, `[Female Vocal]`) instead.
 **D. Singability (treat the lyrics as the score for the vocal engine)**:
 - **Punctuation is rhythm, bare spaces are unreliable**: period = a full stop, breath, reset; comma = a short in-line pause; ellipsis = drifting, lingering hold; hyphen = drawn-out (`Lo-o-ove` / Chinese "暖——"); line break = a longer pause; blank line = instrument continues while vocals stop a beat; exclamation = adds energy (don't overuse). **In-line bare spaces are often swallowed in connected reading — break breath points with punctuation or line breaks.**
 - **Keep lines short** (≤10–12 chars/words), split long lines across multiple lines. Lay it out as a lyric sheet (sections + blank lines between sections), not a wall of text.
