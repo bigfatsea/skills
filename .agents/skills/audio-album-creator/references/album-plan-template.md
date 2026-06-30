@@ -2,7 +2,7 @@
 
 # Album Plan "{album name}" — {subject/theme}
 
-> **Nature of this file**: a complete original emotional album plan, created per the `Album Creation Guide` methodology and using `{material-distillation file}` as source material. {N} tracks ({tracks-with-lyrics} with lyrics{ + 1 instrumental}), every track's lyrics written out in full, every chorus repeated in full each time, all performance cues in English square-bracket metatags (no Chinese parenthetical notes in the lyric body — Suno would sing Chinese parentheticals as lyrics).
+> **Nature of this file**: a complete original emotional album plan, created per the `Album Creation Guide` (`references/album-creation-guide.md`) methodology and using `{material-distillation file}` as source material. All `§N` references in this document point to that guide. {N} tracks ({tracks-with-lyrics} with lyrics{ + 1 instrumental}), every track's lyrics written out in full, every chorus repeated in full each time, all performance cues in English square-bracket metatags (no Chinese parenthetical notes in the lyric body — Suno would sing Chinese parentheticals as lyrics).
 >
 > **Real-person note (keep only when the subject is a real person, otherwise delete this paragraph)**: {subject} is a real person ({basic background}). This is a life album made for a real loved one, to be handled with dignity. **Sensitive-handling principles**: {list the sensitive content this album touches and how it's handled — political content rewritten as personal sensory imagery, overly dark plot points cut, the deceased requiring heir authorization, etc., per §27}.
 

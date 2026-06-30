@@ -1,15 +1,15 @@
-<!-- Ver 2026-06-26 17:36, by Claude Opus 4.8 -->
+<!-- Ver 2026-06-30 17:10, by Claude Sonnet 4.6 -->
 
 # Per-track lyric craft kit
 
-The creation kit handed to each per-track subagent in Step 4, **alongside the creative contract card and this track's dossier**. It operationalizes guide §14 (rewriting) and §15 (the seven-dimension model) into executable steps. A subagent obeys the contract card and this SKILL's "hard writing discipline"; it reads the engine guide (`references/album-creation-guide.md`) by path only when a deep dive is needed.
+The creation kit handed to each per-track subagent in Step 4, **alongside the creative contract card and this track's dossier**. It operationalizes guide §14 (rewriting) and §15 (the seven-dimension model) into executable steps. A subagent obeys the contract card and this SKILL's "hard writing discipline"; when a deep dive is needed, read the engine guide on demand — **all `§N` citations in this document refer to `references/album-creation-guide.md`**.
 
 ## For each lyric version, write out all of the following (seven dimensions, fully landed)
 
 1. **Dimension 1, lyrics and narrative**: material anchor → imagery (express emotion through the concrete, not bluntly venting grief) → chorus hook (short, repeatable, personal image + universal emotion) → perspective (§6) → structural placement (private details into verses, deep emotion held back into the chorus).
 2. **Dimension 2, emotion→lever** (§3/§18): set mode, tempo/meter, instrumentation, dynamics, vocals, and state for each value "why" it serves the emotion. The emotional arc (e.g. minor-key verse → major-key chorus) lands as in-section change in mode + dynamics.
 3. **Dimensions 3–7**: style / song form and dynamic arc / rhythm / vocals / instrumentation.
-4. **Suno Style field** (§21): 4–7 descriptors; **the three vocal layers (timbre + delivery + production) go first**, may add the **key** to boost consistency, name core instruments (for Chinese folk instruments use specific names like erhu/guzheng). Leave timbre to Style + Persona, and push the section-level vocal arc down to metatags. Attach Sliders (emotional song = Weirdness Safe + Style Influence Strong + Prompt Helper Off).
+4. **Suno Style field** (§21): 4–7 descriptors; **the three vocal layers (timbre + delivery + production) go first**, may add the **key** to boost consistency, name core instruments (for Chinese folk instruments use specific names like erhu/guzheng). Leave timbre to Style + Persona, and push delivery arc and instrumentation changes down to metatags — **two control levels** (see §22C for the full tag list): ① **section colon syntax** `[Chorus: full band, erhu accent, powerful vocals]` — sets the whole section's production + delivery, augments (not replaces) global Style; ② **per-line delivery tags** `[Whispered]`/`[Belted]` on their own line immediately before one lyric line — vocal delivery only, that line only. Attach Sliders (emotional song = Weirdness Safe + Style Influence Strong + Prompt Helper Off).
 5. **Complete Chinese lyrics** (see the SKILL's "hard writing discipline"): put the strongest anchor in the chorus, use punctuation/line breaks for in-line breath points, don't fill every section just because the formula has one.
 6. **Chinese singability / 倒字 self-check** (§13/§22): check the hook keywords and personal names one by one for zero 倒字, flag the long lines that need watching.
 
