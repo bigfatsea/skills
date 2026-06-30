@@ -265,7 +265,7 @@ subagent 各写各的，跨曲一致性可能裂。回到主上下文做一遍**
 
 ## 参考资料（按需读取，progressive disclosure）
 
-- `references/album-creation-guide.zh.md`：完整方法论引擎（Album Creation Guide v3.5）。**Step 3–4 创作前必读相关章节**（两条底层原则 §2、情感→杠杆 §3/§18、词 Part II〔工整 §9.1〕、曲 Part III、Suno 实操 Part IV〔人声三层 §15.4、调性/和弦 §15.5、Style §21、标点即节奏 §22〕、提示词框架 Part V、QC Part VI、流派置信度 §26）。**逐曲 subagent 默认只读 Step 3 的创作契约卡，不强制通读全文**；需深查某 § 时再按路径读；**Step 6 封面设计读 §36（封面=视觉层的 Prosody）**。Suno 与图像模型能力随版本变化，实操前以当前版本为准。
+- `references/album-creation-guide.zh.md`：完整方法论引擎（Album Creation Guide）。**Step 3–4 创作前必读相关章节**（两条底层原则 §2、情感→杠杆 §3/§18、词 Part II〔工整 §9.1〕、曲 Part III、Suno 实操 Part IV〔人声三层 §15.4、调性/和弦 §15.5、Style §21、标点即节奏 §22〕、提示词框架 Part V、QC Part VI、流派置信度 §26）。**逐曲 subagent 默认只读 Step 3 的创作契约卡，不强制通读全文**；需深查某 § 时再按路径读；**Step 6 封面设计读 §36（封面=视觉层的 Prosody）**。Suno 与图像模型能力随版本变化，实操前以当前版本为准。
 - `references/album-plan-template.zh.md`：最终方案的结构骨架与占位符。**Step 3 起照此结构填充**，逐项替换 `{…}` 占位符，删除不适用的可选段（如非真人则删"真人提示"）。模板只给形态，内容与风格全部来自素材提炼。
 - `references/lyric-craft.zh.md`：逐曲词作工具卡（七维度 / 三轮打磨协议 / 主打锤炼）——**Step 4 与契约卡一并发给每个 subagent**，使其无须通读整本引擎。
 - `references/cover-production.zh.md`：Step 6 封面生产细则（各图像模型的提示词写法、产出规格、`gen_cover.py` 零配置 UV 环境 + flags + API 密钥）——**Step 6 写提示词 / 实际出图时读**。

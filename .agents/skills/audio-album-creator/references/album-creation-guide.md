@@ -1,6 +1,6 @@
 <!-- Ver 2026-06-30 16:42, by Claude Sonnet 4.6 -->
 
-# Album Creation Guide v3.5 (condensed)
+# Album Creation Guide v4.0 (condensed)
 
 > An overall guide to distilling any source material (voice/video/text/photos — biography, story, project history, team growth, romantic memories…) into its essence and designing and producing an album from it. Covers the four layers of lyrics/music/voice/production, AI creation best practices, and the Suno prompt framework. Subject-agnostic, Mandarin-first; supports "one signature track per album," album-level consistency, and single-person scalable QC. Based on Pattison's *Writing Better Lyrics* / Berklee songwriting theory + Suno official docs and community evidence. **Platform capabilities change by version — verify Part IV against the current Suno version before hands-on work (re-check every 3–6 months).**
 
@@ -337,5 +337,5 @@ WAV master + 320k MP3; unified **-14 LUFS**; verify loudness and track order sep
 
 ---
 
-*v3.5 condensed · songwriting/music/voice/production + the three principles + the element vocabulary + AI best practices + the prompt framework + cover design · paired with song_examples*
+*v4.0 condensed · songwriting/music/voice/production + the three principles + the element vocabulary + AI best practices + the prompt framework + cover design · paired with song_examples*
 *2026-06-23 · by Claude Opus 4.8*

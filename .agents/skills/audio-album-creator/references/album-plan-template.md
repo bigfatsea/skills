@@ -4,7 +4,7 @@
 
 > **Nature of this file**: a complete original emotional album plan, created per the `Album Creation Guide` methodology and using `{material-distillation file}` as source material. {N} tracks ({tracks-with-lyrics} with lyrics{ + 1 instrumental}), every track's lyrics written out in full, every chorus repeated in full each time, all performance cues in English square-bracket metatags (no Chinese parenthetical notes in the lyric body — Suno would sing Chinese parentheticals as lyrics).
 >
-> **Real-person note (keep only when the subject is a real person, otherwise delete this paragraph)**: {subject} is a real person ({basic background}). This is a life album made for a real loved one, to be handled with dignity. **Sensitive-handling principles**: {list the sensitive content this album touches and how it's handled — political content rewritten as personal sensory imagery, overly dark plot points cut, the deceased requiring heir authorization, etc., per v3.5 §27}.
+> **Real-person note (keep only when the subject is a real person, otherwise delete this paragraph)**: {subject} is a real person ({basic background}). This is a life album made for a real loved one, to be handled with dignity. **Sensitive-handling principles**: {list the sensitive content this album touches and how it's handled — political content rewritten as personal sensory imagery, overly dark plot points cut, the deceased requiring heir authorization, etc., per §27}.
 
 ---
 
@@ -20,17 +20,17 @@ State in one line what kind of album this is (perspective choice + core emotion)
 
 > Put the signature track at the album's climax (center-back), leaving 1–2 tracks of descent and release after it.
 
-### 0.2 Persona lock (v3.5 §24)
+### 0.2 Persona lock (§24)
 - **Main Persona "{lead-voice name}"**: {gender + register + timbre texture + delivery + production, per §15.4}. All first-person tracks across the album use this one voice.
 - **Backup Persona "{backup-voice name}" (optional)**: {use — e.g. a second voice entering on one track for a duet or a hand-off}.
 - Procedure: audition and lock the main voice on the signature track first, reuse it for the rest (Persona keeps the timbre, not the melody).
 
-### 0.3 Thematic motif (v3.5 §34)
+### 0.3 Thematic motif (§34)
 - **Lyric motif: "{throughline image}"** — the album throughline, recurring in tracks {x, x, x}, closing the loop in track {final track}.
 - **Subplot image: "{subplot image}"**, echoed in tracks {x, x}.
 - **Melodic motif**: the signature track's chorus melodic line, recurring in track {x}'s instrumental interlude / track {x}'s humming, forming an aural echo.
 
-### 0.4 Style-family default + per-track genre variable (v3.5 §24/§34)
+### 0.4 Style-family default + per-track genre variable (§24/§34)
 **Invariant binder (what makes it one album — not a uniform genre): Persona voice + thematic motif + unified key.** The style-family here is only the **default**: **"{style-family description}"**, {core instrumentation} as the base, {color instruments} for color, production **{production}**. **A track may swap genre / era-color to match its narrative beat** (the Genre column in 0.5 may differ per track — e.g. a faster, harder genre at a turning point, or a sound the listener associates with a moment via its era/place/event/cultural touchstone); heavy diversity → rely on Persona, not a Custom Model (§24).
 
 ### 0.5 Tracklist arrangement table
@@ -46,10 +46,10 @@ State in one line what kind of album this is (perspective choice + core emotion)
 
 Target total runtime ≈ 26–30 minutes.
 
-### 0.6 Delivery (v3.5 §35)
+### 0.6 Delivery (§35)
 WAV master + 320k MP3; unified **-14 LUFS**; verify loudness and track order separately for the physical version; include the cover (see 0.7), tracklist, handwritten card. Commercial use requires Pro+ and checking the current terms. **Real material — have the family confirm before delivering the finished work.**
 
-### 0.7 Cover design (3 style candidates · v3.5 §36)
+### 0.7 Cover design (3 style candidates · §36)
 
 > **Cover = Prosody at the visual layer**: subject/color/typography/composition share a source with the lyrics and music, reusing the above **throughline image "{throughline}" + strongest personal anchor "{anchor}" + emotional tone + style family + Persona character**. The three tiers below (photorealistic/illustration/abstract) are the **default archetypes, swappable per the album's character** (e.g. for a high-energy album swap in "dynamic collage / film-grain sense of speed"), only requiring the three to **genuinely diverge** (not reskins). For selecting 1 main cover, the rest kept as alternates.
 > **How to set the subject**: if the throughline can go straight into the image, paint it; **if the throughline is abstract and can't be visualized** (e.g. "a sentence never said"), fall back to the **strongest personal-anchor object** (prefer a concrete object, sense-bound), don't force a literal abstract concept.
@@ -239,7 +239,7 @@ WAV master + 320k MP3; unified **-14 LUFS**; verify loudness and track order sep
 
 ## Appendix: how this album implements the Album Creation Guide
 
-| v3.5 point | How it shows up in this album |
+| Guide point | How it shows up in this album |
 |---|---|
 | Signal over noise (§2) | {what noise was cut: artist names/bare spaces/over-filled sections; strongest anchor put in the chorus} |
 | Layered control (§2) | {global sound → Style, section change → metatag, breath points → punctuation/line breaks} |
