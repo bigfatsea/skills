@@ -11,14 +11,16 @@
 ## 0. Album-level coordination
 
 ### 0.1 Concept, spine and emotional arc
-State in one line what kind of album this is (perspective choice + core emotion) **and the spine — how the subject changed (the throughline)**. The **emotional curve** (valence over time) is the track order and shapes the tempo (tempo inverted-U, valence opposite; §34):
+State in one line what kind of album this is (perspective choice + core emotion), **the spine — how the subject changed (the throughline)**, and **the arc's shape** (diagnosed from the material, §5: classic rising-action / spiral-introspective / gradual no-climax / fragmented / other). The **emotional curve** (valence over time) is the track order and shapes the tempo accordingly (§34).
+
+The row below sketches the **classic rising-action shape** as one worked example — replace it with whatever shape the material actually has (a spiral arc has no single "descent" leg; a gradual arc may have no "peak" node at all, just a warmest point):
 
 ```
 {node 1} → {node 2} → [{signature-track node} · signature track] → {descent node} → {closing node}
- {mood}     {mood}      {peak · tear-jerker}                          {descent}     {release · close}
+ {mood}     {mood}      {peak/strongest moment · tear-jerker}         {descent, if this shape has one}   {release · close}
 ```
 
-> Put the signature track at the album's climax (center-back), leaving 1–2 tracks of descent and release after it.
+> For a classic rising-action arc, put the signature track at the climax (center-back), leaving 1–2 tracks of descent and release after it. For a gradual/spiral/fragmented arc, anchor the signature track at wherever the material's real strongest moment falls instead — climax or not.
 
 ### 0.2 Persona lock (§24)
 - **Main Persona "{lead-voice name}"**: {gender + register + timbre texture + delivery + production, per §15.4}. All first-person tracks across the album use this one voice.
@@ -44,7 +46,7 @@ State in one line what kind of album this is (perspective choice + core emotion)
 | … | … | … | … | … | … | interlude (instrumental) | — |
 | {final #} | {title} | {subject} | … | … | … | base · closing | {main voice (+ backup voice)} |
 
-Target total runtime ≈ 26–30 minutes.
+Target total runtime scales with track count (~2:30–3:30/track; ≈ 26–30 minutes for 8 tracks, ≈ 20–22 for 6).
 
 ### 0.6 Delivery (§35)
 WAV master + 320k MP3; unified **-14 LUFS**; verify loudness and track order separately for the physical version; include the cover (see 0.7), tracklist, handwritten card. Commercial use requires Pro+ and checking the current terms. **Real material — have the family confirm before delivering the finished work.**
