@@ -18,6 +18,7 @@ https://github.com/bigfatsea/skills
 | `Startup Idea Evaluator` | You want to evaluate a startup idea, early project, pivot, GTM direction, monetization logic, or whether something is worth building. | A pragmatic China/global startup assessment with kill switch, assumptions, validation plan, unit economics, GTM, and verdict. |
 | `Prompt Architect` | You have a rough feature request, app idea, workflow concept, or coding brief and want a stronger implementation prompt for Claude Code. | A clarified product spec, critical technical decisions, and a precise build prompt. |
 | `synthesize-documents` | You have multiple drafts, reports, reviews, memos, or source documents and want one comprehensive synthesis. | A standalone synthesis that preserves consensus, minority-only points, disagreements, evidence checks, and final recommendations. |
+| `ai-script` | A task needs real AI generation or retrieval via the local `ai-script` CLI: LLM (multi-provider), TTS, STT, image, music, video, web/scholar search, scraping. | Correct invocation of the right subcommand with sane defaults, timeout/retry expectations, and output-convention handling. |
 
 ## Master BP Review
 
