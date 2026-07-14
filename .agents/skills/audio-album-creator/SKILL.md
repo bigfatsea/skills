@@ -1,5 +1,5 @@
 ---
-name: bfs-audio-album-creator
+name: audio-album-creator
 description: "Distill a pack of source material (audio / text / photos) into a complete, production-ready original emotional music album plan (a Markdown document). Use when the user wants to make an album for a person or a life experience, turn raw material into an album plan, create a life/memorial album, an Amber Ark-style custom album, or write an album following the creation guide. The user names which source files to use this time. For narrative, custom albums made for close family, a partner, a child, or a team/company. Not for plain lyric polishing, pure music-theory Q&A, or generic lyric-writing with no narrative material."
 ---
 

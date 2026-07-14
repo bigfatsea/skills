@@ -1,0 +1,13 @@
+{
+  "name": "bfs",
+  "skills": [
+    "./.agents/skills/ai-script",
+    "./.agents/skills/audio-album-creator",
+    "./.agents/skills/interview-methodology",
+    "./.agents/skills/lobster-agent-creator",
+    "./.agents/skills/master-bp-review",
+    "./.agents/skills/prompt-architect",
+    "./.agents/skills/startup-idea-evaluator",
+    "./.agents/skills/synthesize-documents"
+  ]
+}

@@ -1,5 +1,5 @@
 ---
-name: bfs-interview-methodology
+name: interview-methodology
 description: 'Three-mode pipeline for oral history and personal-experience interviews. Mode 1 Pre-Interview: research-dimensions report + semi-structured guide. Mode 2 Transcript Organization: transcription error correction + five-type structured notes + subtext capture. Mode 3 Story Core Extraction: theme identification + arc mapping + six-angle analysis + recommended narrative angle. Trigger: "interview prep", "prepare outline", "organize transcript", "extract story", "interview analysis", "访谈准备", "整理转写", "故事提炼". Not for job interviews, market research, or when audio-album-creator already has organized source material.'
 ---
 

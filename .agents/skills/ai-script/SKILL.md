@@ -1,5 +1,5 @@
 ---
-name: bfs-ai-script
+name: ai-script
 description: "Call local AI-service CLI ai-script for real generation and retrieval tasks: LLM text (multi-provider second opinions, vision, consult mode), TTS speech synthesis, STT/ASR transcription, text-to-image / image-to-image, music generation, video generation, Tavily web search, OpenAlex scholar search, Firecrawl scraping, and local image resizing. Use when the user asks to 生成图片/配图、合成语音/朗读、转录音频、生成音乐/歌曲、生成视频、问另一个模型/多模型会诊、搜索网页/论文、抓取网页, or when a task needs actual media generation rather than code. Not for local code editing, git, or tasks with no external AI/service call (except resize, which is local)."
 ---
 

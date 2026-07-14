@@ -14,15 +14,15 @@ https://github.com/bigfatsea/skills
 
 | Skill | Use it when | What it produces |
 | --- | --- | --- |
-| `Master BP Review` | You have a business plan, pitch deck, memo, or similar business document and want investor-style or strategic review. Do not use it for a raw startup idea without a document. | A structured BP review using 5 context-fit master reviewers, founder response, strategic decision, and rewritten BP direction. |
-| `Startup Idea Evaluator` | You want to evaluate a startup idea, early project, pivot, GTM direction, monetization logic, or whether something is worth building. | A pragmatic China/global startup assessment with kill switch, assumptions, validation plan, unit economics, GTM, and verdict. |
-| `Prompt Architect` | You have a rough feature request, app idea, workflow concept, or coding brief and want a stronger implementation prompt for Claude Code. | A clarified product spec, critical technical decisions, and a precise build prompt. |
+| `master-bp-review` | You have a business plan, pitch deck, memo, or similar business document and want investor-style or strategic review. Do not use it for a raw startup idea without a document. | A structured BP review using 5 context-fit master reviewers, founder response, strategic decision, and rewritten BP direction. |
+| `startup-idea-evaluator` | You want to evaluate a startup idea, early project, pivot, GTM direction, monetization logic, or whether something is worth building. | A pragmatic China/global startup assessment with kill switch, assumptions, validation plan, unit economics, GTM, and verdict. |
+| `prompt-architect` | You have a rough feature request, app idea, workflow concept, or coding brief and want a stronger implementation prompt for Claude Code. | A clarified product spec, critical technical decisions, and a precise build prompt. |
 | `synthesize-documents` | You have multiple drafts, reports, reviews, memos, or source documents and want one comprehensive synthesis. | A standalone synthesis that preserves consensus, minority-only points, disagreements, evidence checks, and final recommendations. |
 | `ai-script` | A task needs real AI generation or retrieval via the local `ai-script` CLI: LLM (multi-provider), TTS, STT, image, music, video, web/scholar search, scraping. | Correct invocation of the right subcommand with sane defaults, timeout/retry expectations, and output-convention handling. |
 
-## Master BP Review
+## master-bp-review
 
-`Master BP Review` reviews an existing BP, pitch deck, memo, or business plan. It is not for raw startup idea brainstorming.
+`master-bp-review` reviews an existing BP, pitch deck, memo, or business plan. It is not for raw startup idea brainstorming.
 
 How it works:
 
@@ -54,12 +54,12 @@ Master pool:
 Example prompt:
 
 ```text
-Use Master BP Review to review docs/my-startup-bp.md
+Use master-bp-review to review docs/my-startup-bp.md
 ```
 
-## Startup Idea Evaluator
+## startup-idea-evaluator
 
-`Startup Idea Evaluator` judges whether a startup idea, early project, pivot, market, or GTM path is worth pursuing. It is optimized for a <=3 person AI-augmented team with China familiarity, global optionality, no paid-ad dependency, and bootstrap-first bias.
+`startup-idea-evaluator` judges whether a startup idea, early project, pivot, market, or GTM path is worth pursuing. It is optimized for a <=3 person AI-augmented team with China familiarity, global optionality, no paid-ad dependency, and bootstrap-first bias.
 
 Output modes:
 
@@ -69,12 +69,12 @@ Output modes:
 Example prompt:
 
 ```text
-Use Startup Idea Evaluator: AI tool for helping Chinese exporters create product videos for overseas marketplaces.
+Use startup-idea-evaluator: AI tool for helping Chinese exporters create product videos for overseas marketplaces.
 ```
 
-## Prompt Architect
+## prompt-architect
 
-`Prompt Architect` turns a rough app, product, workflow, or coding brief into an implementation-ready Claude Code prompt. Use it when the goal is clear enough to build, but the request needs sharper product, technical, platform, and UX decisions.
+`prompt-architect` turns a rough app, product, workflow, or coding brief into an implementation-ready Claude Code prompt. Use it when the goal is clear enough to build, but the request needs sharper product, technical, platform, and UX decisions.
 
 Typical output:
 
@@ -86,7 +86,7 @@ Typical output:
 Example prompt:
 
 ```text
-Use Prompt Architect: build a Mac menu bar tool that records short voice notes, transcribes them, and appends structured tasks to a local Markdown inbox.
+Use prompt-architect: build a Mac menu bar tool that records short voice notes, transcribes them, and appends structured tasks to a local Markdown inbox.
 ```
 
 ## synthesize-documents
@@ -123,15 +123,15 @@ npx -y skills add https://github.com/bigfatsea/skills --skill '*'
 Install one specific skill:
 
 ```bash
-npx -y skills add https://github.com/bigfatsea/skills --skill "Startup Idea Evaluator"
+npx -y skills add https://github.com/bigfatsea/skills --skill startup-idea-evaluator
 ```
 
 Other valid skill names:
 
 ```text
-Master BP Review
-Prompt Architect
-Startup Idea Evaluator
+master-bp-review
+prompt-architect
+startup-idea-evaluator
 synthesize-documents
 ```
 

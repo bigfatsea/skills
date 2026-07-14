@@ -1,5 +1,5 @@
 ---
-name: bfs-prompt-architect
+name: prompt-architect
 description: Rewrite a rough feature request, app idea, workflow concept, or coding brief into a clear product spec, critical technical decisions, and a high-precision build prompt for Claude Code. Use when the user gives an underspecified product or engineering request and wants a prompt that can drive high-quality implementation with minimal back-and-forth.
 argument-hint: [rough user brief]
 disable-model-invocation: true

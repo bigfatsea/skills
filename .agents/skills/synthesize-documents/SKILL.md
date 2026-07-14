@@ -1,5 +1,5 @@
 ---
-name: bfs-synthesize-documents
+name: synthesize-documents
 description: Synthesize multiple provided documents into one comprehensive replacement document. Use when the user asks to merge, consolidate, reconcile, summarize comprehensively, produce a consensus report, integrate several drafts/reviews/memos, or create a final synthesis that preserves shared points, minority-only points, disagreements, source structures, user-specific requirements, and evidence-based evaluation.
 ---
 

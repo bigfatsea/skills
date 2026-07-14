@@ -1,5 +1,5 @@
 ---
-name: bfs-startup-idea-evaluator
+name: startup-idea-evaluator
 description: >
   Evaluate startup ideas and early-stage projects as a pragmatic angel investor + operator.
   Optimized for small AI-augmented teams with China/global context.
