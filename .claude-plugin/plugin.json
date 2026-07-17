@@ -3,6 +3,7 @@
   "skills": [
     "./.agents/skills/ai-script",
     "./.agents/skills/audio-album-creator",
+    "./.agents/skills/dev-env-audit",
     "./.agents/skills/interview-methodology",
     "./.agents/skills/lobster-agent-creator",
     "./.agents/skills/master-bp-review",

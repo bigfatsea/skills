@@ -19,6 +19,7 @@ https://github.com/bigfatsea/skills
 | `prompt-architect` | You have a rough feature request, app idea, workflow concept, or coding brief and want a stronger implementation prompt for Claude Code. | A clarified product spec, critical technical decisions, and a precise build prompt. |
 | `synthesize-documents` | You have multiple drafts, reports, reviews, memos, or source documents and want one comprehensive synthesis. | A standalone synthesis that preserves consensus, minority-only points, disagreements, evidence checks, and final recommendations. |
 | `ai-script` | A task needs real AI generation or retrieval via the local `ai-script` CLI: LLM (multi-provider), TTS, STT, image, music, video, web/scholar search, scraping. | Correct invocation of the right subcommand with sane defaults, timeout/retry expectations, and output-convention handling. |
+| `dev-env-audit` | You want to audit a local macOS dev environment: what SDKs are installed, version-manager conflicts (pyenv+uv, nvm+fnm, rvm+rbenv), PATH drift across shell scenarios, external-SSD cache relocation status. Read-only — never installs or edits anything. | A six-section Markdown diagnosis: overall verdict, per-language status table, conflicts, cache relocation status, per-language 5-step migration plans, and execution-order advice. |
 
 ## master-bp-review
 
