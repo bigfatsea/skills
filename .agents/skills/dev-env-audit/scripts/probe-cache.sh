@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
-# Ver 2026-07-18 20:00, by Claude Fable 5
+# Ver 2026-07-18 20:33, by Claude Sonnet 5
 # probe-cache.sh — Phase 3 横切检查②：开发缓存外置核查。
 # 判定口径分两层:
 #   1) 生效值优先——能问工具本身的(uv / pnpm / go / maven),按工具报告的实际落位判定。
@@ -97,8 +97,16 @@ print "== node toolchain =="
 classify FNM_DIR fnm
 classify PNPM_HOME pnpm
 classify NPM_CONFIG_CACHE npm
-# NPM_CONFIG_PREFIX 与版本管理器相克(见 node.md §5)——这里只报状态,报告里要提示移除
+# NPM_CONFIG_PREFIX 与版本管理器相克(见 node.md §5)。只查这个 env 变量会有假阴性:
+# npm config set prefix 会把同样的值持久化写进 ~/.npmrc 的 prefix= 行,这是独立于 shell
+# 变量的第二层配置——env 变量 unset 不代表 npm 的真正生效值也是默认(2026-07-18 真实
+# 踩过:删了 env 变量以为解决了,npm 依然读到 ~/.npmrc 的旧值)。两处都查才不会误判。
 classify NPM_CONFIG_PREFIX npm
+if [[ -f "$HOME/.npmrc" ]]; then
+  local _npmrc_prefix
+  _npmrc_prefix=$(grep -m1 '^prefix' "$HOME/.npmrc" 2>/dev/null)
+  [[ -n "$_npmrc_prefix" ]] && print "WARN: ~/.npmrc has persisted $_npmrc_prefix — independent of NPM_CONFIG_PREFIX env var, also pins npm -g across all fnm Node versions (native-module ABI risk, see node.md §5). Must remove here too if reverting the env var."
+fi
 if command -v pnpm >/dev/null 2>&1; then
   # pnpm 的 store 只认自己的配置,环境变量与 mv 目录都不生效——必须问它本身
   local _store
