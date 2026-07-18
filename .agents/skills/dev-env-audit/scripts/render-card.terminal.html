@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>dev-env-audit</title>
+<style>
+/* ============================================================
+   dev-env-audit report card — "terminal" theme
+   - self-contained: all CSS/JS/data inline, no external requests
+   - status shown via CSS dots/bars, never colored emoji (renders
+     the same on every OS/font, unlike emoji glyphs)
+   - follows system light/dark (prefers-color-scheme); the card
+     itself stays dark in both, by design (consistent brand look)
+   - responsive + print-friendly
+   ============================================================ */
+:root {
+  --page-bg: #eef0f3;
+  --term-bg: #0d1117;
+  --term-bar: #161b22;
+  --term-border: rgba(255,255,255,.08);
+  --fg: #e6edf3;
+  --fg-muted: #8b949e;
+  --border: rgba(255,255,255,.09);
+  --card-bg: rgba(255,255,255,.03);
+  --ok: #3fb950;
+  --warn: #d29922;
+  --fail: #f85149;
+  --info: #6e7681;
+  --accent1: #3fb950;
+  --accent2: #58a6ff;
+  --accent3: #f0883e;
+  --link: #58a6ff;
+}
+@media (prefers-color-scheme: dark) { :root { --page-bg: #05070a; } }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html {
+  font-family: ui-monospace, "SF Mono", "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+body {
+  background:
+    radial-gradient(ellipse 900px 500px at 20% -10%, rgba(63,185,80,.10), transparent 60%),
+    radial-gradient(ellipse 900px 500px at 100% 0%, rgba(88,166,255,.10), transparent 60%),
+    var(--page-bg);
+  color: var(--fg);
+  padding: 2.5rem 1rem;
+  min-height: 100vh;
+}
+
+.term {
+  max-width: 720px;
+  margin: 0 auto;
+  background: var(--term-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--term-border);
+  box-shadow: 0 30px 70px -30px rgba(0,0,0,.55), 0 4px 18px rgba(0,0,0,.25);
+}
+.term-accent { height: 3px; background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3)); }
+.term-bar {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.625rem 0.875rem;
+  background: var(--term-bar);
+  border-bottom: 1px solid var(--term-border);
+}
+.term-dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+.term-dot-fail { background: #ff5f57; }
+.term-dot-warn { background: #febc2e; }
+.term-dot-ok { background: #28c840; }
+.term-title {
+  margin-left: 0.375rem; font-size: 0.75rem; color: var(--fg-muted);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.term-meta { margin-left: auto; font-size: 0.6875rem; color: var(--fg-muted); white-space: nowrap; padding-left: 0.75rem; }
+.term-body { padding: 1.25rem 1.25rem 0.25rem; }
+
+.hero { display: flex; align-items: center; gap: 1rem; padding-bottom: 1rem; margin-bottom: 1rem; border-bottom: 1px solid var(--border); }
+.grade {
+  flex: none; width: 4rem; height: 4rem; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.25rem; font-weight: 700; border: 1px solid; line-height: 1;
+}
+.grade-excellent, .grade-good { background: rgba(63,185,80,.13); color: var(--ok); border-color: rgba(63,185,80,.35); }
+.grade-needs-attention, .grade-at-risk { background: rgba(210,153,34,.13); color: var(--warn); border-color: rgba(210,153,34,.35); }
+.grade-critical { background: rgba(248,81,73,.13); color: var(--fail); border-color: rgba(248,81,73,.35); }
+
+.hero-main { flex: 1; min-width: 0; }
+.hero-score-row { display: flex; align-items: baseline; gap: 0.375rem; }
+.hero-score { font-size: 1.75rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.hero-score-suffix { font-size: 0.8125rem; color: var(--fg-muted); }
+.hero-tier { font-size: 0.8125rem; font-weight: 600; margin-top: 0.125rem; }
+.tier-excellent, .tier-good { color: var(--ok); }
+.tier-needs-attention, .tier-at-risk { color: var(--warn); }
+.tier-critical { color: var(--fail); }
+.hero-counts { display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap; }
+.chip { font-size: 0.6875rem; padding: 0.125rem 0.5rem; border-radius: 999px; border: 1px solid var(--border); color: var(--fg-muted); white-space: nowrap; }
+.chip .dot { margin-right: 0.3125rem; }
+
+.dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; flex: none; }
+.dot-ok { background: var(--ok); }
+.dot-warn { background: var(--warn); }
+.dot-fail { background: var(--fail); }
+.dot-info { background: var(--info); }
+
+.metrics { margin-bottom: 1rem; }
+.metric { display: flex; align-items: center; gap: 0.625rem; font-size: 0.6875rem; padding: 0.25rem 0; }
+.metric-label { width: 4.5rem; flex: none; color: var(--fg-muted); }
+.metric-bar { flex: 1; height: 5px; border-radius: 999px; background: var(--border); overflow: hidden; display: block; }
+.metric-fill { height: 100%; border-radius: 999px; display: block; }
+.metric-value { width: 2rem; flex: none; text-align: right; font-variant-numeric: tabular-nums; color: var(--fg-muted); }
+
+.section-title { font-size: 0.625rem; font-weight: 600; color: var(--fg-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding-bottom: 1rem; margin-bottom: 1rem; border-bottom: 1px solid var(--border); }
+.list { list-style: none; }
+.list li { display: flex; gap: 0.5rem; padding: 0.375rem 0; align-items: flex-start; }
+.list .dot { margin-top: 0.5em; }
+.item-title { font-size: 0.75rem; font-weight: 600; line-height: 1.35; }
+.item-detail { font-size: 0.6875rem; color: var(--fg-muted); line-height: 1.4; margin-top: 0.125rem; }
+
+.langs { padding-bottom: 1rem; }
+.lang-grid { display: flex; flex-wrap: wrap; gap: 0.375rem; }
+.lang { display: flex; align-items: center; gap: 0.375rem; padding: 0.25rem 0.625rem; border-radius: 999px; background: var(--card-bg); border: 1px solid var(--border); font-size: 0.6875rem; }
+
+.report-link-wrap { padding-bottom: 1rem; }
+.report-link {
+  display: inline-block; font-size: 0.75rem; font-weight: 600;
+  color: var(--link); text-decoration: none; border-bottom: 1px solid rgba(88,166,255,.4);
+}
+.report-link:hover { border-bottom-color: var(--link); }
+
+.term-footer { text-align: center; color: var(--fg-muted); font-size: 0.625rem; padding: 0.75rem 0; border-top: 1px solid var(--border); background: var(--term-bar); }
+
+.error-box { margin: 1.25rem; padding: 1rem; border: 1px solid var(--fail); border-radius: 8px; color: var(--fail); font-size: 0.75rem; line-height: 1.5; }
+
+@media (max-width: 520px) {
+  body { padding: 1rem 0.625rem; }
+  .term-body { padding: 1rem 1rem 0.125rem; }
+  .cols { grid-template-columns: 1fr; gap: 0; }
+  .cols > .col:first-child { padding-bottom: 0.5rem; margin-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  .grade { width: 3.25rem; height: 3.25rem; font-size: 1.75rem; }
+  .term-title { display: none; }
+}
+@media print {
+  body { background: white; padding: 0; }
+  .term { box-shadow: none; border: 1px solid #ccc; }
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<!--
+  Single data placeholder. Generating a report does exactly one mechanical
+  thing: replace the line below with the real JSON text (after escaping
+  "</" to "<\/" so a JSON string can't contain a literal "</script>" that
+  would prematurely close this tag). See render-card.schema.md for the
+  JSON field contract — unaffected by which of the 3 templates is used.
+-->
+<script id="audit-data" type="application/json">
+%%AUDIT_JSON_DATA%%
+</script>
+
+<script>
+(function () {
+  "use strict";
+
+  var COLOR_OK = "#3fb950", COLOR_WARN = "#d29922", COLOR_FAIL = "#f85149";
+  var GRADE_MAP = { excellent: "A", good: "B", "needs-attention": "C", "at-risk": "D", critical: "F" };
+
+  function clampScore(n) {
+    n = Number(n);
+    if (!isFinite(n)) n = 0;
+    return Math.max(0, Math.min(100, Math.round(n)));
+  }
+  function colorForScore(s) {
+    if (s >= 75) return COLOR_OK;
+    if (s >= 40) return COLOR_WARN;
+    return COLOR_FAIL;
+  }
+  function dotClassForStatus(status) {
+    return { ok: "dot-ok", warn: "dot-warn", fail: "dot-fail" }[status] || "dot-info";
+  }
+  function el(tag, className, text) {
+    var e = document.createElement(tag);
+    if (className) e.className = className;
+    if (text !== undefined && text !== null) e.textContent = text;
+    return e; // textContent -> browser escapes automatically, no manual html-escape needed
+  }
+  function formatTimestamp(ts) {
+    if (!ts) return "—";
+    var d = new Date(ts);
+    if (isNaN(d.getTime())) return String(ts);
+    function pad(n) { return (n < 10 ? "0" : "") + n; }
+    return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()) +
+           " " + pad(d.getHours()) + ":" + pad(d.getMinutes());
+  }
+
+  function renderMetric(container, score, label) {
+    score = clampScore(score);
+    var color = colorForScore(score);
+    var row = el("div", "metric");
+    row.appendChild(el("span", "metric-label", label));
+    var bar = el("span", "metric-bar");
+    bar.setAttribute("role", "img");
+    bar.setAttribute("aria-label", label + " score " + score);
+    var fill = el("span", "metric-fill");
+    fill.style.width = score + "%";
+    fill.style.background = color;
+    bar.appendChild(fill);
+    row.appendChild(bar);
+    row.appendChild(el("span", "metric-value", String(score)));
+    container.appendChild(row);
+  }
+
+  function renderListItem(container, dotClass, title, detail) {
+    var li = el("li");
+    li.appendChild(el("span", "dot " + dotClass));
+    var body = el("div");
+    body.appendChild(el("div", "item-title", title || ""));
+    if (detail) body.appendChild(el("div", "item-detail", detail));
+    li.appendChild(body);
+    container.appendChild(li);
+  }
+
+  function renderLangChip(container, name, status) {
+    var chip = el("div", "lang");
+    chip.appendChild(el("span", "dot " + dotClassForStatus(status)));
+    chip.appendChild(el("span", "lang-name", name || ""));
+    container.appendChild(chip);
+  }
+
+  function renderError(root, message) {
+    var box = el("div", "error-box");
+    box.textContent = "⚠ " + message;
+    root.appendChild(box);
+  }
+
+  function render(root, data) {
+    var counts = data.counts || {};
+    var scores = data.scores || {};
+    var host = data.host || {};
+    var tier = data.tier || "unknown";
+    var grade = GRADE_MAP[tier] || "?";
+    var score = clampScore(data.score);
+
+    var term = el("div", "term");
+    term.appendChild(el("div", "term-accent"));
+
+    var bar = el("div", "term-bar");
+    bar.appendChild(el("span", "term-dot term-dot-fail"));
+    bar.appendChild(el("span", "term-dot term-dot-warn"));
+    bar.appendChild(el("span", "term-dot term-dot-ok"));
+    bar.appendChild(el("span", "term-title",
+      "dev-env-audit — " + (host.os || "Unknown") + " · " + (host.shell || "Unknown")));
+    bar.appendChild(el("span", "term-meta", formatTimestamp(data.timestamp)));
+    term.appendChild(bar);
+
+    var body = el("div", "term-body");
+
+    var hero = el("div", "hero");
+    hero.appendChild(el("div", "grade grade-" + tier, grade));
+    var heroMain = el("div", "hero-main");
+    var scoreRow = el("div", "hero-score-row");
+    scoreRow.appendChild(el("span", "hero-score", String(score)));
+    scoreRow.appendChild(el("span", "hero-score-suffix", "/ 100"));
+    heroMain.appendChild(scoreRow);
+    heroMain.appendChild(el("div", "hero-tier tier-" + tier, data.tier_label || ""));
+    var chips = el("div", "hero-counts");
+    [["ok", "OK", counts.ok], ["warn", "WARN", counts.warn], ["fail", "FAIL", counts.fail]]
+      .forEach(function (c) {
+        var chip = el("span", "chip");
+        chip.appendChild(el("span", "dot dot-" + c[0]));
+        chip.appendChild(document.createTextNode(c[1] + " " + (c[2] || 0)));
+        chips.appendChild(chip);
+      });
+    heroMain.appendChild(chips);
+    hero.appendChild(heroMain);
+    body.appendChild(hero);
+
+    var metrics = el("div", "metrics");
+    renderMetric(metrics, scores.stability, "Stability");
+    renderMetric(metrics, scores.consistency, "Consistency");
+    renderMetric(metrics, scores.modernity, "Modernity");
+    body.appendChild(metrics);
+
+    var cols = el("div", "cols");
+    var actionsCol = el("div", "col");
+    actionsCol.appendChild(el("div", "section-title", "Top Actions"));
+    var actionsList = el("ul", "list actions");
+    var actions = (data.top_actions || []).slice(0, 3);
+    if (actions.length === 0) {
+      renderListItem(actionsList, "dot-info", "None", "");
+    } else {
+      actions.forEach(function (a) {
+        renderListItem(actionsList, a.severity === "fail" ? "dot-fail" : "dot-warn", a.title, a.detail);
+      });
+    }
+    actionsCol.appendChild(actionsList);
+    cols.appendChild(actionsCol);
+
+    var findingsCol = el("div", "col");
+    findingsCol.appendChild(el("div", "section-title", "Highlights"));
+    var findingsList = el("ul", "list findings");
+    var findings = data.positive_findings || [];
+    if (findings.length === 0) {
+      renderListItem(findingsList, "dot-info", "None", "");
+    } else {
+      findings.forEach(function (f) {
+        renderListItem(findingsList, "dot-ok", f.title, f.detail);
+      });
+    }
+    findingsCol.appendChild(findingsList);
+    cols.appendChild(findingsCol);
+    body.appendChild(cols);
+
+    var langs = el("div", "langs");
+    langs.appendChild(el("div", "section-title", "Languages"));
+    var langGrid = el("div", "lang-grid");
+    var languages = data.languages || [];
+    if (languages.length === 0) {
+      langGrid.appendChild(el("div", "lang", "—"));
+    } else {
+      languages.forEach(function (l) { renderLangChip(langGrid, l.name, l.status); });
+    }
+    langs.appendChild(langGrid);
+    body.appendChild(langs);
+
+    if (data.report_md) {
+      var linkWrap = el("div", "report-link-wrap");
+      var link = document.createElement("a");
+      link.className = "report-link";
+      link.href = data.report_md;
+      link.textContent = "Full details in the Markdown report →";
+      linkWrap.appendChild(link);
+      body.appendChild(linkWrap);
+    }
+
+    term.appendChild(body);
+    term.appendChild(el("div", "term-footer", "generated by dev-env-audit · read-only, no changes made"));
+
+    root.appendChild(term);
+  }
+
+  var root = document.getElementById("app");
+  var dataEl = document.getElementById("audit-data");
+  var raw = dataEl ? dataEl.textContent : "";
+  var data;
+  try {
+    data = JSON.parse(raw);
+  } catch (err) {
+    renderError(root, "report data missing or invalid JSON (" + err.message + "). " +
+      "This file's data block was not filled in correctly when the report was generated.");
+    return;
+  }
+  try {
+    render(root, data);
+  } catch (err) {
+    renderError(root, "failed to render report (" + err.message + ").");
+  }
+})();
+</script>
+</body>
+</html>
