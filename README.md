@@ -1,5 +1,7 @@
 <!-- Ver 2026-07-18 20:00, by Claude Sonnet 5 -->
 
+[中文](README.zh-CN.md)
+
 # skills
 
 Reusable AI-agent skills covering business review, startup evaluation, prompt/spec design, content creation, and local dev tooling.
