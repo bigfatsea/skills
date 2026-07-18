@@ -1,4 +1,4 @@
-<!-- Ver 2026-07-18 10:00, by Claude Sonnet 5 -->
+<!-- Ver 2026-07-18 20:00, by Claude Fable 5 -->
 
 # Node.js —— 权威管理器: fnm + pnpm
 
@@ -52,6 +52,7 @@ npm ls -g --depth=0 2>/dev/null
 | `command -v pnpm` 含 `fnm_multishells` 或 fnm 版本目录 | WARN | corepack shim 抢占了独立 pnpm（见 §5），调 PATH 顺序 |
 | 只有 brew node、无任何管理器 | WARN | 可用但非推荐；单版本用户风险低，多项目多版本必坑 |
 | yarn/npm/pnpm 混用全局包 | WARN | 建议全局包统一到 pnpm |
+| NPM_CONFIG_PREFIX 已设且在用 fnm/nvm 等版本管理器 | WARN | 全局包脱离按版本隔离，native module 切 Node 版本即坏（见 §5）；建议移除并用 pnpm 重装全局工具 |
 | 顶层 rc 文件 grep 落空，但 source chain 上的文件里能 grep 到 NVM_DIR/VOLTA_HOME | FAIL | 逻辑藏在集中管理的文件里，不是没有 |
 
 ## 4. 迁移方案（五步法）
@@ -73,11 +74,11 @@ npm ls -g --depth=0 2>/dev/null
    - 全局 npm 包：按第 1 步清单 `pnpm install -g <pkg>` 逐个重装；pnpm 版验证可用后，再 `npm uninstall -g <pkg>` 清理旧副本（破坏性，逐个确认）。
 4. **【可选】外置存储**：
    ```bash
-   export PNPM_STORE_DIR="/Volumes/<盘>/dev-cache/pnpm-store"
+   export FNM_DIR="/Volumes/<盘>/dev-cache/fnm"    # Node 版本本体的落位,装第一个版本之前设好
    export NPM_CONFIG_CACHE="/Volumes/<盘>/dev-cache/npm-cache"
-   export NPM_CONFIG_PREFIX="/Volumes/<盘>/dev-cache/npm-global"
-   pnpm config set store-dir "$PNPM_STORE_DIR"   # store 必须用这条命令改，环境变量/mv 目录都不生效
+   pnpm config set store-dir "/Volumes/<盘>/dev-cache/pnpm-store"   # store 必须用这条命令改，环境变量/mv 目录都不生效
    ```
+   **不要设 `NPM_CONFIG_PREFIX`**：它把 npm 全局包钉进单一目录，破坏 fnm 的按 Node 版本隔离（见 §5）；全局工具统一走 pnpm 后它没有存在必要，已设的建议移除。
 5. **验证**：
    ```bash
    node -v; npm -v; pnpm -v
@@ -91,3 +92,4 @@ npm ls -g --depth=0 2>/dev/null
 - **pnpm store 位置三不认**：不认环境变量、不认直接 mv 目录、只认 `pnpm config set store-dir`。
 - **brew node 是"必须卸"而非"停用即可"**：它把 node/npm 装进 `/opt/homebrew/bin`，那个目录必然在 PATH 里，无 init 代码可删，唯一解法是卸载。
 - **pnpm 安装脚本加料 ~/.zshrc**：装完检查有没有被追加配置块。
+- **NPM_CONFIG_PREFIX 与版本管理器相克**：固定全局 prefix 后，`npm -g` 装的 native module 绑定安装时那个 Node 版本的 ABI，fnm 一切版本就坏；nvm 干脆检测到就直接报错拒绝工作。全局工具统一走 pnpm 即可，这个变量在本基线下没有正当用途。

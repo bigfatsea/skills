@@ -1,4 +1,4 @@
-<!-- Ver 2026-07-18 10:00, by Claude Sonnet 5 -->
+<!-- Ver 2026-07-18 17:40, by Claude Fable 5 -->
 
 # Ruby —— 权威管理器: rbenv（纯 Ruby 开发者）/ ASDF（多语言全栈统一）
 
@@ -58,7 +58,7 @@ grep -n 'rvm' ~/.zshrc ~/.zprofile ~/.zshenv ~/.bash_profile 2>/dev/null
    # 多语言全栈开发者（已用 asdf 管理其他语言）
    asdf plugin add ruby
    asdf install ruby <version>
-   asdf set --global ruby <version>
+   asdf set -u ruby <version>   # -u/--home 写入家目录 .tool-versions;asdf ≤0.15 旧语法是 asdf global ruby <version>
    ```
 3. **处理旧的**——RVM 是特例，**必须真的卸载干净**，不能只停用：
    ```bash

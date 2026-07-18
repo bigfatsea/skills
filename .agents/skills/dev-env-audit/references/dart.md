@@ -1,4 +1,4 @@
-<!-- Ver 2026-07-18 10:00, by Claude Sonnet 5 -->
+<!-- Ver 2026-07-18 20:00, by Claude Fable 5 -->
 
 # Dart / Flutter —— 权威管理器: 官方 SDK（单版本）/ fvm（多版本）
 
@@ -14,12 +14,15 @@
 
 ```bash
 which -a flutter dart fvm
-flutter --version
 dart --version
+
+# 不要跑 flutter --version:它会做更新检查(联网),fresh clone 上首次运行还会下载
+# 整个 Dart SDK——版本从 SDK 根目录的 version 文件读(flutter 命令在 <SDK>/bin/ 下):
+cat "$(dirname "$(dirname "$(command -v flutter)")")/version" 2>/dev/null
 
 fvm list 2>/dev/null
 
-# 项目是否用 fvm 锁定了版本
+# 项目级线索:仅当用户在项目目录里运行审计时有意义,不是机器级必查项
 find . -maxdepth 2 -name '.fvmrc' -o -maxdepth 2 -path '*/.fvm' 2>/dev/null
 ```
 
@@ -58,4 +61,4 @@ find . -maxdepth 2 -name '.fvmrc' -o -maxdepth 2 -path '*/.fvm' 2>/dev/null
 ## 5. 已知坑
 
 - **fvm 是项目级锁定，不是全局替代**：`fvm use` 是在具体项目目录下执行的，生成的 `.fvm` 软链接只对该项目生效，不要指望装了 fvm 就自动解决全局版本问题——它解决的是"不同项目要不同版本"这个问题。
-- **`flutter doctor` 是权威验证入口**：任何版本/工具链问题优先跑这个命令，它会检查 Xcode/Android Studio/CocoaPods 等一整套外围依赖，不只是 Flutter 本身的版本。
+- **`flutter doctor` 是权威验证入口**：任何版本/工具链问题优先跑这个命令，它会检查 Xcode/Android Studio/CocoaPods 等一整套外围依赖，不只是 Flutter 本身的版本。注意它和 `flutter --version` 一样会联网（更新检查/首次初始化下载 Dart SDK），所以只出现在 §4/§5 让**用户自己跑**，审计探测阶段禁止执行。

@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
-# Ver 2026-07-18 10:00, by Claude Sonnet 5
+# Ver 2026-07-18 20:00, by Claude Fable 5
 # scan.sh — Phase 1 粗扫：本机语言/版本管理器/包管理器存在性清单。
 # 纯清单，不做判断（判断规则在 references/<lang>.md）。只读，不修改任何东西。
 # 用法: zsh scan.sh
@@ -27,6 +27,20 @@ probe_cmd() {
   fi
 }
 
+# CLT 桩保护:未装 Xcode CLT 时,/usr/bin 下的 git/swift/clang/gcc/python3/pip3 是
+# 会触发 GUI 安装弹窗的桩程序,绝不能执行——这种情形只登记路径不运行
+local _clt_ok=1
+xcode-select -p >/dev/null 2>&1 || _clt_ok=0
+probe_dev() {
+  local p
+  p=$(command -v "$1" 2>/dev/null)
+  if [[ $_clt_ok -eq 0 && "$p" == /usr/bin/* ]]; then
+    row "$1" "$p" "(CLT stub — not executed; running it would pop the GUI install prompt)"
+    return 0
+  fi
+  probe_cmd "$@"
+}
+
 # dir_hint <name> <dir> — 命令不在 PATH 但特征目录存在时的重要信号
 dir_hint() {
   local name=$1 dir=$2
@@ -39,20 +53,47 @@ print "# dev-env-audit scan  ($(date '+%Y-%m-%d %H:%M %Z'))"
 print "# env snapshot = this process's inherited environment"
 print ""
 
+# 本 skill 全部分析假设登录 shell 是 zsh——不是的话结论会系统性失真,必须最先声明
+print "== login shell =="
+local _ushell
+_ushell=$(dscl . -read ~/ UserShell 2>/dev/null | awk '{print $2}')
+[[ -z "$_ushell" ]] && _ushell="$SHELL"
+if [[ "$_ushell" == */zsh ]]; then
+  print "  $_ushell (zsh — audit assumptions hold)"
+else
+  print "  $_ushell (NOT zsh — PATH/init analysis below is zsh-based; see SKILL.md"
+  print "  Phase 1 for how to degrade: existence/cache facts stay valid, shell-config"
+  print "  conclusions must be re-mapped or declared out of scope)"
+fi
+print ""
+
 print "== shell config source chain =="
 print -r -- "# 集中式 dotfiles 框架(如 ~/myenv 这类自定义目录)会把真正的 PATH/init 逻辑"
 print -r -- "# 藏在被 source 的文件里——Phase 2 各 reference 的 grep 不要只认 ~/.zshrc/"
 print -r -- "# ~/.zprofile/~/.zshenv 字面文件名，要连着下面列出的目标文件一起查。"
+typeset -gA _scan_seen   # 同一文件经多条入口链到达时只深入一次,避免重复展开
 _scan_sources() {
   local file=$1 depth=$2
   (( depth > 2 )) && return
   [[ -f "$file" ]] || return
   local line target
-  grep -E '^[[:space:]]*(source|\.)[[:space:]]+' "$file" 2>/dev/null | while IFS= read -r line; do
-    target=$(print -r -- "$line" | sed -E 's/^[[:space:]]*(source|\.)[[:space:]]+//; s/[[:space:]]*(#.*)?$//; s/^"(.*)"$/\1/')
+  # 行内条件 source 也要抓([[ -f x ]] && source x 这种写法非常常见);目标不存在的误匹配会被 -f 过滤掉
+  grep -E '(^|[;&[:space:]])(source|\.)[[:space:]]+' "$file" 2>/dev/null | while IFS= read -r line; do
+    target=$(print -r -- "$line" | sed -E 's/^.*[;&[:space:]](source|\.)[[:space:]]+//; s/^(source|\.)[[:space:]]+//; s/[[:space:]]*(#.*)?$//; s/^"(.*)"$/\1/')
+    target=${target//\$\{HOME\}/$HOME}
     target=${target//\$HOME/$HOME}
+    target=${target//\$\{ZDOTDIR\}/${ZDOTDIR:-$HOME}}
+    target=${target//\$ZDOTDIR/${ZDOTDIR:-$HOME}}
     target=${target/#\~/$HOME}
-    [[ -f "$target" ]] && { print "  $file -> $target"; _scan_sources "$target" $(( depth + 1 )); }
+    if [[ -f "$target" ]]; then
+      if [[ -z "${_scan_seen[$target]}" ]]; then
+        _scan_seen[$target]=1
+        print "  $file -> $target"
+        _scan_sources "$target" $(( depth + 1 ))
+      else
+        print "  $file -> $target (already traversed above)"
+      fi
+    fi
   done
 }
 local _src_found=0
@@ -65,7 +106,7 @@ done
 
 print ""
 print "== languages =="
-probe_cmd python3 python3 --version
+probe_dev python3 python3 --version
 probe_cmd node    node -v
 if command -v java >/dev/null 2>&1; then
   row java "$(command -v java)" "$(java -version 2>&1 | head -1)"
@@ -78,20 +119,25 @@ probe_cmd cargo   cargo --version
 probe_cmd ruby    ruby -v
 probe_cmd bun     bun -v
 probe_cmd deno    deno --version
-probe_cmd git     git --version
+probe_dev git     git --version
 
 print ""
 print "== extended languages (C/C++, C#, Swift, PHP, Lua, Zig, Julia, Dart/Flutter, Erlang/Elixir) =="
 probe_cmd dotnet  dotnet --version
-probe_cmd swift   swift --version
+probe_dev swift   swift --version
 probe_cmd php     php --version
 probe_cmd lua     lua -v
 probe_cmd zig     zig version
 probe_cmd julia   julia --version
 probe_cmd dart    dart --version
 if command -v flutter >/dev/null 2>&1; then
-  # flutter --version 有时会先打印一个"有新版本"的装饰性提示框，真正版本行以 Flutter 开头
-  row flutter "$(command -v flutter)" "$(flutter --version 2>&1 | grep -m1 '^Flutter ')"
+  # 不跑 flutter --version:它会做更新检查,且 fresh clone 首次运行会联网下载 Dart SDK,
+  # 违背本 skill 的只读/零联网纪律——改读 SDK 根目录的 version 文件(:A 解析 fvm 等符号链接)
+  local fbin froot fver
+  fbin=$(command -v flutter); froot=${fbin:A:h:h}
+  fver=""
+  [[ -f "$froot/version" ]] && fver="Flutter $(cat "$froot/version" 2>/dev/null)"
+  row flutter "$fbin" "${fver:-(version file not found; user can run 'flutter --version' themselves)}"
 else
   row flutter "(not found)" ""
 fi
@@ -101,8 +147,8 @@ if command -v erl >/dev/null 2>&1; then
 else
   row erl "(not found)" ""
 fi
-probe_cmd clang   clang --version
-probe_cmd gcc     gcc --version
+probe_dev clang   clang --version
+probe_dev gcc     gcc --version
 probe_cmd cmake   cmake --version
 
 # macOS: 列出系统登记过的全部 JDK（任何渠道装的都会出现）
@@ -157,6 +203,8 @@ dir_hint pyenv  "$HOME/.pyenv"
 dir_hint conda  "$HOME/miniconda3"
 dir_hint conda  "$HOME/anaconda3"
 dir_hint conda  "$HOME/miniforge3"
+dir_hint conda  "$HOME/opt/miniconda3"
+dir_hint conda  "$HOME/opt/anaconda3"
 dir_hint volta  "$HOME/.volta"
 dir_hint n      "/usr/local/n"
 dir_hint jenv   "$HOME/.jenv"
@@ -164,11 +212,16 @@ dir_hint asdf   "${ASDF_DATA_DIR:-$HOME/.asdf}"
 dir_hint rbenv  "$HOME/.rbenv"
 dir_hint rustup "${RUSTUP_HOME:-$HOME/.rustup}"
 dir_hint fnm    "${FNM_DIR:-$HOME/.fnm}"
+dir_hint fnm    "$HOME/Library/Application Support/fnm"
+dir_hint fnm    "$HOME/.local/share/fnm"
+dir_hint dotnet "$HOME/.dotnet"
+dir_hint swiftenv "$HOME/.swiftenv"
+dir_hint juliaup "$HOME/.juliaup"
 print "  (nothing above this line means: no residue detected)"
 
 print ""
 print "== package managers =="
-probe_cmd pip3     pip3 --version
+probe_dev pip3     pip3 --version
 probe_cmd poetry   poetry --version
 probe_cmd npm      npm -v
 probe_cmd pnpm     pnpm -v
@@ -186,24 +239,34 @@ probe_cmd vcpkg    vcpkg version
 
 print ""
 print "== homebrew =="
+# 双 Homebrew:Apple Silicon 迁移机常见 /usr/local 残留一份 Intel brew,经典冲突源
+if [[ -x /opt/homebrew/bin/brew && -x /usr/local/bin/brew ]]; then
+  print "  !! two Homebrew prefixes: /opt/homebrew (arm64) + /usr/local (likely Intel residue)"
+  print "     formulas may exist in both; PATH order decides which brew/formula wins"
+fi
 if command -v brew >/dev/null 2>&1; then
   row brew "$(command -v brew)" "$(brew --version 2>/dev/null | head -1)"
   # 注意口径：管理器走 brew 装(fnm/rbenv/asdf/uv)是推荐路线；
   # 语言运行时本体走 brew 装(node/go/rust/python@x)才是常见冲突源——判定交给 references
   print -r -- "-- brew-installed language/manager formulas (judge via references) --"
   local hits
-  hits=$(brew list --formula 2>/dev/null | grep -E '^(python@[0-9.]+|python3?|node(@[0-9]+)?|go|golang|rust|openjdk(@[0-9]+)?|ruby|git|uv|fnm|pyenv|nvm|asdf|rbenv|deno|php(@[0-9.]+)?|lua|gcc(@[0-9]+)?|dotnet|dart|flutter|erlang|elixir|zig|julia)$')
+  hits=$(brew list --formula 2>/dev/null | grep -E '^(python@[0-9.]+|python3?|node(@[0-9]+)?|go(@[0-9.]+)?|golang|rust|openjdk(@[0-9]+)?|ruby|git|uv|fnm|pyenv|nvm|asdf|rbenv|deno|php(@[0-9.]+)?|lua(@[0-9.]+)?|gcc(@[0-9]+)?|dotnet|dart|flutter|erlang|elixir|zig|julia)$')
   if [[ -n "$hits" ]]; then print -r -- "$hits" | sed 's/^/  /'; else print "  (none)"; fi
+  # flutter / dotnet-sdk / 各家 JDK 走 cask 渠道,不在 formula 清单里,单独列
+  print -r -- "-- brew-installed language casks --"
+  local chits
+  chits=$(brew list --cask 2>/dev/null | grep -E '^(flutter|dotnet-sdk(@[0-9]+)?|temurin(@[0-9]+)?|zulu(@[0-9]+)?|oracle-jdk|microsoft-openjdk|liberica-jdk[0-9a-z-]*|graalvm-jdk(@[0-9]+)?|dart)$')
+  if [[ -n "$chits" ]]; then print -r -- "$chits" | sed 's/^/  /'; else print "  (none)"; fi
 else
   row brew "(not found)" ""
 fi
 
 print ""
-print "== duplicate resolutions on PATH (which -a) =="
+print "== duplicate resolutions on PATH (which -a; first line = the one that wins) =="
 local c all n_uniq
 local found_dup=0
 for c in python3 node java go rustc ruby git uv pnpm php dotnet; do
-  all=$(which -a "$c" 2>/dev/null | sort -u)
+  all=$(which -a "$c" 2>/dev/null | awk '!seen[$0]++')   # 保序去重:PATH 顺序即优先序,不能 sort
   n_uniq=$(print -r -- "$all" | grep -c . 2>/dev/null)
   if (( n_uniq > 1 )); then
     found_dup=1

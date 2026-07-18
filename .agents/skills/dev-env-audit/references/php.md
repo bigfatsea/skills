@@ -1,4 +1,4 @@
-<!-- Ver 2026-07-18 10:00, by Claude Sonnet 5 -->
+<!-- Ver 2026-07-18 20:00, by Claude Fable 5 -->
 
 # PHP —— 权威管理器: Homebrew（单版本）/ ASDF（多版本或多语言全栈统一）
 
@@ -48,12 +48,14 @@ composer --version 2>/dev/null
    # 多语言全栈统一
    asdf plugin add php
    asdf install php <version>
-   asdf set --global php <version>
+   asdf set -u php <version>    # -u/--home 写入家目录 .tool-versions;asdf ≤0.15 旧语法是 asdf global php <version>
    ```
    Composer（两条路径都需要）：
    ```bash
-   curl -sS https://getcomposer.org/installer | php
-   sudo mv composer.phar /usr/local/bin/composer
+   brew install composer          # 首选:免 sudo、升级统一走 brew
+   # 或官方安装器(不想经 brew 时):
+   # curl -sS https://getcomposer.org/installer | php
+   # mkdir -p ~/.local/bin && mv composer.phar ~/.local/bin/composer   # 放用户目录,避免 sudo
    ```
 3. **处理旧的**：多余的 brew php 版本 `brew unlink php@<旧版本>`，不需要卸载（除非确认不再需要）。
 4. **【可选】外置存储**：Composer 的全局缓存可以外置：

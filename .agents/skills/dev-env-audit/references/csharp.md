@@ -1,4 +1,4 @@
-<!-- Ver 2026-07-18 10:00, by Claude Sonnet 5 -->
+<!-- Ver 2026-07-18 20:00, by Claude Fable 5 -->
 
 # C# / .NET —— 权威管理器: 官方 dotnet-install（单/多版本统一一套）
 
@@ -21,7 +21,7 @@ dotnet --list-runtimes
 # brew 侧是否也装了一份（两者都会话跑起来，但装两份容易版本对不齐）
 brew list --formula 2>/dev/null | grep -E '^dotnet'
 
-# 项目是否有 global.json 钉版本
+# 项目级线索:仅当用户在项目目录里运行审计时有意义,不是机器级必查项
 find . -maxdepth 2 -name 'global.json' 2>/dev/null
 ```
 
@@ -50,6 +50,7 @@ find . -maxdepth 2 -name 'global.json' 2>/dev/null
    export DOTNET_ROOT="/Volumes/<盘>/dev-cache/dotnet"   # dotnet-install 支持 --install-dir 参数指定
    ./dotnet-install.sh --channel LTS --install-dir "$DOTNET_ROOT"
    ```
+   装到自定义目录后，`DOTNET_ROOT` 的 export 和 `PATH` 里加 `$DOTNET_ROOT` 都要**持久写进 shell 配置**，否则新终端里找不到 `dotnet` 命令。
 5. **验证**：
    ```bash
    dotnet --version; dotnet --list-sdks

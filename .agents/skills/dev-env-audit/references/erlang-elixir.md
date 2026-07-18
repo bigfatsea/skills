@@ -1,4 +1,4 @@
-<!-- Ver 2026-07-18 10:00, by Claude Sonnet 5 -->
+<!-- Ver 2026-07-18 17:40, by Claude Fable 5 -->
 
 # Erlang / Elixir —— 权威管理器: ASDF（asdf-erlang + asdf-elixir，单/多版本都推荐）
 
@@ -46,8 +46,8 @@ cat .tool-versions 2>/dev/null | grep -E 'erlang|elixir'
    asdf plugin add elixir
    asdf install erlang <version>
    asdf install elixir <version>
-   asdf set --global erlang <version>
-   asdf set --global elixir <version>
+   asdf set -u erlang <version>   # -u/--home 写入家目录 .tool-versions;asdf ≤0.15 旧语法是 asdf global <name> <version>
+   asdf set -u elixir <version>
    ```
 3. **处理旧的**：
    ```bash

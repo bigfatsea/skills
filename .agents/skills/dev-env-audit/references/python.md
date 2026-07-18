@@ -1,4 +1,4 @@
-<!-- Ver 2026-07-17 17:30, by Claude Sonnet 5 -->
+<!-- Ver 2026-07-18 20:00, by Claude Fable 5 -->
 
 # Python —— 权威管理器: uv
 
@@ -15,6 +15,8 @@
 ```bash
 # PATH 上有几个 python，分别是谁
 which -a python python3
+# pip3 常独立漂移:很多机器 pip3 解析到 Xcode 内置 Python 的 pip(与 python3 不同源),极具迷惑性
+which -a pip3
 
 # uv 本体：路径、版本、是否多份共存（CARGO_HOME 坑，见 §5）
 which -a uv
@@ -76,9 +78,11 @@ zsh -c 'command -v python3; python3 -V'
    ```bash
    export UV_CACHE_DIR="/Volumes/<盘>/dev-cache/uv_cache"
    export UV_PYTHON_INSTALL_DIR="/Volumes/<盘>/dev-cache/uv_pythons"
-   export UV_VIRTUALENV_DIR="/Volumes/<盘>/dev-cache/uv_venvs"
    export UV_TOOL_DIR="/Volumes/<盘>/dev-cache/uv_tools"
    ```
+   venv 没有对应的外置变量：uv 无全局 venv 目录概念，项目 venv 就是项目内的 `.venv`
+   （位置可用 `UV_PROJECT_ENVIRONMENT` 按项目改，一般不外置）。曾流传的
+   `UV_VIRTUALENV_DIR` 不是 uv 的环境变量，设了静默无效。
 5. **验证**：
    ```bash
    which python; python -V

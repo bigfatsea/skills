@@ -1,4 +1,4 @@
-<!-- Ver 2026-07-18 10:00, by Claude Sonnet 5 -->
+<!-- Ver 2026-07-18 17:40, by Claude Fable 5 -->
 
 # Lua —— 权威管理器: Homebrew（单版本）/ ASDF（多版本）
 
@@ -44,7 +44,7 @@ luarocks config lua_version 2>/dev/null   # luarocks 是按 Lua 版本区分 roc
    # 多语言全栈统一
    asdf plugin add lua
    asdf install lua <version>
-   asdf set --global lua <version>
+   asdf set -u lua <version>    # -u/--home 写入家目录 .tool-versions;asdf ≤0.15 旧语法是 asdf global lua <version>
    ```
 3. **处理旧的**：确认系统自带的 lua（如有）不在 PATH 前排，不需要卸载（通常也卸不掉）。
 4. **【可选】外置存储**：

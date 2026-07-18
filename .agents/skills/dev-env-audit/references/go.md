@@ -1,4 +1,4 @@
-<!-- Ver 2026-07-18 10:00, by Claude Sonnet 5 -->
+<!-- Ver 2026-07-18 17:40, by Claude Fable 5 -->
 
 # Go —— 单版本用 Homebrew 无争议；全局多版本才需要额外工具
 
@@ -52,7 +52,7 @@ asdf list golang 2>/dev/null
    brew install asdf
    asdf plugin add golang
    asdf install golang latest
-   asdf set --global golang latest
+   asdf set -u golang latest    # -u/--home 写入家目录 .tool-versions;asdf ≤0.15 旧语法是 asdf global golang latest
    ```
 3. **处理旧的**：
    - asdf 和 brew go 只能留一个，多出来的 `brew uninstall go` 卸载。
