@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
-# Ver 2026-07-17 13:00, by Claude Fable 5
+# Ver 2026-07-19 03:15, by Claude Sonnet 5
 # probe-path.sh — Phase 3 横切检查①：PATH 三场景一致性。
 # macOS 的 path_helper 会在登录 shell 里把 /usr/bin 等系统路径重新提前；
 # 而 ~/.zshrc 只在交互式 shell 被读取。三种场景要分别验证：
@@ -9,6 +9,18 @@
 # 只读，不修改任何东西。
 # 用法: zsh probe-path.sh [cmd ...]   默认检查一组关键命令
 # 退出码: 0 = 全一致; 1 = 存在不一致(WARN)。
+
+# Portable guard (plain POSIX syntax, parses fine under bash/sh too): if this
+# ever gets run with the wrong interpreter, fail with one clear line instead
+# of a cascade of zsh-syntax parse errors further down.
+if [ -z "$ZSH_VERSION" ]; then
+  echo "error: this script requires zsh — run: zsh scripts/probe-path.sh" >&2
+  exit 1
+fi
+if [ "$(uname -s)" != "Darwin" ]; then
+  echo "error: dev-env-audit only supports macOS (relies on Homebrew/Xcode/path_helper conventions); detected: $(uname -s)" >&2
+  exit 1
+fi
 
 emulate -L zsh
 

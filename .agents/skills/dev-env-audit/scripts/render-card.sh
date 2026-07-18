@@ -1,4 +1,5 @@
 #!/usr/bin/env zsh
+# Ver 2026-07-19 03:15, by Claude Sonnet 5
 # render-card.sh — merge a dev-env-audit JSON summary into a self-contained
 # HTML report card. Pure zsh + sed + awk. No Python, no network, no external
 # dependency beyond coreutils that ship with macOS.
@@ -14,6 +15,16 @@
 # <template> is one of: terminal | paper | brutalist (case-insensitive).
 # Omit it to let the script pick one at random (uniform, via $RANDOM) —
 # this skill never stops to ask the user which look they want.
+
+# Portable guard (plain POSIX syntax, parses fine under bash/sh too): if this
+# ever gets run with the wrong interpreter, fail with one clear line instead
+# of a cascade of zsh-syntax parse errors further down. Unlike the audit
+# scripts, this one has no macOS-specific logic (just sed/awk text merging),
+# so there's no OS check here — it's fine on Linux too, as long as it's zsh.
+if [ -z "$ZSH_VERSION" ]; then
+  echo "error: this script requires zsh — run: zsh scripts/render-card.sh" >&2
+  exit 1
+fi
 
 set -euo pipefail
 

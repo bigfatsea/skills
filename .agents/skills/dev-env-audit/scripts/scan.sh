@@ -1,9 +1,21 @@
 #!/usr/bin/env zsh
-# Ver 2026-07-18 20:00, by Claude Fable 5
+# Ver 2026-07-19 03:15, by Claude Sonnet 5
 # scan.sh — Phase 1 粗扫：本机语言/版本管理器/包管理器存在性清单。
 # 纯清单，不做判断（判断规则在 references/<lang>.md）。只读，不修改任何东西。
 # 用法: zsh scan.sh
 # 退出码: 恒为 0（清单无对错）。
+
+# Portable guard (plain POSIX syntax, parses fine under bash/sh too): if this
+# ever gets run with the wrong interpreter, fail with one clear line instead
+# of a cascade of zsh-syntax parse errors further down.
+if [ -z "$ZSH_VERSION" ]; then
+  echo "error: this script requires zsh — run: zsh scripts/scan.sh" >&2
+  exit 1
+fi
+if [ "$(uname -s)" != "Darwin" ]; then
+  echo "error: dev-env-audit only supports macOS (relies on Homebrew/Xcode/path_helper conventions); detected: $(uname -s)" >&2
+  exit 1
+fi
 
 emulate -L zsh
 setopt no_nomatch
