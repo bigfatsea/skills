@@ -1,4 +1,4 @@
-<!-- Ver 2026-07-17 13:00, by Claude Fable 5 -->
+<!-- Ver 2026-07-17 17:30, by Claude Sonnet 5 -->
 
 # Python —— 权威管理器: uv
 
@@ -30,6 +30,9 @@ command -v pipx && pipx list 2>/dev/null
 ls /Library/Frameworks/Python.framework/Versions 2>/dev/null   # python.org .pkg 装的；zsh 下别用 glob(无匹配时报错)
 
 # init 残留（冲突的最常见根源：以为卸载了，其实初始化代码还在）
+# 注意：先看 scan.sh 的"shell config source chain"——集中式 dotfiles 框架
+# （如 ~/myenv/*.zsh）会把 init 代码放进被 source 的文件里，字面 rc 文件
+# grep 落空不代表没有，把 source chain 上的文件也加进下面的 grep 目标
 grep -n 'pyenv init' ~/.zshrc ~/.zprofile ~/.zshenv ~/.bash_profile ~/.bashrc 2>/dev/null
 grep -n 'conda initialize' ~/.zshrc ~/.zprofile ~/.zshenv ~/.bash_profile ~/.bashrc 2>/dev/null
 
@@ -54,6 +57,7 @@ zsh -c 'command -v python3; python3 -V'
 | brew python 在 PATH 顶层且 uv 存在 | WARN | PATH 顺序问题，应让 uv 管的 python 优先 |
 | 无 uv，仅一份 brew/系统 python | WARN | 可用但非推荐；给迁移方案 |
 | 非交互 `python3` 落到 /usr/bin/python3 且用户有脚本场景 | WARN | 见 §5 alias 坑，建议 `uv python install --default` 兜底 |
+| 顶层 rc 文件 grep 落空，但 source chain 上的文件里能 grep 到 pyenv init/conda initialize | FAIL/WARN（视内容而定） | 逻辑藏在集中管理的文件里，不是没有——按上面对应行的判定 |
 
 ## 4. 迁移方案（五步法）
 

@@ -1,4 +1,4 @@
-<!-- Ver 2026-07-17 13:00, by Claude Fable 5 -->
+<!-- Ver 2026-07-17 17:30, by Claude Sonnet 5 -->
 
 # Git —— 推荐: brew git（避开 Apple 冻结版）
 
@@ -20,8 +20,13 @@ brew list --versions git 2>/dev/null    # brew 装过没有
 # 由 probe-path.sh 统一覆盖（交互档手工跑会触发 prompt 插件 stderr 噪音）:
 #   zsh scripts/probe-path.sh git
 
-# PATH 夺回逻辑是否两处都有
+# PATH 夺回逻辑是否两处都有——注意：不要只 grep 字面 ~/.zshrc/~/.zprofile。
+# 先看 scan.sh 输出的"shell config source chain"：如果 .zshrc/.zprofile 只是
+# source 了别的文件（集中式 dotfiles 框架，如 ~/myenv/pathorder.zsh 这类），
+# 真正的夺回逻辑在那些被 source 的文件里，把它们也加进 grep 目标。
 grep -n 'homebrew/bin' ~/.zshrc ~/.zprofile 2>/dev/null | tail -5
+# 例：若 source chain 显示 ~/.zprofile -> ~/myenv/pathorder.zsh，改成：
+#   grep -n 'homebrew/bin' ~/.zshrc ~/.zprofile ~/myenv/pathorder.zsh 2>/dev/null
 ```
 
 ## 3. 判定规则
@@ -32,6 +37,8 @@ grep -n 'homebrew/bin' ~/.zshrc ~/.zprofile 2>/dev/null | tail -5
 | 只有 /usr/bin/git（2.39.x 附近） | WARN | 能用，但版本被 Apple 冻结，建议装 brew git |
 | brew git 装了但某场景解析到 /usr/bin/git | WARN | path_helper 反超（尤其"登录非交互"档），补 .zprofile 的 PATH 逻辑 |
 | 交互终端正常、`zsh -l -c` 落到 /usr/bin/git | WARN | 典型的"只配了 .zshrc 漏了 .zprofile"，GUI App/launchd 场景会用到旧 git |
+| 顶层 rc 文件 grep 落空，但 source chain 上的文件里能 grep 到夺回逻辑，且三场景解析一致 | OK | 逻辑存在且生效，只是放在集中管理的文件里，不是缺失 |
+| 顶层 rc 文件 grep 落空，追到 source chain 尽头仍然没找到，且某场景解析到 /usr/bin/git | WARN | 才是真的缺夺回逻辑，按 §4 补 |
 
 ## 4. 迁移方案（五步法）
 

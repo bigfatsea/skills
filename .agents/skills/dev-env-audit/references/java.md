@@ -1,10 +1,11 @@
-<!-- Ver 2026-07-17 13:00, by Claude Fable 5 -->
+<!-- Ver 2026-07-18 10:00, by Claude Sonnet 5 -->
 
-# Java / Gradle / Maven —— 权威管理器: SDKMAN
+# Java / Gradle / Maven / Kotlin / Groovy / Scala —— 权威管理器: SDKMAN
 
 ## 1. 基线
 
-- 推荐工具：**SDKMAN**（Java 生态专用版本管理，连带管 gradle/maven）。
+- 推荐工具：**SDKMAN**（JVM 生态事实标准，不止管 Java——Gradle、Maven、Kotlin、Groovy、Scala、sbt 都由它统一管版本，是 JVM 全栈唯一一体化工具，无同级竞品）。
+- `sdk list` 能看到的 candidate 里，`kotlin`/`scala`/`sbt`/`groovy` 判定规则和 java/gradle/maven 完全一致——发现其中任一独立于 SDKMAN 之外安装（比如 brew kotlin），按本文件 §3 的判定套用，不用单独写一份。
 - 达标最小特征集：
   - `java -version` 显示 SDKMAN 装的版本（`which java` 显示 `/usr/bin/java` 是正常的，见 §5）
   - `JAVA_HOME` 派生自 `$SDKMAN_DIR/candidates/java/current`，不手动指向具体 JDK 路径

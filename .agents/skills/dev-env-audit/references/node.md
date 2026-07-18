@@ -1,12 +1,13 @@
-<!-- Ver 2026-07-17 13:00, by Claude Fable 5 -->
+<!-- Ver 2026-07-18 10:00, by Claude Sonnet 5 -->
 
 # Node.js —— 权威管理器: fnm + pnpm
 
 ## 1. 基线
 
 - 推荐工具：**fnm**（版本管理，比 nvm 快 10-40x）+ **pnpm**（包管理，官方独立安装器装）。
+- **多语言全栈统一场景的备选**：已经用 ASDF 管理其他语言、更看重"一套工具、一套心智模型"而非极致速度的用户，可以用 `asdf-nodejs` 插件替代 fnm。这是"省心 vs 更快"的取舍，不是无条件的升级——ASDF 靠 shim 转发，fnm 靠环境变量直接切换，纯 Node 场景 fnm 仍然更快、启动开销更低。不要同时装两者。
 - 达标最小特征集：
-  - `node` 解析到 fnm 管理的路径；`which -a node` 无 brew/系统份
+  - `node` 解析到 fnm（或 asdf）管理的路径；`which -a node` 无 brew/系统份
   - `command -v pnpm` 解析到独立安装位置（不含 `fnm_multishells` 字样，见 §5）
   - nvm / volta / n 的初始化代码不在 shell 配置里生效
 
@@ -20,7 +21,9 @@ ls -d ~/.nvm 2>/dev/null
 command -v volta; ls -d ~/.volta 2>/dev/null
 command -v n; ls -d /usr/local/n 2>/dev/null
 
-# init 残留
+# init 残留（先看 scan.sh 的 source chain，集中式 dotfiles 框架把 init 代码
+# 放进被 source 的文件里时，字面 rc 文件 grep 落空不代表没有，把 source chain
+# 上的文件也加进下面的 grep 目标）
 grep -n 'NVM_DIR\|nvm.sh' ~/.zshrc ~/.zprofile ~/.zshenv ~/.bash_profile ~/.bashrc 2>/dev/null
 grep -n 'VOLTA_HOME' ~/.zshrc ~/.zprofile ~/.zshenv 2>/dev/null
 
@@ -49,6 +52,7 @@ npm ls -g --depth=0 2>/dev/null
 | `command -v pnpm` 含 `fnm_multishells` 或 fnm 版本目录 | WARN | corepack shim 抢占了独立 pnpm（见 §5），调 PATH 顺序 |
 | 只有 brew node、无任何管理器 | WARN | 可用但非推荐；单版本用户风险低，多项目多版本必坑 |
 | yarn/npm/pnpm 混用全局包 | WARN | 建议全局包统一到 pnpm |
+| 顶层 rc 文件 grep 落空，但 source chain 上的文件里能 grep 到 NVM_DIR/VOLTA_HOME | FAIL | 逻辑藏在集中管理的文件里，不是没有 |
 
 ## 4. 迁移方案（五步法）
 
