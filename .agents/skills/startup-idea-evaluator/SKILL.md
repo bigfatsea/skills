@@ -5,11 +5,13 @@ description: >
   Optimized for small AI-augmented teams with China/global context.
   Trigger when the user: asks to evaluate a startup/project/idea, shares a business concept
   for feedback, asks about commercial viability or monetization potential, wants a GTM strategy,
-  requests market sizing, asks "should I build this", "is this worth pursuing", compares two
-  pivots, or reviews pitch/deck logic. Works with raw one-liners, detailed pitches, and
-  everything in between. Even when the user hasn't said "evaluate" — if they describe a
-  product concept, business model, or market opportunity and seem to want strategic input,
-  invoke this skill. When in doubt, use it.
+  requests market sizing, asks "should I build this", "is this worth pursuing", or compares two
+  pivots. Works with raw one-liners, detailed pitches, and everything in between. Even when the
+  user hasn't said "evaluate" — if they describe a product concept, business model, or market
+  opportunity and seem to want strategic input, invoke this skill. When in doubt, use it.
+  If the user has an actual written business plan or pitch deck document and wants investor-style
+  critique/rewrite of that document, use `master-bp-review` instead — this skill is for raw ideas
+  and concepts, not for reviewing an already-written document.
 ---
 
 # Startup Idea Evaluator

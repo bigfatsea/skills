@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
-# Ver 2026-07-19 03:15, by Claude Sonnet 5
+# Ver 2026-07-19 05:30, by Claude Sonnet 5
 # probe-path.sh — Phase 3 横切检查①：PATH 三场景一致性。
 # macOS 的 path_helper 会在登录 shell 里把 /usr/bin 等系统路径重新提前；
 # 而 ~/.zshrc 只在交互式 shell 被读取。三种场景要分别验证：
@@ -28,7 +28,7 @@ local cmds
 if (( $# > 0 )); then
   cmds=("$@")
 else
-  cmds=(git python3 node java go rustc ruby pnpm uv)
+  cmds=(git python3 node npm java go rustc ruby pnpm uv)
 fi
 
 print "# dev-env-audit probe-path"

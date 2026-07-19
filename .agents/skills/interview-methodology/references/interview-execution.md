@@ -1,4 +1,4 @@
-<!-- Ver 2026-06-26 12:43, by Claude Sonnet 4.6 -->
+<!-- Ver 2026-07-19 05:45, by Claude Sonnet 5 (updated; originally Claude Sonnet 4.6) -->
 
 # Interview Execution & Follow-Up
 
@@ -150,6 +150,11 @@ Use this sequence when a response warrants deeper exploration:
 - [ ] Has a new, simplified outline been prepared? (Usually shorter than the original)
 
 ---
+
+<!-- Section lettering is shared across all 4 reference files and runs A→H in this
+order: A/B in ethics-and-prep.md, C/D here, E in transcript-templates.md,
+F in story-extraction.md, G/H back here. The jump from D to G below is not a
+missing section — E and F simply live in the other two files. -->
 
 ## G. Tool Stack (Reference)
 

@@ -6,3 +6,14 @@ xushuiying
 doc
 archived
 .agents/skills/skill-creator
+
+# Repo-wide junk/dependency hygiene (consolidated from nested .gitignore files —
+# there should be exactly one .gitignore in this repo, at the root).
+# Previously: .agents/skills/audio-album-creator/scripts/.gitignore had
+# .venv/ and __pycache__/ scoped to that one directory; these patterns cover
+# the same ground repo-wide so any future skill with a local venv is
+# protected without needing its own nested .gitignore.
+**/__pycache__/
+*.pyc
+**/.venv/
+**/.DS_Store

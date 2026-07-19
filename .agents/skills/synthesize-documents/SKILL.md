@@ -3,7 +3,7 @@ name: synthesize-documents
 description: Synthesize multiple provided documents into one comprehensive replacement document. Use when the user asks to merge, consolidate, reconcile, summarize comprehensively, produce a consensus report, integrate several drafts/reviews/memos, or create a final synthesis that preserves shared points, minority-only points, disagreements, source structures, user-specific requirements, and evidence-based evaluation.
 ---
 
-<!-- Ver 2026-05-10 15:09, by GPT-5 -->
+<!-- Ver 2026-07-19 05:30, by Claude Sonnet 5 (updated; originally by GPT-5) -->
 
 # Synthesize Documents
 
@@ -46,6 +46,12 @@ For each document, extract a compact "document card":
 - obvious gaps, weak claims, or internal tensions.
 
 Use this inventory for reasoning. Include it in the final output only when the user asks for traceability or when the synthesis would otherwise be hard to audit.
+
+**Handling very long documents**: if a source is too large to read in one pass (e.g. a single document that would itself consume a large fraction of the context window, or several documents that together would), don't silently truncate or skim. Instead:
+
+- Read it in sequential chunks, building the document card incrementally as you go (append new claims/examples/tensions as they appear rather than holding the whole text in memory at once).
+- If there are many long documents, prioritize: build inventories for the ones most central to the synthesis goal first, and note explicitly in the output if any source was only partially read or sampled rather than read in full.
+- Never fabricate a document card from a title or skim — if you truly can't read something in full, say so in the output rather than presenting inferred content as if it were extracted.
 
 ### Step 3: Classify The Content Surface
 

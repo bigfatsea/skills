@@ -3,11 +3,11 @@ name: ai-script
 description: "Call local AI-service CLI ai-script for real generation and retrieval tasks: LLM text (multi-provider second opinions, vision, consult mode), TTS speech synthesis, STT/ASR transcription, text-to-image / image-to-image, music generation, video generation, Tavily web search, OpenAlex scholar search, Firecrawl scraping, and local image resizing. Use when the user asks to 生成图片/配图、合成语音/朗读、转录音频、生成音乐/歌曲、生成视频、问另一个模型/多模型会诊、搜索网页/论文、抓取网页, or when a task needs actual media generation rather than code. Not for local code editing, git, or tasks with no external AI/service call (except resize, which is local)."
 ---
 
-<!-- Ver 2026-07-10 10:30, by Claude Fable 5 -->
+<!-- Ver 2026-07-19 05:00, by Claude Sonnet 5 -->
 
 # ai-script — 统一 AI 服务 CLI
 
-本机已安装的多能力 AI CLI,仓库位于 `/Volumes/SSD2T/code/ai-script`。所有 API Key 读系统环境变量,无需配置。
+本机已安装的多能力 AI CLI,仓库位于 `~/code/ai-script`。所有 API Key 读系统环境变量,无需配置。
 
 ## 何时使用
 
@@ -29,7 +29,7 @@ description: "Call local AI-service CLI ai-script for real generation and retrie
 ## 如何调用
 
 ```bash
-cd /Volumes/SSD2T/code/ai-script && ./ai-script <subcommand> ...
+cd ~/code/ai-script && ./ai-script <subcommand> ...
 ```
 
 `./ai-script` 是仓库根目录的包装脚本,自动 source `~/.zshrc` 加载 API Key,再执行 `uv run ai-script`。**必须先 cd 到该仓库目录**(wrapper 内部是 `uv run`,依赖 cwd 定位项目,直接用绝对路径从别处调用会报 `Failed to spawn: ai-script`)。输出文件路径用绝对路径指定,避免产物落在 ai-script 仓库里。
@@ -41,6 +41,8 @@ cd /Volumes/SSD2T/code/ai-script && ./ai-script <subcommand> ...
 ./ai-script <subcommand> --list  # 列出该命令可用 provider:model 组合(及音色等)
 ./ai-script check --no-network   # 排错时:检查环境变量是否配齐
 ```
+
+**`check` 报非 0 退出码就先停下**:它会检测目标 provider 的 API Key/环境变量是否配齐,失败通常意味着后续生成类调用大概率会在长 timeout 后才报错。`check` 失败时,先把缺失项告知用户,不要直接接着跑 `image`/`video` 等昂贵调用去"试试看"。
 
 ### `-e/--engine` 一个参数选 provider+model
 

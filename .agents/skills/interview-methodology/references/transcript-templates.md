@@ -1,4 +1,4 @@
-<!-- Ver 2026-06-26 12:43, by Claude Sonnet 4.6 -->
+<!-- Ver 2026-07-19 05:45, by Claude Sonnet 5 (updated; originally Claude Sonnet 4.6) -->
 
 # Transcript Organization — Templates & SOP
 
@@ -34,7 +34,7 @@ Reference for SKILL.md Mode 2. Read this when organizing and structuring intervi
 - `[uncertain]` — audio unclear; best approximation, note ambiguity
 - `[inaudible]` — cannot be recovered even from audio
 
-### Organizing Principles (E.2 — Five Goals)
+### E.2 Organizing Principles — Five Goals
 
 Every organized transcript must achieve:
 

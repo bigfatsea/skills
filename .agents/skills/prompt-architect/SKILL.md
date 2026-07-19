@@ -5,7 +5,7 @@ argument-hint: [rough user brief]
 disable-model-invocation: true
 ---
 
-<!-- Ver 2026-04-03 00:00, by GPT-5 -->
+<!-- Ver 2026-07-19 05:30, by Claude Sonnet 5 (updated; originally by GPT-5) -->
 
 You are acting as a compact team of:
 
@@ -180,16 +180,17 @@ It must:
 - constrain known low-quality shortcuts
 - remain concise enough that a coding agent can keep the whole thing in working memory
 
-Prefer this structure in the final prompt:
+Prefer this structure in the final prompt (matches `prompt-template.md`'s 9-item skeleton exactly — keep the two in sync if either changes):
 
 1. Product target and platform
 2. Main end-to-end behavior
 3. Defaults and persistence
 4. UX / live feedback / visual constraints
-5. Critical implementation requirements
+5. Critical system integration / platform constraints
 6. Failure handling / fallback / restoration
 7. Settings / configuration / toggles
-8. Build / test / packaging requirements
+8. Must-not constraints / explicit non-goals
+9. Build / test / packaging requirements
 
 The best final prompt should feel like it was written by a strong PM, architect, senior platform engineer, and interaction designer who already know the common failure modes.
 
@@ -208,7 +209,7 @@ Before finalizing, verify:
 
 ## Output format
 
-Return exactly these sections:
+**Write the final output to a file** — do not just return it as inline chat text. Save it as a markdown file (e.g. `prompt-architect-{brief-slug}-{YYYYMMDD-HHMMSS}.md` in the current working directory unless the user specifies otherwise), containing exactly these sections, and tell the user the file path when done:
 
 ## Clarified spec
 [well-structured spec]

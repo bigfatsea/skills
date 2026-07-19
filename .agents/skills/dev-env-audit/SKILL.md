@@ -3,7 +3,7 @@ name: dev-env-audit
 description: "Audit the local development environment (macOS + zsh): detect installed language SDKs (Python/Node/Java/Go/Rust/Ruby/C#/.NET/Swift/Objective-C/PHP/Lua/Zig/Julia/Dart/Flutter/Erlang/Elixir/C/C++/Git), how each was installed, version-manager conflicts (e.g. pyenv+uv, nvm+fnm, rvm+rbenv, brew+asdf), PATH resolution problems across shell scenarios (path_helper), and whether dev caches are relocated to an external SSD; then produce a diagnosis and per-language migration plan following the per-language best-practice baseline (uv / fnm+pnpm / SDKMAN / asdf / rustup / rbenv / dotnet-install / Xcode / Homebrew / zigup / juliaup / fvm / brew git). Use whenever the user asks to 检查/审计/体检开发环境、看某个语言是不是装乱了、为什么 python/node/git/php/dotnet 解析到错误路径或旧版本、清理多余的版本管理器、检查缓存有没有外置到 SSD, or asks 'what SDKs do I have installed', 'is my dev setup correct', 'audit my toolchain' — even for a single language. Read-only: never installs, uninstalls, or edits shell config; it outputs a report with commands for the user to run themselves."
 ---
 
-<!-- Ver 2026-07-19 03:00, by Claude Sonnet 5 -->
+<!-- Ver 2026-07-19 05:30, by Claude Sonnet 5 -->
 
 # dev-env-audit — 开发环境审计
 
@@ -69,7 +69,7 @@ zsh scripts/probe-cache.sh       # 缓存外置环境变量清单核查
 ```
 
 - probe-path.sh 对关键命令分别在"非登录非交互 / 登录非交互 / 登录交互"三种 zsh 场景下解析，三者不一致即 WARN。"登录非交互"（GUI App、launchd 常用）是最容易漏配的一档。深挖某语言时可追加单独检查：`zsh scripts/probe-path.sh <cmd>`（git.md / ruby.md §2 即此用法）。注意 `zsh -l -c` 是 GUI App/launchd 环境的**近似模型**（真实 launchd 环境需 `launchctl getenv PATH` 才能精确取到），足以定位绝大多数问题；报告若涉及 launchd 级精确诊断，需注明这一近似。
-- probe-cache.sh 对照外置清单逐项核查：uv/pnpm/go/maven 这类"环境变量会骗人"的条目按**工具自身报告的生效值**判定（能捕捉 `go env -w`/`pnpm config set` 完成的外置），其余按本进程继承的环境变量判定；末尾还做外置变量的**三场景一致性检查**（变量只写在 ~/.zshrc 时 GUI App/launchd 看不到 = 隐性漂移）。若它报 FAIL（路径指向未挂载的卷），**不要中途停下来问用户**——跳过外置检查、继续走完剩余流程，在报告里注明"检测到外置路径未挂载，本次跳过该项核查；挂载磁盘后可重跑 `zsh scripts/probe-cache.sh` 复核"。
+- probe-cache.sh 对照外置清单逐项核查：uv/pnpm/go/maven 这类"环境变量会骗人"的条目按**工具自身报告的生效值**判定（能捕捉 `go env -w`/`pnpm config set` 完成的外置），其余按本进程继承的环境变量判定；末尾还做外置变量的**三场景一致性检查**（变量只写在 ~/.zshrc 时 GUI App/launchd 看不到 = 隐性漂移）。**漂移判定按工具分组**（uv/node/jvm/go/rust/asdf/poetry/php/ruby/dart/julia/cpp/dotnet/bun/deno/lua 各自一组）：只有同一组内既有变量外置、又有变量未外置才算漂移并 WARN；不同组之间进度不一致（比如 uv 全外置了、Maven 还没顾得上）是正常状态，不算漂移——外置本来就是可选项，不该被要求"要做就全做"。若它报 FAIL（路径指向未挂载的卷），**不要中途停下来问用户**——跳过外置检查、继续走完剩余流程，在报告里注明"检测到外置路径未挂载，本次跳过该项核查；挂载磁盘后可重跑 `zsh scripts/probe-cache.sh` 复核"。
 - 两个脚本的主体读取的是**本进程继承的环境**（输出首行会声明快照口径）；跨场景差异由 probe-path.sh（PATH）和 probe-cache.sh 末节（外置变量）分别覆盖。
 
 ### Phase 4 — 综合报告

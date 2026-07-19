@@ -9,7 +9,7 @@
     },
     {
       "id": 2,
-      "prompt": "Review this business plan for a SaaS startup targeting HR departments: [user provides a document path or pasted text describing a hiring automation tool]",
+      "prompt": "Review this business plan for a SaaS startup targeting HR departments: We built an AI tool that auto-screens resumes and schedules first-round interviews for mid-size companies (200-2000 employees). Pricing is $400/month per HR seat. We have 5 paying customers, $2,800 MRR, and a team of 4. Main risk: ATS integrations (Greenhouse, Lever) are slow to build and each customer wants a different one.",
       "expected_output": "Skill triggers even though user wrote in English; the report first selects the 5 most suitable masters with reasons; 5 separate master reviews with distinct voices; founder response with strategic decisions; rewritten BP; output saved as Chinese markdown",
       "files": []
     },

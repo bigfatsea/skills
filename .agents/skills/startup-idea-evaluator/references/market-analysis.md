@@ -1,6 +1,11 @@
 # Market Analysis Reference
 
-**Primary skill**: Use `everything-claude-code:market-research` for research execution (sizing, competitive analysis, data sourcing, output format). This file provides startup-evaluator-specific overlays only.
+**Primary skill**: Use `everything-claude-code:market-research` for research execution (sizing, competitive analysis, data sourcing, output format), if it is available in the current environment. This file provides startup-evaluator-specific overlays only, not a full substitute for it.
+
+**If `everything-claude-code:market-research` is not available** (it does not exist in every environment this skill runs in): do not silently proceed as if you had run it. Instead:
+1. Say explicitly in the output that market sizing/competitive analysis below is based on your own reasoning and general knowledge, not a dedicated research pass or live data sources.
+2. Still apply the constraints and templates in this file directly — they are self-contained enough to use standalone (bottom-up sizing, red flags, the pricing table, etc.) — just be more conservative about precision (ranges, not point estimates) given the lack of verified sourcing.
+3. If the user has access to real market data (Statista, Crunchbase, 36kr, 创业邦, industry reports), ask them to paste relevant numbers rather than inventing figures.
 
 Run ≥2 areas per Mode B analysis: market sizing + competitive landscape + pricing model.
 

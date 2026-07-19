@@ -1,9 +1,9 @@
 ---
 name: master-bp-review
-description: Use when the user wants feedback on a business plan, pitch deck, or other business document for investor-style or strategic review. Trigger for requests like "review my BP", "点评商业计划书", "review this pitch deck", "投资人视角分析这份 deck", "帮我看看这个商业计划书", or when the user shares a BP, deck, memo, or business document and asks for business or investor-style feedback. Do not use for raw startup ideas without a document or deck to review.
+description: Use when the user wants feedback on a business plan, pitch deck, or other business document for investor-style or strategic review. Trigger for requests like "review my BP", "点评商业计划书", "review this pitch deck", "投资人视角分析这份 deck", "帮我看看这个商业计划书", or when the user shares a BP, deck, memo, or business document and asks for business or investor-style feedback. Do not use for raw startup ideas without a document or deck to review — if the user only has a concept/idea with nothing written down, use `startup-idea-evaluator` instead.
 ---
 
-<!-- Ver 2026-05-09 10:45, by GPT-5 -->
+<!-- Ver 2026-07-19 05:30, by Claude Sonnet 5 (updated; originally by GPT-5) -->
 
 # Master BP Review
 
@@ -332,6 +332,17 @@ Do not select a master only because they are famous. If a master is not a good f
 
 ## How to Execute
 
+### 0. Decide: Full Review (default) or Critique-Only
+
+The default flow is the full pipeline: 5 master reviews -> founder response -> full BP rewrite (steps 1-6 below). This is the right default because most requests genuinely want the rewrite.
+
+**Switch to critique-only** (skip step 4's rewrite entirely, stop after the 5 master reviews + a short synthesis) when the user's phrasing signals they only want feedback, not a rewrite — e.g. "just give me feedback", "don't rewrite it", "只是想听听意见", "别帮我改", or when they explicitly ask for a quick/light review. In critique-only mode:
+
+- Still do steps 1-3 (read, classify, select + run all 5 master reviews) in full — the independent-voices mechanism is the core value and shouldn't be cut.
+- Replace step 4 (Founder Response & BP Rewrite) with a short "Summary & Key Tensions" section: the investment-decision distribution, the 2-3 sharpest disagreements between masters, and 3-5 concrete action items — no full BP rewrite, no founder-persona section.
+- Steps 5-7 (save, confirm, output format) still apply, just with the shorter body.
+- If genuinely unsure which mode the user wants, default to the full pipeline (rewrite included) — that remains the skill's primary value proposition — but mention in one line that a lighter critique-only pass is available on request.
+
 ### 1. Read the Business Document
 
 When invoked, the user will provide one or more business documents, such as a BP, pitch deck, memo, or pasted business text:
@@ -411,7 +422,7 @@ Now play the role of the **actual founder** of this business (not a master inves
 
 ### 5. Generate the Review Report
 
-Use the template in `references/review-template.md` as the output structure. Key guidelines:
+Use the template in `references/review-template.md` as the output structure — see `references/example-output.md` for a fully filled worked example (fictional project, demonstrates the expected depth and tension between masters). Key guidelines:
 
 - Include the selected-master rationale table before the reviews.
 - Each selected master's section must include: 投资决策 / 如果我是创始人 / 远景描绘.
@@ -424,7 +435,7 @@ Use the template in `references/review-template.md` as the output structure. Key
 
 Save the review report with this naming convention:
 
-- Filename format: `bp-review-{project-name}-{YYYYMMDD-HHMMSS}.md`
+- Filename format: `bp-review-{project-name-slug}-{YYYYMMDD-HHMMSS}.md`, where `{project-name-slug}` is the same `{PROJECT_NAME}` used in the report header (see `references/review-template.md`), lowercased with spaces/special characters replaced by hyphens (e.g. `PROJECT_NAME = "微信报销通"` -> slug `weixin-baoxiao-tong`, or keep it in pinyin/English words that plainly identify the project — exact transliteration isn't important, a readable filename is).
 - If you can't extract a project name, use: `bp-review-{YYYYMMDD-HHMMSS}.md`
 - Save in the current working directory unless user specifies otherwise.
 
