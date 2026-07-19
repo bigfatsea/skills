@@ -134,8 +134,7 @@ probe_cmd deno    deno --version
 probe_dev git     git --version
 
 print ""
-print "== extended languages (C/C++, C#, Swift, PHP, Lua, Zig, Julia, Dart/Flutter, Erlang/Elixir) =="
-probe_cmd dotnet  dotnet --version
+print "== extended languages (C/C++, Swift, PHP, Lua, Zig, Julia, Dart/Flutter, Erlang/Elixir) =="
 probe_dev swift   swift --version
 probe_cmd php     php --version
 probe_cmd lua     lua -v
@@ -226,7 +225,6 @@ dir_hint rustup "${RUSTUP_HOME:-$HOME/.rustup}"
 dir_hint fnm    "${FNM_DIR:-$HOME/.fnm}"
 dir_hint fnm    "$HOME/Library/Application Support/fnm"
 dir_hint fnm    "$HOME/.local/share/fnm"
-dir_hint dotnet "$HOME/.dotnet"
 dir_hint swiftenv "$HOME/.swiftenv"
 dir_hint juliaup "$HOME/.juliaup"
 print "  (nothing above this line means: no residue detected)"
@@ -262,12 +260,12 @@ if command -v brew >/dev/null 2>&1; then
   # 语言运行时本体走 brew 装(node/go/rust/python@x)才是常见冲突源——判定交给 references
   print -r -- "-- brew-installed language/manager formulas (judge via references) --"
   local hits
-  hits=$(brew list --formula 2>/dev/null | grep -E '^(python@[0-9.]+|python3?|node(@[0-9]+)?|go(@[0-9.]+)?|golang|rust|openjdk(@[0-9]+)?|ruby|git|uv|fnm|pyenv|nvm|asdf|rbenv|deno|php(@[0-9.]+)?|lua(@[0-9.]+)?|gcc(@[0-9]+)?|dotnet|dart|flutter|erlang|elixir|zig|julia)$')
+  hits=$(brew list --formula 2>/dev/null | grep -E '^(python@[0-9.]+|python3?|node(@[0-9]+)?|go(@[0-9.]+)?|golang|rust|openjdk(@[0-9]+)?|ruby|git|uv|fnm|pyenv|nvm|asdf|rbenv|deno|php(@[0-9.]+)?|lua(@[0-9.]+)?|gcc(@[0-9]+)?|dart|flutter|erlang|elixir|zig|julia)$')
   if [[ -n "$hits" ]]; then print -r -- "$hits" | sed 's/^/  /'; else print "  (none)"; fi
-  # flutter / dotnet-sdk / 各家 JDK 走 cask 渠道,不在 formula 清单里,单独列
+  # flutter / 各家 JDK 走 cask 渠道,不在 formula 清单里,单独列
   print -r -- "-- brew-installed language casks --"
   local chits
-  chits=$(brew list --cask 2>/dev/null | grep -E '^(flutter|dotnet-sdk(@[0-9]+)?|temurin(@[0-9]+)?|zulu(@[0-9]+)?|oracle-jdk|microsoft-openjdk|liberica-jdk[0-9a-z-]*|graalvm-jdk(@[0-9]+)?|dart)$')
+  chits=$(brew list --cask 2>/dev/null | grep -E '^(flutter|temurin(@[0-9]+)?|zulu(@[0-9]+)?|oracle-jdk|microsoft-openjdk|liberica-jdk[0-9a-z-]*|graalvm-jdk(@[0-9]+)?|dart)$')
   if [[ -n "$chits" ]]; then print -r -- "$chits" | sed 's/^/  /'; else print "  (none)"; fi
 else
   row brew "(not found)" ""
@@ -277,7 +275,7 @@ print ""
 print "== duplicate resolutions on PATH (which -a; first line = the one that wins) =="
 local c all n_uniq
 local found_dup=0
-for c in python3 node java go rustc ruby git uv pnpm php dotnet; do
+for c in python3 node java go rustc ruby git uv pnpm php; do
   all=$(which -a "$c" 2>/dev/null | awk '!seen[$0]++')   # 保序去重:PATH 顺序即优先序,不能 sort
   n_uniq=$(print -r -- "$all" | grep -c . 2>/dev/null)
   if (( n_uniq > 1 )); then

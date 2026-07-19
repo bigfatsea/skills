@@ -213,7 +213,6 @@ classify JULIAUP_DEPOT_PATH juliaup julia
 classify JULIA_DEPOT_PATH julia julia
 classify VCPKG_DOWNLOADS vcpkg cpp
 classify VCPKG_DEFAULT_BINARY_CACHE vcpkg cpp
-classify DOTNET_ROOT dotnet dotnet optional # 安装根而非缓存,默认 ~/.dotnet 是常态
 classify BUN_INSTALL bun bun optional    # 安装根,默认 ~/.bun 是常态
 classify DENO_DIR deno deno
 classify LUAROCKS_CONFIG luarocks lua optional # 指向 config 文件,rocks_trees 外置写在文件里(lua.md §4)
@@ -227,7 +226,7 @@ local _vars=(UV_CACHE_DIR UV_PYTHON_INSTALL_DIR UV_TOOL_DIR FNM_DIR PNPM_HOME
   NPM_CONFIG_CACHE NPM_CONFIG_PREFIX SDKMAN_DIR GRADLE_USER_HOME ASDF_DATA_DIR
   RUSTUP_HOME CARGO_HOME GOCACHE GOMODCACHE GOPATH POETRY_CACHE_DIR POETRY_DATA_DIR
   COMPOSER_CACHE_DIR RBENV_ROOT FVM_HOME JULIAUP_DEPOT_PATH JULIA_DEPOT_PATH
-  VCPKG_DOWNLOADS VCPKG_DEFAULT_BINARY_CACHE DOTNET_ROOT BUN_INSTALL DENO_DIR
+  VCPKG_DOWNLOADS VCPKG_DEFAULT_BINARY_CACHE BUN_INSTALL DENO_DIR
   LUAROCKS_CONFIG)
 local _script='for v in '"${_vars[*]}"'; do print -r -- "$v=${(P)v}"; done'
 local _a _b _c

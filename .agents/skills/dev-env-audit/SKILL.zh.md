@@ -1,6 +1,6 @@
 ---
 name: dev-env-audit
-description: "Audit the local development environment (macOS + zsh): detect installed language SDKs (Python/Node/Java/Go/Rust/Ruby/C#/.NET/Swift/Objective-C/PHP/Lua/Zig/Julia/Dart/Flutter/Erlang/Elixir/C/C++/Git), how each was installed, version-manager conflicts (e.g. pyenv+uv, nvm+fnm, rvm+rbenv, brew+asdf), PATH resolution problems across shell scenarios (path_helper), and whether dev caches are relocated to an external SSD; then produce a diagnosis and per-language migration plan following the per-language best-practice baseline (uv / fnm+pnpm / SDKMAN / asdf / rustup / rbenv / dotnet-install / Xcode / Homebrew / zigup / juliaup / fvm / brew git). Use whenever the user asks to 检查/审计/体检开发环境、看某个语言是不是装乱了、为什么 python/node/git/php/dotnet 解析到错误路径或旧版本、清理多余的版本管理器、检查缓存有没有外置到 SSD, or asks 'what SDKs do I have installed', 'is my dev setup correct', 'audit my toolchain' — even for a single language. Read-only: never installs, uninstalls, or edits shell config; it outputs a report with commands for the user to run themselves."
+description: "只读审计本机开发环境（macOS，zsh 完整支持、bash 降级支持）：盘点 Python、Node、Java/JVM、Go、Rust、Ruby、Swift/Objective-C、PHP、Lua、Zig、Julia、Dart/Flutter、Erlang/Elixir、C/C++、Git 等 SDK 的安装渠道；检测冲突的版本管理器、陈旧的 shell 初始化、终端/GUI/脚本三种场景下的 PATH 差异（含 path_helper），以及不完整或损坏的外置 SSD 缓存迁移。基于各语言权威/原生管理器生成健康报告与 per-language 迁移方案，并尊重合理既有配置。适用于整机或单一语言审计、SDK 清单、命令解析错/旧、清理冗余管理器、PATH/shell 冲突、缓存迁移检查等场景。绝不安装、卸载、改配置、联网下载；只做探测并提供可由用户手动执行的命令。"
 ---
 
 <!-- Ver 2026-07-19 16:00, by Claude Sonnet 5 -->
@@ -18,7 +18,7 @@ description: "Audit the local development environment (macOS + zsh): detect inst
 1. **只探测、只分析、只建议，绝不执行。** 核心功能就是全面了解系统实况 + 给出合理建议；安装/卸载/改配置/联网都不做，变更命令只出现在报告里，由用户确认后自行执行。
 2. **事实与解读分离。** scan 只陈述全部事实，不做判断、也不因"良性"而隐藏任何事实；判定规则集中在 references；报告在完整事实之上做解读。
 3. **每种语言用其领域的权威工具**（uv / fnm / rustup / rbenv / juliaup…），或一个工具管一类强耦合生态（SDKMAN for JVM、asdf for OTP+Elixir）。**反对"一个工具统一所有语言"的路线**——不认同、不推荐 mise 类方案。
-4. **官方优先于第三方。** 语言原生机制能解决的（GOTOOLCHAIN、.NET 多 SDK 并存、多 Xcode + xcode-select）不引入额外工具；第三方工具须有明确的不可替代价值。
+4. **官方优先于第三方。** 语言原生机制能解决的（GOTOOLCHAIN、多 Xcode + xcode-select）不引入额外工具；第三方工具须有明确的不可替代价值。
 5. **尊重存量的合理选择。** 同类等价工具（mise↔asdf、zigup↔zvm）运转正常就不建议互迁；系统默认"未治理"是合法状态；缓存外置是可选项不是义务——**半外置的漂移才是最危险状态**。
 6. **生效值优先于配置表象。** 判定以工具自身报告的实际落位为准（环境变量会骗人），并覆盖三种 shell 场景（交互终端 / GUI App / 脚本）。
 7. **原则性指导，不做精细版本管控。** 关注工具链结构是否健康，不纠结细微版本号差异。
@@ -54,7 +54,7 @@ zsh scripts/scan.sh
 
 对 Phase 1 命中的每种语言：
 
-1. Read `references/<lang>.zh.md`（python / node / java / go / rust / ruby / git / csharp / swift / php / lua / zig / julia / dart / erlang-elixir / cpp）。
+1. Read `references/<lang>.zh.md`（python / node / java / go / rust / ruby / git / swift / php / lua / zig / julia / dart / erlang-elixir / cpp）。
 2. 按其 **§2 深挖探测** 逐条执行命令。命令全部只读，可以多个 Bash 调用并行。**必须真的执行，禁止凭记忆脑补输出。**
 3. 按其 **§3 判定规则** 把发现归类为 OK / WARN / FAIL。
 4. 发现异常时允许自主追查（例如发现 pyenv 目录，就去 grep shell 配置里的 init 残留；发现两个 uv，就 `which -a uv` 查全）。追查也必须只读。
@@ -69,7 +69,7 @@ zsh scripts/probe-cache.sh       # 缓存外置环境变量清单核查
 ```
 
 - probe-path.sh 对关键命令分别在"非登录非交互 / 登录非交互 / 登录交互"三种 zsh 场景下解析，三者不一致即 WARN。"登录非交互"（GUI App、launchd 常用）是最容易漏配的一档。深挖某语言时可追加单独检查：`zsh scripts/probe-path.sh <cmd>`（git.zh.md / ruby.zh.md §2 即此用法）。注意 `zsh -l -c` 是 GUI App/launchd 环境的**近似模型**（真实 launchd 环境需 `launchctl getenv PATH` 才能精确取到），足以定位绝大多数问题；报告若涉及 launchd 级精确诊断，需注明这一近似。
-- probe-cache.sh 对照外置清单逐项核查：uv/pnpm/go/maven 这类"环境变量会骗人"的条目按**工具自身报告的生效值**判定（能捕捉 `go env -w`/`pnpm config set` 完成的外置），其余按本进程继承的环境变量判定；末尾还做外置变量的**三场景一致性检查**（变量只写在 ~/.zshrc 时 GUI App/launchd 看不到 = 隐性漂移）。**漂移判定按工具分组**（uv/node/jvm/go/rust/asdf/poetry/php/ruby/dart/julia/cpp/dotnet/bun/deno/lua 各自一组）：只有同一组内既有变量外置、又有变量未外置才算漂移并 WARN；不同组之间进度不一致（比如 uv 全外置了、Maven 还没顾得上）是正常状态，不算漂移——外置本来就是可选项，不该被要求"要做就全做"。若它报 FAIL（路径指向未挂载的卷），**不要中途停下来问用户**——跳过外置检查、继续走完剩余流程，在报告里注明"检测到外置路径未挂载，本次跳过该项核查；挂载磁盘后可重跑 `zsh scripts/probe-cache.sh` 复核"。
+- probe-cache.sh 对照外置清单逐项核查：uv/pnpm/go/maven 这类"环境变量会骗人"的条目按**工具自身报告的生效值**判定（能捕捉 `go env -w`/`pnpm config set` 完成的外置），其余按本进程继承的环境变量判定；末尾还做外置变量的**三场景一致性检查**（变量只写在 ~/.zshrc 时 GUI App/launchd 看不到 = 隐性漂移）。**漂移判定按工具分组**（uv/node/jvm/go/rust/asdf/poetry/php/ruby/dart/julia/cpp/bun/deno/lua 各自一组）：只有同一组内既有变量外置、又有变量未外置才算漂移并 WARN；不同组之间进度不一致（比如 uv 全外置了、Maven 还没顾得上）是正常状态，不算漂移——外置本来就是可选项，不该被要求"要做就全做"。若它报 FAIL（路径指向未挂载的卷），**不要中途停下来问用户**——跳过外置检查、继续走完剩余流程，在报告里注明"检测到外置路径未挂载，本次跳过该项核查；挂载磁盘后可重跑 `zsh scripts/probe-cache.sh` 复核"。
 - 两个脚本的主体读取的是**本进程继承的环境**（输出首行会声明快照口径）；跨场景差异由 probe-path.sh（PATH）和 probe-cache.sh 末节（外置变量）分别覆盖。
 
 ### Phase 4 — 综合报告
@@ -233,7 +233,7 @@ zsh scripts/render-card.sh /tmp/dev-env-audit-summary.json \
 | `references/rust.zh.md` | 发现 rustc / cargo / rustup 任一 |
 | `references/ruby.zh.md` | 发现非系统 ruby / rbenv / rvm 任一（macOS 系统自带 ruby 且无管理器时可跳过，报告标注"系统默认，未治理"即可） |
 | `references/git.zh.md` | 总是读（git 人人都有，且 Apple 冻结版是普遍问题） |
-| `references/csharp.zh.md` | 发现 dotnet 任一 |
+| `references/csharp.zh.md` | 已移除：.NET/C# 在 macOS 上少见，已退出本 skill 范围 |
 | `references/swift.zh.md` | 发现 swift 任一（macOS 上装了 Xcode 通常就有，不代表用户在写 Swift，只在用户问起或 Phase 1 发现明显异常时才深挖） |
 | `references/php.zh.md` | 发现 php / composer 任一 |
 | `references/lua.zh.md` | 发现 lua / luarocks 任一 |
