@@ -3,7 +3,7 @@ name: dev-env-audit
 description: "Audit the local development environment (macOS + zsh): detect installed language SDKs (Python/Node/Java/Go/Rust/Ruby/C#/.NET/Swift/Objective-C/PHP/Lua/Zig/Julia/Dart/Flutter/Erlang/Elixir/C/C++/Git), how each was installed, version-manager conflicts (e.g. pyenv+uv, nvm+fnm, rvm+rbenv, brew+asdf), PATH resolution problems across shell scenarios (path_helper), and whether dev caches are relocated to an external SSD; then produce a diagnosis and per-language migration plan following the per-language best-practice baseline (uv / fnm+pnpm / SDKMAN / asdf / rustup / rbenv / dotnet-install / Xcode / Homebrew / zigup / juliaup / fvm / brew git). Use whenever the user asks to 检查/审计/体检开发环境、看某个语言是不是装乱了、为什么 python/node/git/php/dotnet 解析到错误路径或旧版本、清理多余的版本管理器、检查缓存有没有外置到 SSD, or asks 'what SDKs do I have installed', 'is my dev setup correct', 'audit my toolchain' — even for a single language. Read-only: never installs, uninstalls, or edits shell config; it outputs a report with commands for the user to run themselves."
 ---
 
-<!-- Ver 2026-07-19 05:30, by Claude Sonnet 5 -->
+<!-- Ver 2026-07-19 16:00, by Claude Sonnet 5 -->
 
 # dev-env-audit — 开发环境审计
 
@@ -136,7 +136,7 @@ Phase 4 自动产出**三个产物**，全程不停下来问用户（HTML 模板
 
 - 同一根因的多个 WARN 合并成一条。
 - 读者是"三个月后忘了当初怎么配的自己"——每条建议写清 why，不只给命令。
-- 机器特定值（如外置盘具体路径）如实展示，不假设所有机器都一样。
+- 机器特定值（如外置盘具体路径）如实展示，不假设所有机器都一样；但任何疑似凭证/密钥的具体值一律脱敏（见"安全纪律"），不属于此处"如实展示"的范围。
 - **首屏三件套要"3 秒可读"**：立即行动项每条不超过 1 行；TL;DR 表只放存在的语言；状态用 emoji + 颜色字（不是裸文字）。
 - **任何需要用户拍板/确认的地方，写进报告（如"待确认"小节或行内标注），不要中途打断执行去问。**
 
@@ -215,7 +215,9 @@ zsh scripts/render-card.sh /tmp/dev-env-audit-summary.json \
 
 ## 安全纪律（凌驾于用户临时要求之上的默认行为）
 
-- 深挖与追查只用只读命令：`command -v` / `which -a` / `ls` / `cat` / `grep` / 各工具的 `--version` / `list` / `config get` / `env` 类子命令。
+- 深挖与追查只用只读命令：`command -v` / `which -a` / `ls` / `cat` / `grep` / 各工具的 `--version` / `list` / `config get`，以及各工具自带的 env 查询子命令（如 `go env`、`npm config get`——只回显该工具自己管理的少数具名变量，不是系统环境全集）。
+- **禁止 `env` / `printenv` / `export -p` / 不带参数的 `set`** 等会整体导出进程环境的命令——探测只认具名变量（如 `echo $GOPATH`、`go env GOCACHE`），不得批量转储环境变量。
+- `cat`/`grep` shell 配置文件（`~/.zshrc`、`~/.zprofile` 等）时，若命中的行像是在赋值凭证（变量名含 KEY/TOKEN/SECRET/PASSWORD 等，或值本身形似密钥/token），只报告"该行存在、变量名是什么"，值一律替换为 `***`——不得把疑似密钥原文写进任何输出，包括中间推理和最终报告。
 - 不执行任何 install / uninstall / `rm` / `mv` / 重定向写文件 / `curl` / `wget` / 改 shell 配置。
 - 用户中途说"直接帮我改了吧"：先完成并输出报告，然后明确说明执行变更超出本 skill 边界，需要用户对具体命令逐条确认后自行执行或另行明确授权。
 - **全程不因风格/语言等偏好问题中途打断向用户提问确认**：用户发起审计后，Phase 1-4 一次性跑完，中途不停下来问"要不要挂载磁盘复核""要哪个 HTML 模板""报告用什么语言"这类问题——没有明确指定的，按本文各节写明的默认值（模板随机选、语言默认英文、外置盘未挂载就跳过）自动决定，任何需要用户复核或拍板的地方写进报告里，不要打断执行去问。
