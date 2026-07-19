@@ -1,4 +1,4 @@
-<!-- Ver 2026-07-18 20:00, by Claude Sonnet 5 -->
+<!-- Ver 2026-07-19 08:00, by Claude Sonnet 5 -->
 
 [中文](README.zh-CN.md)
 
@@ -24,10 +24,8 @@ Each skill's `SKILL.md` is the source of truth for triggers, workflow, and outpu
 | `synthesize-documents` | You have multiple drafts/reports/memos and want one comprehensive synthesis that preserves disagreements and minority points. |
 | `ai-script` | A task needs real AI generation/retrieval via the local `ai-script` CLI: LLM, TTS, STT, image, music, video, web/scholar search, scraping. |
 | `dev-env-audit` | You want a read-only audit of a local macOS dev environment: SDK installs, version-manager conflicts, PATH drift, cache relocation. |
-| `lobster-agent-creator` | You want to scaffold the IDENTITY/SOUL persona pair for a new OpenClaw/LobsterAI agent. Create-only. |
 | `interview-methodology` | You're prepping an interview, organizing a transcript, or extracting a story core from oral-history material. |
 | `audio-album-creator` | You have source material (audio/text/photos) for a person or life experience and want a production-ready original album plan. |
-| `skill-creator` | You want to create, edit, or evaluate a Claude Code skill (including the ones in this repo). |
 
 ## Install
 

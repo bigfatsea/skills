@@ -1,10 +1,11 @@
 # `.agents/skills` 全面审计报告
 
-<!-- Ver 2026-07-18 21:37 +08, by Claude (Fable 5)  · 一次性深度审计 -->
+<!-- Ver 2026-07-18 21:37 +08, by Claude (Fable 5) · 一次性深度审计 (edited 2026-07-19 08:00 by Claude Sonnet 5: superseded-doc disclaimer, skill-creator section removed — see note below) -->
 
 > ⚠️ **本文档已被 `.agents/skills-issue-report.md` 取代（2026-07-19 核实版）**。
-> 那份文档逐条核实了下面的结论（实际读文件、跑命令），发现 **§11.3/§12 关于 `.venv`/`__pycache__`/`.DS_Store` "已入库需清理"的核心判断是错的**（三者从未被 git 跟踪，`skill-creator` 整个目录也被仓库根 `.gitignore` 排除在版本控制外，本文档完全没提到这一点）；另外本文档写于 `dev-env-audit` 那一轮大改（去 Python 化、三套 HTML 模板、默认英文报告）**之前**，第 3 节关于 dev-env-audit 的内容已大部分过时。
+> 那份文档逐条核实了下面的结论（实际读文件、跑命令），发现 **§11.3/§12 关于 `.venv`/`__pycache__`/`.DS_Store` "已入库需清理"的核心判断是错的**（三者从未被 git 跟踪，本文档完全没提到这一点）；另外本文档写于 `dev-env-audit` 那一轮大改（去 Python 化、三套 HTML 模板、默认英文报告）**之前**，第 3 节关于 dev-env-audit 的内容已大部分过时。
 > 本文档的**定性分析和优点归纳仍有参考价值**（每个 skill 的设计取舍、术语提炼），但任何具体技术结论请以 `skills-issue-report.md` 为准，不要单独引用本文档下判断。
+> **另注**：本文档写作时把 `skill-creator` 也纳入了审计范围（第 8 节），但已确认 `skill-creator` 不属于本项目（本地存在但被仓库根 `.gitignore` 排除，是外部工具），相关内容已从本文档移除，不再讨论。
 >
 > 范围:对当前仓库 `.agents/skills/` 下 10 个技能、合计 90 个源文件(排除 `audio-album-creator/scripts/.venv/` 共 167 个 venv 产物)做 360° 审计,含 SKILL.md / SKILL.zh.md / references / scripts / agents / assets / eval-viewer / licenses / openai.yaml 等。
 > 报告原则:事实先于判断;每条问题都尽量指明证据路径、行号或运行输出;只对真正可观察的问题下结论;对涉及品味/争论/路线的项目,只列"信息差 + 我建议怎么决策",结论留给你。
@@ -24,7 +25,7 @@
 | **工程卫生** | 中下。`.DS_Store` ×2、`.venv/` ×167、`__pycache__/` 已在审计中清理(pycache 已被 git 跟踪,需 `git rm -r --cached` 一次性清理);SKILL.md 最长 276 行超出自定 200 行建议但未超 500 行硬限;`generator-report.py / improve-description.py` 有 600+ 字符超长行,纯排版不破坏解析。 |
 | **安全/伦理边界** | OK。多数技能明文声明只读/不装、不外泄、prompt 防越界;`dev-env-audit` 的"用户中途说直接帮我改"场景有显式拦截;`audio-album-creator` 对真人有 ethics note。 |
 | **可移植性** | 弱。`ai-script` 强制 `cd /Volumes/SSD2T/code/ai-script`(绝对路径 hardcode);`dev-env-audit` 的 reference 全是 macOS + zsh 口径;`lobster-agent-creator` 是 OpenClaw/LobsterAI 专有概念;`master-bp-review` 16 位大师的人设/语气不可被替换。 |
-| **触发可靠性** | 多数 description 写得很"pushy",按"skill-creator"建议风格是好的;`startup-idea-evaluator / prompt-architect / ai-script` 的 description 最长,`interview-methodology` description 触发边界最稳。 |
+| **触发可靠性** | 多数 description 写得很"pushy",这是好的;`startup-idea-evaluator / prompt-architect / ai-script` 的 description 最长,`interview-methodology` description 触发边界最稳。 |
 
 **整体评分(主观)**:约 8.2 / 10。如果把"可移植性"和"工程卫生"按同等权重算进去,会被拉到 7.5 左右。
 
@@ -36,15 +37,14 @@
 |---|---|---|
 | G1 | **路径 hardcode 到 `/Volumes/SSD2T/...`**,移植到他机即坏 | `ai-script` (脚本仓库路径)、`dev-env-audit` 的 scripts/probes 内部全用绝对 `$HOME` 而无 fallback |
 | G2 | **`description` 字段长度参差**,从 92 字符到 1.8K+ 字符不等,无上限/下限规则 | 全部 10 个技能 |
-| G3 | **Bilingual 配对文件未受管控** — `interview-methodology / audio-album-creator` 维护了完整 zh 版本;`dev-env-audit / skill-creator` 仅英文;`lobster-agent-creator` 靠 `core/*_en.md` 实现双语但 SKILL.md 仍是英文;`prompt-architect` 内嵌中英混合模板 | 9/10 技能 |
+| G3 | **Bilingual 配对文件未受管控** — `interview-methodology / audio-album-creator` 维护了完整 zh 版本;`dev-env-audit` 仅英文;`lobster-agent-creator` 靠 `core/*_en.md` 实现双语但 SKILL.md 仍是英文;`prompt-architect` 内嵌中英混合模板 | 8/9 技能 |
 | G4 | **本机工具链全貌未在 repo 任何地方归档** | `dev-env-audit` 设计就是现场扫描,但本仓库内没有"上次扫描结果" |
 | G5 | **没有 CI / smoke test / pre-commit / lint** | 全部 |
 | G6 | **没有 `package_skill.py` 之外的元数据维护** | 全部 |
 | G7 | **SKILL.md 内仍把 SKILL.zh.md 列为"备选/另存",但 Claude 在 Pi/Codex 实际不会读非 SKILL.md 文件** | 全部双语技能 |
 | G8 | **`.DS_Store` 进入仓库**(macOS Finder 副作用),会进 `.skill` 包 | `.agents/skills/.DS_Store`、`.agents/skills/audio-album-creator/.DS_Store` |
 | G9 | **`.venv/` 入库**(Pillow + certifi 完整虚拟环境),`uv.lock` 也入库 | `audio-album-creator/scripts/` |
-| G10 | **`__pycache__/` 已被 git 跟踪**(10 个 .pyc),违反 PEP 3147 默认行为 | `skill-creator/...` |
-| G11 | **没有任何一个 SKILL.md 在 frontmatter 中标注 `license` 字段**,但 `skill-creator/LICENSE.txt` 是 Apache 2.0、实际复制到所有下游 `.skill` 包 | 全部 9 个(没标) |
+| G11 | **没有任何一个 SKILL.md 在 frontmatter 中标注 `license` 字段** | 全部 9 个(没标) |
 | G12 | **没有 `CHANGELOG.md` 顶层记录**,版本只能从每个 SKILL.md 顶部的 `<!-- Ver YYYY-MM-DD ... -->` 推测 | 全部 |
 | G13 | **跨技能没有"统一术语表"**(如 `硬性写作纪律 / Suno / 钩子 / 钩句` 在 `audio-album-creator` 自洽但与外部对话无锚) | 全部 |
 | G14 | **`references/` 引用 `scripts/` / `agents/` 资源时无索引**,新用户要先看 SKILL.md 才能猜到 | 全部含 references/ 的技能 |
@@ -55,7 +55,7 @@
 
 | 建议 | 内容 | 影响技能 |
 |---|---|---|
-| CP1 | 抽出统一的 **frontmatter-lint / trigger-eval / freeze-venv** 工具到 skill-creator,被所有技能调用 | 全部 |
+| CP1 | 抽出统一的 **frontmatter-lint / trigger-eval / freeze-venv** 工具,被所有技能共用 | 全部 |
 | CP2 | 在 `references/` 公共目录建 `cross-skill-glossary.md`,术语用最权威技能(Suno → audio-album-creator;Polanyi 默会知识 → lobster-agent-creator)作主定义 | 全部 |
 | CP3 | `startup-idea-evaluator` 显式声明代理到外部 `market-research` skill,但本仓库没有该 skill —— **这是一处 fail-soft 的暗契约** | `startup-idea-evaluator` |
 | CP4 | `lobster-agent-creator` 的"生成"和"部署"分离;`USER.md` 在模板里有但 `SKILL.md` 明确不生成 —— 团队其他工具(将来若做)应继承此约定 | 全部 agent-类技能 |
@@ -78,7 +78,7 @@
 description: "Call local AI-service CLI ai-script for real generation and retrieval tasks: ...Use when the user asks to 生成图片/配图、合成语音/朗读、转录音频、生成音乐/歌曲、生成视频、问另一个模型/多模型会诊、搜索网页/论文、抓取网页, or when a task needs actual media generation rather than code. Not for local code editing, git, or tasks with no external AI/service call (except resize, which is local)."
 ```
 
-- ✅ 含 "use when" 与 "not for" 边界,符合 skill-creator § Writing the SKILL.md 的 "pushy description" 建议。
+- ✅ 含 "use when" 与 "not for" 边界,符合"pushy description"的建议写法。
 - ⚠️ description 长度 ~880 字符,在 1024 上限内,但接近 — 触发后 description 注入每次模型调用,长 description 是真实的 token 成本。
 - ⚠️ description 把 "Not for" 写进 description 字段(因为是触发门槛),这本身没错,但放太长的反例集会**稀释核心触发词**(`生成图片/配图/合成语音`等)。
 
@@ -213,7 +213,7 @@ description: "Distill a pack of source material (audio / text / photos) into a c
 
 ### 2.7 Cross-cutting Proposals 回引
 
-- CP1:封面生产工具应迁到 skill-creator 的"通用"工具栏,而不是挂在 audio-album-creator 名下。
+- CP1:封面生产工具应迁到一个跨技能共用的"通用"工具栏,而不是挂在 audio-album-creator 名下。
 - CP2:音频术语表"主 / 副主打 / 锁辙 / 题眼复现 / 三轮打磨"应进入 cross-skill-glossary.md。
 - CP5:`.venv/` 必须清掉(已在 G9 列,本技能最大);`uv.lock` 留着(可复现)。
 
@@ -676,136 +676,6 @@ disable-model-invocation: true
 
 ---
 
-## 8. `skill-creator` — 创建/改进 skill 的元技能
-
-### 8.1 文件清单与规模
-
-| 文件 | 字节 | 行 | 备注 |
-|---|---|---|---|
-| `SKILL.md` | 33 168 | 485 | **最长 SKILL.md** |
-| `LICENSE.txt` | 11 345 | 202 | Apache 2.0 |
-| `agents/analyzer.md` | 10 376 | 274 | 复盘分析 |
-| `agents/comparator.md` | 7 287 | 202 | blind A/B |
-| `agents/grader.md` | 9 049 | 223 | 期望评分 |
-| `assets/eval_review.html` | 7 058 | 146 | trigger-eval UI |
-| `eval-viewer/generate_review.py` | 16 365 | 471 | 跑结果服务 |
-| `eval-viewer/viewer.html` | 44 998 | 1 325 | 结果查看器 |
-| `references/schemas.md` | 12 061 | 430 | JSON 模式 |
-| `scripts/__init__.py` | 0 | 0 | 空 |
-| `scripts/aggregate_benchmark.py` | 14 386 | 401 | 聚合 |
-| `scripts/generate_report.py` | 12 847 | 326 | 报表 |
-| `scripts/improve_description.py` | 11 116 | 247 | 改进 desc |
-| `scripts/package_skill.py` | 4 234 | 136 | 打包 |
-| `scripts/quick_validate.py` | 3 972 | 103 | 校验 frontmatter |
-| `scripts/run_eval.py` | 11 464 | 310 | 跑 trigger eval |
-| `scripts/run_loop.py` | 13 605 | 328 | desc 优化循环 |
-| `scripts/utils.py` | 1 661 | 47 | 解析 SKILL.md |
-
-18 文件(`__pycache__` 已清理),5 个 Python 脚本 + 1 个 HTML 资产 + 3 个 agent prompt + 1 个 viewer。**最重**的技能。
-
-### 8.2 触发(description)
-
-```yaml
-description: Create new skills, modify and improve existing skills, and measure skill performance. Use when users want to create a skill from scratch, edit, or optimize an existing skill, run evals to test a skill works, run benchmarks with variance analysis, or optimize a skill's description for better triggering accuracy.
-```
-
-- ✅ 触发词最"pushy"(skill-creator §Writing the SKILL.md 明确建议 pushy description)。
-- ✅ "improve existing skills" + "description for better triggering"—— 涵盖元技能两面。
-- ⚠️ **description 没 "Not for"**——可能与其它"修改 skill"任务撞。若未来有 `skill-editor`,这里需分流。
-
-### 8.3 内容/逻辑/准确性
-
-#### 8.3.1 强项
-
-- ✅ **核心循环写得清楚**:Capture Intent → Interview → Write SKILL.md → Test Cases → Run → Grade → Improve → Repeat。
-- ✅ **"Spawn all runs in same turn"**(with_skill + baseline) 是稀缺洞察:避免 "先 baseline 后 with-skill" 的隐含顺序偏差。
-- ✅ **"Don't use /skill-test or any other testing skill"** —— 显式排他,防测试 skill 的多版本混淆。
-- ✅ **`run_loop.py` 60/40 train/test split + 选 best on test** —— 抗 overfit。
-- ✅ **"Quick Validate"** YAML schema lint 简洁可执行。
-- ✅ **`<new_description>` tag 强制** —— 解析鲁棒;超长自动二次 round。
-
-#### 8.3.2 已知问题与弱项(我实测发现)
-
-- ❌ **`quick_validate.py` 与 `package_skill.py` 缺 `PyYAML` 依赖**——本地跑 `ModuleNotFoundError: No module named 'yaml'`。这意味着**该 skill 的核心工具在用户机器上大概率不可用**。建议:
-  - 写 `pyproject.toml` 把 `PyYAML` 列为依赖,或
-  - 用 `python3 -c "import yaml"` 探测并在 SKILL.md 标 "requires pip install pyyaml"。
-- ❌ **`run_eval.py` 强依赖 `claude` CLI** 在 `$PATH` 上(用于 `claude -p`),并在 Python 内 spawn subprocess → 任何没有 `claude` CLI 的环境都坏。SKILL.md §"Claude.ai-specific instructions" 部分说明了 fallback,但**eval 不能 fallback**(run_eval 直接 break)。
-- ❌ **`generate_review.py` 用 `lsof` 杀端口**(macOS only) → `lsof` 在 Linux 上存在但路径不同,Windows 无。SKILL 没标记。
-- ❌ **`run_eval.py` 创建 `.claude/commands/<unique-id>.md` 临时文件** —— 在用户项目根目录创建隐藏目录;**每个 eval 创建一次**;若用户已有 `.claude/commands/` 子目录,被无差别覆盖风险。修复:用 `tempfile` 临时目录,而不是 `.claude/`。
-- ⚠️ **viewer.html 1,325 行** —— 单一 HTML 内嵌大量逻辑(SheetJS via CDN),没有 minified;**离线场景**(CDN 404) → xlsx 不渲染。**建议**:把 SheetJS 内联或允许"无 CDN 模式"。
-- ⚠️ **`run_eval.py` 用的 prompt 检测 trigger**靠 `claude -p --include-partial-messages` 的流事件;这在 Claude Code 新版本可能改 schema → 鲁棒性依赖。
-- ⚠️ **`generate_review.py` `--static` 模式自动开浏览器**;在 headless 容器里 `webbrowser.open()` 会 print 而不是真正打开,但 feedback 路径不同。**轻微**。
-- ⚠️ **`generate_review.py` 默认端口 3117;没写**为什么是 3117(可改成"任何空闲 port 试 3117 → 0 fallback")。
-- ⚠️ **`eval_review.html` `__EVAL_DATA_PLACEHOLDER__` 直接 inline JSON;** 若 eval 含 `<script>` 字符串,可 XSS(用户输入不可信场景)。**安全:必须确认 eval 源是可信。**
-- ⚠️ **`generate_report.py` `_call_claude` prompt > 32K** 风险:Claude Code 上下文窗口是模型特定,没说限制。**超长 prompt 在 Sonnet 4.5/Opus 4.6 上需管理**。
-- ⚠️ **evals 触发 prompt 模板**是 `_call_claude` 里拼出来的;`{prompt}` 字段来自用户,**没**做 escape → 若 user input 含 `{skill_name}` literal,会破坏格式(f-string 错)。
-- ⚠️ **`run_loop.py` 与 `run_eval.py` `find_project_root()` 找 `.claude/`**——多 .claude 嵌套时,`return current` fallback 不严谨。
-- ⚠️ **improve_description.py `_call_claude` 把 prompt 通过 stdin 传**——`echo` + pipe 在 prompt 含特殊字符时可能 broken。**建议:用 `--prompt` flag**(但 Claude Code CLI 不一定有)or 写到临时文件 `claude -p < file`。
-- ⚠️ **触发优化 prompt 里"每次优化鼓励风格多样"** —— "you'll have multiple opportunities"——但**跑 `max-iterations=5` 时**,默认就 5 次,若 user 设了 1,风格多样性提示就是空头支票。
-- ⚠️ **`<new_description>` 超 1024 字符的二次 round 是 ad-hoc safety net**;若再次超,SKILL 没说。
-
-#### 8.3.3 viewer.html 的逻辑(1,325 行)
-
-- ✅ outputs / benchmark / grades / feedback 4 tab 完整。
-- ✅ xlsx 渲染用 SheetJS。
-- ⚠️ "Static mode"实际是"在 `--static` 路径写入 HTML";但 feedback 仍是下载文件——**没有 read GET `/api/feedback`**,意味着静态模式第一次**看不到**之前 feedback(若同一文件被复用)。
-- ⚠️ `renderGrades` 直接注入 innerHTML,若 evidence 字段有 XSS payload(eval metadata 是 user-supplied)——安全风险。
-- ⚠️ `escapeHtml` 在多处被调用,逻辑正确;但 `__EMBEDDED_DATA__` 是 raw JSON inline → eval data 内的 HTML 字符**没**被 escape;若 eval prompt 含 `<script>`,会被嵌入到 innerHTML。
-- ⚠️ `EMBEDDED_DATA` 是 const,不可改;若在 iframe 内嵌入,可能受 CSP 限制。
-- ⚠️ benchmark 表格的 `r.benchmark_row_without` 类名——但**生成的 HTML 用 `rowClass = ci === 0 ? "with" : "without"`**——**ci 0 不一定是 with_skill**;这是 config 顺序敏感。**如果 users run `with_skill` 后跑 `without_skill`,会反过来**。
-
-#### 8.3.4 内部不一致(细看)
-
-- ⚠️ SKILL.md §Running and evaluating 写 "1-3 realistic test prompts" 但 evals.json schema 允许多个;OK。
-- ⚠️ schemas.md `metrics.json` schema 没有 `total_tool_calls` 字段,但 aggregate_benchmark.py 读 `total_tool_calls` — **若 user 不输出,fallback 0**,OK;但 schema 文档不一致。
-- ⚠️ `grading.json` schema 写 `eval_feedback.suggestions` 是 array,但 grader.md 给的 sample JSON 是 OK 的。✅
-- ⚠️ `comparison.json` 的 `expectation_results` 字段 — schema 说 "Only if expectations were provided" — OK。
-- ⚠️ `analysis.json` 的 `transcript_insights` — schema 没强制 winner/loser 名字;OK。
-- ⚠️ **evals/evals.json 里的 schema 字段** 与 schemas.md evals.json 略有差异:evals.json 里的 `expected_output` 字段在 schemas.md 是 `expected_output: Description of expected result`,一致;但 `files` 字段在 sample evals(其他技能)里没用。OK。
-- ⚠️ `run_loop.py` 里"Train + Test result split 用的 query 比对"——若 train 与 test 出现同一 query(holdout=0),会全归 train。**OK** 但隐含依赖 holdout > 0。
-
-#### 8.3.5 evals/目录
-
-- 仅 `master-bp-review` 和 `startup-idea-evaluator` 有 evals(各 3-4 个 case)。其他 8 个技能**没有** → trigger eval 不可运行。
-  - 建议:在 skill-creator 顶部加 "Before running trigger eval, ensure evals/evals.json exists" 的硬警告。
-
-### 8.4 提示工程与安全
-
-- ✅ Apache 2.0 LICENSE 在仓库,**其他技能没有 license 字段**(全局 G11)。
-- ✅ "Principle of Lack of Surprise"显式写在 SKILL.md —— 防恶意 skill。
-- ✅ 多次提 "You have full context so less rigorous; use subagent in Claude Code for rigor"。
-- ⚠️ "Description optimization" prompt 给 Claude 自由发挥,可能产生"风格过于 pushy 但描述不准确"—— `claude -p` 改写后没自动 lint。
-- ⚠️ 跑 `run_loop.py` 会调 `claude -p` 多次 → 实际消费 token(用户付钱)。SKILL 没警告"this will cost ~$X"。
-- ⚠️ benchmark 阶段 spawn "with_skill" + "without_skill" 共 N×2 runs → 大量子任务。SKILL 没提 "How to estimate cost"。
-
-### 8.5 待补内容
-
-1. **真测试该 skill 的 evals**:skill-creator 自己**没有 evals/** —— 元技能无法被元技能测试。
-2. **CI 集成**:没 GitHub Action / pre-commit,lint 全部靠人跑。
-3. **多语言 description 优化**:目前只优化英文。
-4. **回滚机制**:优化后的 description 写入 SKILL.md,无 git 自动回滚。
-5. **`improve_description.py` 的 prompt token 估算**:长 prompt 跑到 `claude -p` 会被 100K token 限。
-6. **Viewer 的"i18n"**:全英文,中文用户不友好。
-7. **trigger eval 的"negative 难度"**:没给"应该 NOT trigger"的负面测试集构造指南(已有,但深度可加)。
-8. **生成 review 的 export**:feedback.json 导出,但**没有"用户从另一端 import"的脚本**。
-9. **`package_skill.py` 的 `EXCLUDE_DIRS = {"__pycache__", "node_modules"}`** ✅ 但 **没排除 `.venv/`** —— audio-album-creator 用此 skill 打包会把 venv 整个 zip 进去。修复。
-10. **`package_skill.py` 没排除 `.DS_Store`**(`EXCLUDE_FILES` 只有这一个)—— 实际有但 `should_exclude` 检查 `name in EXCLUDE_FILES` ✅,OK。
-11. **examples/ 没用到**:description 提到"或" —— 但 files 字段 schema 支持,没人用。
-
-### 8.6 Cross-cutting Proposals 回引
-
-- CP1:**skill-creator 应强制"frontmatter linter + description optim"** 跑过才能发布。
-- CP5:audio-album-creator 用 `gen_cover.py` 脚本,可迁到 skill-creator 的"通用工具"目录(避免每个 skill 都自管 venv)。
-- CP6:本 skill 应作为"未来新 skill" 的母版,`quick_validate` 应是 `validate` 的薄包装。
-
-### 8.7 Summary(skill-creator)
-
-- 评分: 9 / 8 / 8 / 5 / 7
-- 主要问题:`PyYAML` 缺、Claude CLI 硬依赖、CDN XSS、`.claude/commands/` 副作用、evals 缺自己。
-- 最少修改见效快:补 `pyproject.toml` + `requirements.txt` 标 PyYAML;`EXCLUDE_DIRS` 加 `.venv`;viewer.html 的 `__EMBEDDED_DATA__` 加 sanitize。
-
----
-
 ## 9. `startup-idea-evaluator` — 创业 idea 评估
 
 ### 9.1 文件清单与规模
@@ -1000,7 +870,6 @@ description: Synthesize multiple provided documents into one comprehensive repla
 | `lobster-agent-creator` | 8 | 8 | 8 | 2 | 9 | 7.0 |
 | `master-bp-review` | 8 | 8 | 8 | 6 | 7 | 7.4 |
 | `prompt-architect` | 8 | 8 | 9 | 7 | 7 | 7.8 |
-| `skill-creator` | 9 | 8 | 8 | 5 | 7 | 7.4 |
 | `startup-idea-evaluator` | 8 | 9 | 8 | 6 | 7 | 7.6 |
 | `synthesize-documents` | 8 | 8 | 9 | 6 | 7 | 7.6 |
 
@@ -1009,7 +878,6 @@ description: Synthesize multiple provided documents into one comprehensive repla
 | 触发词 | 风险技能 |
 |---|---|
 | "评估 / review" | `master-bp-review` vs `startup-idea-evaluator` |
-| "改 skill / 改 prompt" | `skill-creator` vs `prompt-architect` |
 | "总结 / 整合" | `synthesize-documents` vs (隐式)其他 |
 | "audio / music" | `ai-script` vs `audio-album-creator` |
 | "环境 / 审计" | `dev-env-audit` (相对独立) |
@@ -1027,15 +895,13 @@ description: Synthesize multiple provided documents into one comprehensive repla
 | `lobster-agent-creator` | — | — | — | ❌ | ❌ | ❌ |
 | `master-bp-review` | — | — | — | ❌ | ❌ | ✅ |
 | `prompt-architect` | — | — | — | ❌ | ❌ | ❌ |
-| `skill-creator` | — | (已修) | — | ❌ | ✅(Apache 2.0) | ❌ |
 | `startup-idea-evaluator` | — | — | — | ✅ | ❌ | ✅ |
 | `synthesize-documents` | — | — | — | ❌ | ❌ | ❌ |
 
-**清晰结论**:
-- `.DS_Store` 2 个,根级别 + audio-album-creator 内部,**应清理**。
-- `.venv` 13MB,全在 audio-album-creator,**应剔除 git 并改用 uv sync**。
-- `__pycache__` 8 个(已清理),但 git 已跟踪,**需 `git rm -r --cached`**。
-- 唯一带 LICENSE 的是 `skill-creator` —— **但其他技能若打包 `.skill` 会复制 skill-creator 的 LICENSE** —— 这意味着隐性"所有派生 skill 都是 Apache 2.0",**如果不同意,需在每个技能加 `license` 字段声明其他许可证**。
+**清晰结论**（⚠️ 已被 `skills-issue-report.md` 证伪，见该文档第 1 节 —— `.DS_Store`/`.venv`/`__pycache__` 从未被 git 跟踪，以下三条结论不成立，保留仅作历史对照）:
+- ~~`.DS_Store` 2 个,根级别 + audio-album-creator 内部,应清理。~~
+- ~~`.venv` 13MB,全在 audio-album-creator,应剔除 git 并改用 uv sync。~~
+- ~~`__pycache__` 8 个(已清理),但 git 已跟踪,需 `git rm -r --cached`。~~
 - 唯一带 README 的是 `startup-idea-evaluator` —— 平台使用说明,值得复制到其他技能。
 
 ### 11.4 待补充内容 Top 10(按影响排序)
@@ -1046,10 +912,9 @@ description: Synthesize multiple provided documents into one comprehensive repla
 4. **CP3:`market-research` 暗契约** —— `startup-idea-evaluator` 必须加 fallback
 5. **CP7:跨技能触发冲突图** —— 在每个 SKILL.md 顶部加"什么时候不用我"
 6. **CP11:每个 SKILL.md 加 `license` 字段**(避免"全部隐性 Apache 2.0")
-7. **CP1:skill-creator 的 `quick_validate.py` 补 PyYAML 依赖**;`EXCLUDE_DIRS` 加 `.venv`;`improve_description.py` 的 prompt 通过文件传
-8. **CP5:`audio-album-creator` 抽 `gen_cover.py` 到 skill-creator `tools/`**(避免 skill-specific venv)
-9. **CP2:cross-skill-glossary.md** —— 沉淀术语(锁辙 / 钩子 / 小而美 / 默会知识 / Synthesis 4-bucket)
-10. **`synthesize-documents` 的 `agents/openai.yaml` 重命名/迁移到 `platforms/openai/`** —— 与 `agents/` 的"agent templates"语义分离
+7. **CP5:`audio-album-creator` 抽 `gen_cover.py` 到一个跨技能共用的工具目录**(避免 skill-specific venv)
+8. **CP2:cross-skill-glossary.md** —— 沉淀术语(锁辙 / 钩子 / 小而美 / 默会知识 / Synthesis 4-bucket)
+9. **`synthesize-documents` 的 `agents/openai.yaml` 重命名/迁移到 `platforms/openai/`** —— 与 `agents/` 的"agent templates"语义分离
 
 ### 11.5 需要你拍板的争议项
 
@@ -1079,9 +944,6 @@ echo "*.pyc" >> .gitignore
 # 3. .venv 移出
 echo "audio-album-creator/scripts/.venv/" >> .gitignore
 git rm -r --cached .agents/skills/audio-album-creator/scripts/.venv
-
-# 4. skill-creator/scripts/__init__.py 是空,这是合法(让 scripts 成 package)
-# 5. skill-creator EXCLUDE_DIRS 加 .venv (PR 到 skill-creator 项目)
 ```
 
 ### 12.1 我建议的 `.gitignore` 补充(本仓库根 `.gitignore`)
@@ -1096,7 +958,6 @@ git rm -r --cached .agents/skills/audio-album-creator/scripts/.venv
 
 ### 12.2 我建议的 SKILL.md 模板(本仓库内)
 
-- 在 `skill-creator/SKILL.md` 的"Step 1 Capture Intent"加一条:"Confirm whether to commit; skills under `agents/skills/` are typically version-controlled, but `references/`, `examples/`, `evals/`, `*.skill` packaged files, and **never** `scripts/.venv/` should be in git"。
 - 在"frontmatter"加一条 `license: Apache-2.0` 作为推荐(如果同意全部 Apache 2.0)。
 
 ---

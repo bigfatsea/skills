@@ -1,4 +1,4 @@
-<!-- Ver 2026-07-18 20:00, by Claude Sonnet 5 -->
+<!-- Ver 2026-07-19 08:00, by Claude Sonnet 5 -->
 
 [English](README.md)
 
@@ -24,10 +24,8 @@ https://github.com/bigfatsea/skills
 | `synthesize-documents` | 手头有多份草稿/报告/memo，想合并成一份保留分歧和少数意见的综合文档。 |
 | `ai-script` | 任务需要通过本地 `ai-script` CLI 调用真实的 AI 生成/检索能力：LLM、TTS、STT、图像、音乐、视频、网页/学术检索、抓取。 |
 | `dev-env-audit` | 想对本机 macOS 开发环境做只读审计：SDK 安装方式、版本管理器冲突、PATH 漂移、缓存外置情况。 |
-| `lobster-agent-creator` | 想为新的 OpenClaw/LobsterAI agent 生成 IDENTITY/SOUL 人设组合。仅限创建新 agent。 |
 | `interview-methodology` | 正在准备访谈、整理转写稿，或从口述史材料中提炼故事核心。 |
 | `audio-album-creator` | 有关于某个人或某段人生经历的素材（音频/文字/照片），想产出可直接投入制作的原创专辑方案。 |
-| `skill-creator` | 想创建、修改或评测一个 Claude Code 技能（包括本仓库里的这些）。 |
 
 ## 安装
 
