@@ -37,7 +37,7 @@ description: 'Three-mode pipeline for oral history and personal-experience inter
 
 **输出：**
 1. 研究维度报告 — 8 维度表格（`references/ethics-and-prep.zh.md §B.3`）
-2. 半结构化访谈提纲 — 话题组 + 每组 3–5 个开放性问题 + `[目的：]` 注释 + 5 个备用问题；最多 2 页 A4
+2. 半结构化访谈提纲 — 主题词 + 每组 3–5 个开放性问题 + `[目的：]` 注释 + 5 个应急问题；最多 2 页 A4
 3. 伦理前置核查单 — 同意书提醒、敏感领域标记
 
 输出文件：`pre-interview-{subject}.md`
@@ -50,10 +50,10 @@ description: 'Three-mode pipeline for oral history and personal-experience inter
 
 输出：
 1. 研究维度报告（填写 8 维度表格，references/ethics-and-prep.zh.md §B.3）
-2. 半结构化提纲：话题组 + 每组 3–5 个开放性问题 + [目的：] 注释 + 5 个备用问题；最多 2 页 A4
+2. 半结构化提纲：主题词 + 每组 3–5 个开放性问题 + [目的：] 注释 + 5 个应急问题；最多 2 页 A4
 3. 伦理前置核查单：标记敏感领域，提示同意书
 
-约束：从话题组入手，而非从预设问题入手。避免引导性问题。在访谈前标记法律/伦理敏感领域。
+约束：从主题词入手，而非从预设问题入手。避免引导性问题。在访谈前标记法律/伦理敏感领域。
 ```
 
 ---
@@ -130,10 +130,10 @@ description: 'Three-mode pipeline for oral history and personal-experience inter
 
 | 步骤 | 动作 | 时机 |
 |---|---|---|
-| 1 | 准备项目说明 + 录音同意书 + 版权授权书 | 首次联系前 |
+| 1 | 准备项目说明 + 录音同意书 + 授权发布书 | 首次联系前 |
 | 2 | 访前会面中逐条解读文件；口头确认 | 访前会面 |
 | 3 | 录音中记录口头同意（on-record） | 每次录制开头 |
-| 4 | 签署版权授权书（权利转让、发布范围） | 访谈完成后 |
+| 4 | 签署授权发布书（权利转让、发布范围） | 访谈完成后 |
 
 每次录制前执行完整伦理自查（`references/ethics-and-prep.zh.md §A.6`）。
 

@@ -1,51 +1,51 @@
 <!-- Ver 2026-07-18 20:00, by Claude Fable 5 -->
 
-# Zig —— 权威管理器: zigup（社区事实标准）
+# Zig — Authoritative Manager: zigup (Community De Facto Standard)
 
-## 1. 基线
+## 1. Baseline
 
-- 推荐工具：**zigup**。注意它不是 Zig 核心团队发布的官方工具，而是社区项目（homebrew-core 有 formula）；同类竞品还有 zvm、anyzig 等，该领域尚未分出唯一胜者——本 skill 选 zigup 是基于当前采用度的偏好，用户已在用 zvm 等同类工具且运转正常时，按"尊重存量选择"原则不建议互迁。
-- 达标最小特征集：
-  - `zig version` 解析到 zigup 管理的版本
-  - 没有手动下载解压的 zig 二进制和 zigup 管理的版本同时挂在 PATH 上
+- Recommended tool: **zigup**. Note that it is not an official tool released by the Zig core team, but a community project (homebrew-core has a formula); competing alternatives include zvm, anyzig, etc. This field has not yet produced a single winner — this skill selects zigup based on current adoption preference. If the user is already using zvm or similar tools and they are working normally, under the principle of "respect existing choices" it is not recommended to switch between them.
+- Minimum required feature set:
+  - `zig version` resolves to a zigup-managed version
+  - No manually downloaded/extracted zig binary coexisting on PATH with a zigup-managed version
 
-## 2. 深挖探测（只读）
+## 2. Deep Probe (Read-only)
 
 ```bash
 which -a zig zigup
 zig version
 zigup list 2>/dev/null
 
-# 是否有手动下载解压装的 zig（常见做法：解压到 ~/zig 或 /usr/local/zig 再手动加 PATH）
+# Is there a manually downloaded/extracted zig installed? (Common practice: extract to ~/zig or /usr/local/zig then manually add to PATH)
 ls -d ~/zig /usr/local/zig 2>/dev/null
 ```
 
-## 3. 判定规则
+## 3. Decision Rules
 
-| 发现 | 判定 | 理由 |
+| Discovery | Verdict | Reason |
 |---|---|---|
-| zig 由 zigup 管理且唯一 | OK | 达标 |
-| 手动下载的 zig 二进制和 zigup 管理的版本都在 PATH 上 | WARN | 谁生效取决于 PATH 顺序，容易在不知情下用错版本 |
-| 只有手动下载的 zig，没有版本管理工具 | WARN | Zig 版本迭代快、语言本身仍有 breaking change，建议上 zigup 方便切换 |
+| zig is managed by zigup and unique | OK | Meets standard |
+| Manually downloaded zig binary and zigup-managed version both on PATH | WARN | Which one takes effect depends on PATH order; easy to use the wrong version unknowingly |
+| Only manually downloaded zig, no version management tool | WARN | Zig version iterations are fast; the language itself still has breaking changes; recommend setting up zigup for easy switching |
 
-## 4. 迁移方案（五步法）
+## 4. Migration Plan (Five-Step Method)
 
-1. **检测现状** —— §2 全套。
-2. **装 zigup**：
+1. **Detect current state** — §2 full set.
+2. **Install zigup**:
    ```bash
-   brew install zigup      # 或按 zigup 项目 README 里的其他安装方式
+   brew install zigup      # or other installation methods from zigup project README
    zigup <version>
    zigup default <version>
    ```
-3. **处理旧的**：手动下载解压的 zig 目录，确认没有脚本/项目硬编码指向它之后可以删除，同时把手动加的 PATH 那一行从 shell 配置里删掉。
-4. **【可选】外置存储**：zigup 支持自定义安装目录，具体参数以 `zigup --help` 为准，装前设好，避免装完再搬。
-5. **验证**：
+3. **Handle old**: For the manually downloaded/extracted zig directory, after confirming no scripts/projects have hard-coded references to it, it can be deleted, and also remove the line that manually added PATH from shell config.
+4. **[Optional] External storage**: zigup supports a custom installation directory; see `zigup --help` for exact parameters and set it before installation to avoid moving it later.
+5. **Verify**:
    ```bash
    zig version; which zig
    zigup list
    ```
 
-## 5. 已知坑
+## 5. Known Pitfalls
 
-- **zigup 不是官方工具**：如果项目 CI 或团队约定要求"零第三方工具"，官方路线是从 ziglang.org/download 手动下载对应版本的 tarball，自己维护多版本切换（比如按版本号命名解压目录，自己管 PATH）。zvm/anyzig 等同类工具与 zigup 属同级竞争关系，发现任一在正常工作都不算 WARN。
-- **Zig 语言本身仍在快速变化**：不同 0.x 版本之间可能有真实的语法/标准库变化，装错版本表现为编译错误，先查版本号再查代码。
+- **zigup is not an official tool**: If project CI or team conventions require "zero third-party tools", the official route is to manually download the tarball for the corresponding version from ziglang.org/download and maintain multi-version switching yourself (e.g., naming extraction directories by version number and managing PATH yourself). zvm/anyzig and similar tools are competing alternatives at the same level as zigup; finding any in normal operation does not count as WARN.
+- **Zig language itself is still rapidly changing**: There may be real syntax/standard library changes between different 0.x versions; the wrong version will manifest as a compilation error; check the version number before debugging the code.

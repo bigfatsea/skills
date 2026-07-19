@@ -1,231 +1,228 @@
 <!-- Ver 2026-07-19 05:30, by Claude Sonnet 5 -->
-<!-- 一份填好的示例输出，演示 review-template.md 的完整结构该怎么填。内容是虚构项目，仅供参考格式，不是真实评审。 -->
+<!-- A completed sample output demonstrating how to fill in the complete structure of review-template.md. The content is a fictional project, for format reference only, not a real review. -->
 
-# 商业计划书大师评审报告（示例）
+# Master BP Review Report (Sample)
 
-**评审日期**: 2026-07-19
-**评审文档**: 微信小程序报销工具 BP（用户口述）
-**项目名称**: 微信报销通
-
----
-
-## 第一部分：项目快速理解与大师选择
-
-### 项目快速理解
-
-- **业务类型**: B2B SaaS（中小企业财务工具，微信小程序形态）
-- **当前阶段**: Early Users（3 家种子用户，月流水 300 元）
-- **目标用户**: 20-200 人规模的中小企业财务/行政人员
-- **收入模式**: 订阅制，99 元/月
-- **核心不确定性**: 300 元/月流水说明付费意愿和获客路径都还没验证，"微信小程序"这个渠道能不能撑起 B2B SaaS 的分发是最大疑问
-
-### 入选的 5 位大师
-
-| 大师 | 入选理由 | 主要评审 lens | 他/她会追问的关键问题 |
-|------|----------|---------------|------------------------|
-| Rob Walling | 微 SaaS + 单位经济学是这个项目最需要被诚实审视的部分 | MRR / churn / CAC payback | "你的 CAC 是多少？3 家种子用户是怎么找到的，能规模化吗？" |
-| 张小龙 | 微信小程序生态里的产品直觉，判断这个形态是否讨巧 | 产品克制 / 用户心智 | "为什么用户要在小程序里做报销，而不是继续用 Excel？" |
-| Jason Fried | 3 人团队、bootstrap 优先，需要"这值得做吗"的清醒视角 | 团队精简 / 可持续现金流 | "99 元定价能撑起多少客户成功成本？你们真的需要做这个吗？" |
-| Alex Hormozi | 300 元流水暴露的是 offer 太弱，需要销售/定价视角 | 报价设计 / 转化 | "为什么只有 3 家？你的 offer 到底在解决多痛的问题？" |
-| April Dunford | 中小企业财务软件竞争激烈，定位模糊是常见死因 | B2B 定位 / 差异化 | "你的'真正的替代品'是什么？是财务软件，还是员工手写报销单？" |
-
-### 未选择其他大师的原因
-
-Thiel/Naval 的垄断与杠杆视角对一个 300 元流水、中小企业财务工具来说为时过早；Jobs 的产品美学在这个阶段不是核心矛盾；Chesky/Kevin Kelly 的社区与信任视角跟这个 B2B 工具型产品匹配度低。
+**Review Date**: 2026-07-19
+**Reviewed Document**: WeChat Mini Program Reimbursement Tool BP (user dictation)
+**Project Name**: WeChat Reimburse
 
 ---
 
-## 第二部分：五位大师的独立评审
+## Part 1: Quick Project Understanding and Master Selection
 
-### 评审人 #1: Rob Walling
+### Quick Project Understanding
 
-#### 投资决策
+- **Business Type**: B2B SaaS (financial tool for SMEs, WeChat Mini Program format)
+- **Current Stage**: Early Users (3 seed users, ¥300 monthly revenue)
+- **Target Users**: Finance/administration staff in SMEs with 20–200 employees
+- **Revenue Model**: Subscription, ¥99/month
+- **Core Uncertainty**: ¥300/month revenue shows neither willingness to pay nor customer acquisition path is validated; the biggest question is whether the "WeChat Mini Program" channel can support B2B SaaS distribution.
 
-**决策**: 有条件的投
+### Selected 5 Masters
 
-**理由**: 3 家种子用户、300 元月流水，样本太小无法判断真实 churn 和 payback，但 99 元/月的定价和"中小企业报销"这个刚需方向是对的。有条件是指：先把种子用户扩到 15-20 家、验证 3 个月留存，再谈规模化。
+| Master | Reason for Selection | Main Review Lens | Key Question He/She Will Ask |
+|--------|----------------------|------------------|------------------------------|
+| Rob Walling | Micro SaaS + unit economics is what this project needs to be honestly examined | MRR / churn / CAC payback | "What is your CAC? How did you find those 3 seed users, and is it scalable?" |
+| Zhang Xiaolong | Product intuition within the WeChat Mini Program ecosystem, judging whether this form is clever | Product restraint / user mindset | "Why would users do reimbursement in a mini program instead of continuing with Excel?" |
+| Jason Fried | A 3-person team, bootstrap-first approach needs a clear-headed "is it worth it?" perspective | Lean team / sustainable cash flow | "Can a ¥99 price support sufficient customer success costs? Do you really need to do this?" |
+| Alex Hormozi | ¥300 revenue exposes a weak offer, needs a sales/pricing perspective | Offer design / conversion | "Why only 3 companies? How painful is the problem your offer is actually solving?" |
+| April Dunford | Intense competition in SME financial software, unclear positioning is a common cause of death | B2B positioning / differentiation | "What is your 'real alternative'? Is it financial software, or handwritten expense reports?" |
 
-#### 如果我是创始人
+### Reasons for Not Selecting Other Masters
 
-我会先停掉一切"扩功能"的冲动，把全部精力放在这 3 家客户身上——每周打电话问他们真实用得怎么样，抠出续费理由。不会去融资，先证明 MRR 能自然涨到 1 万再说。
-
-#### 远景描绘
-
-**1-3 年远景**: 如果能把留存做扎实，这会是一个 500-1000 家客户、MRR 5-10 万元的稳健微 SaaS，靠口碑和 SMB 财务顾问渠道分发。
-
-**更远未来**: 大概率天花板在几千万年流水，除非能横向扩展到费用管理的其他环节（预算审批、发票管理），否则不会是一个 VC 想投的规模，但可以是一个很好的"one-person-army"生意。
-
----
-
-### 评审人 #2: 张小龙
-
-#### 投资决策
-
-**决策**: 不投
-
-**理由**: "报销"这件事本身用户是不想花时间做的，小程序形态如果只是把 Excel 流程照搬进去，没有解决"用户根本不想碰这件事"的本质问题。300 元流水说明用户用完即走，且走了不想再回来。
-
-#### 如果我是创始人
-
-我会重新问自己：用户真正想要的是什么？大概率不是"一个报销工具"，而是"再也不用想报销这件事"。我会去掉大部分手动录入步骤，改成拍照+AI 自动分类+定期批量提醒，让用户几乎感觉不到自己在用一个工具。
-
-#### 远景描绘
-
-**1-3 年远景**: 如果不解决"用完即走"的问题，用户会持续流失，规模很难超过几百家。
-
-**更远未来**: 如果真能做到"无感报销"，这可能演变成企业财务自动化的一个入口，但目前的产品形态离这一步还很远。
+The monopoly and leverage perspectives of Thiel/Naval are premature for a ¥300 revenue SME financial tool; Jobs' product aesthetics are not the core contradiction at this stage; Chesky/Kevin Kelly's community and trust perspectives have low relevance to this B2B utility product.
 
 ---
 
-### 评审人 #3: Jason Fried
+## Part 2: Independent Reviews by the Five Masters
 
-#### 投资决策
+### Reviewer #1: Rob Walling
 
-**决策**: 有条件的投
+#### Investment Decision
 
-**理由**: 这个项目的体量正好适合一个小团队，不需要外部资本——但创始人需要想清楚自己是不是真的想做一个"慢慢盈利"的生意，而不是被"应该融资/应该扩张"的默认叙事推着走。
+**Decision**: Conditional Invest
 
-#### 如果我是创始人
+**Reason**: 3 seed users, ¥300 monthly revenue, the sample is too small to determine real churn and payback, but the ¥99/month pricing and the rigid demand for "SME reimbursement" is the correct direction. Conditional means: first expand to 15–20 seed users, verify 3-month retention, then talk about scaling.
 
-我会把团队保持在 2-3 人，不招销售、不融资，靠产品本身和客户转介绍增长。如果 6 个月后 MRR 还起不来，会认真考虑这是不是一个"值得做但不值得我做"的项目。
+#### If I Were the Founder
 
-#### 远景描绘
+I would first stop any impulse to "add features" and put all energy on these 3 customers — call them every week to understand how they really use it, extract the reasons for renewal. I wouldn't seek funding; first prove that MRR can naturally grow to ¥10,000, then think about scaling.
 
-**1-3 年远景**: 一个 3-5 人团队、MRR 稳定在 3-8 万元的健康小生意，创始人有不错的生活质量。
+#### Vision
 
-**更远未来**: 大概率维持"小而美"的规模，这本身没有问题——不是所有生意都需要变大。
+**1–3 Year Vision**: If retention is solid, this could be a steady micro SaaS with 500–1,000 customers, MRR ¥50k–100k, distributed via word of mouth and SME accountant referral channels.
 
----
-
-### 评审人 #4: Alex Hormozi
-
-#### 投资决策
-
-**决策**: 不投
-
-**理由**: 300 元/月流水在任何合理获客周期下都说明 offer 太弱——要么定价与价值不匹配，要么根本没有真正做销售（只是把产品挂出去等人来）。没看到任何"为什么现在必须买"的紧迫性设计。
-
-#### 如果我是创始人
-
-我会先把定价拆开：99 元/月对一个 20 人公司来说决策成本很低，问题不在贵不贵，而在"没人主动推"。我会亲自去谈下一批 20 家客户，用"免费用 1 个月+承诺帮你省下第一个月的对账时间"这种强 offer 换转化，而不是干等自然增长。
-
-#### 远景描绘
-
-**1-3 年远景**: 如果肯亲自下场做销售，MRR 可以在 12 个月内到 2-3 万元；如果继续等自然增长，大概率原地踏步。
-
-**更远未来**: 这类工具的天花板本身不高，除非组合出更强的 offer（比如打包财务顾问服务），不然不是一个值得长期押注的方向。
+**Longer-Term Future**: Likely revenue ceiling is a few million annually, unless it can horizontally expand to other expense management links (budget approval, invoice management), otherwise it won't be a size VC wants to invest in, but it can be a very good "one-person-army" business.
 
 ---
 
-### 评审人 #5: April Dunford
+### Reviewer #2: Zhang Xiaolong
 
-#### 投资决策
+#### Investment Decision
 
-**决策**: 有条件的投
+**Decision**: No Invest
 
-**理由**: 定位模糊是这个项目当前最大的隐性风险——"报销工具"这个类别里，用户的"真正替代品"到底是纸质单据、Excel，还是金蝶/用友这类财务软件？三种对手对应完全不同的打法，BP 里没有说清楚。
+**Reason**: "Reimbursement" itself is something users don't want to spend time on. If the mini program merely copies the Excel process, it doesn't solve the essential problem that "users fundamentally don't want to touch this matter." ¥300 revenue shows users finish and leave, and never want to come back.
 
-#### 如果我是创始人
+#### If I Were the Founder
 
-我会先做一次"竞争替代品"访谈：直接问 3 家种子用户，"如果没有我们，你现在会怎么做报销？"根据答案重新定义类别——如果对手是"纸质流程"，卖点是"数字化"；如果对手是财务软件，卖点必须是"比它们轻、比它们快上手"。
+I would ask myself again: What do users truly want? Most likely not "a reimbursement tool," but "never having to think about reimbursement again." I would eliminate most manual entry steps, change to photo + AI auto-categorization + regular batch reminders, making users barely feel they are using a tool.
 
-#### 远景描绘
+#### Vision
 
-**1-3 年远景**: 定位清晰后，能在"轻量级、微信原生"这个细分位置站住脚，成为不想用重型财务软件的小微企业的首选。
+**1–3 Year Vision**: If the "finish and leave" problem isn't solved, users will keep churning, and scale will be hard to exceed a few hundred companies.
 
-**更远未来**: 如果定位持续模糊，会长期陷入"四不像"状态，被更聚焦的对手蚕食。
-
----
-
-## 第三部分：创始人回应与战略决策
-
-### 大师意见汇总
-
-#### 投资决策统计
-
-- 投: 0 位
-- 不投: 2 位
-- 有条件的投: 3 位
-
-#### 核心建议矩阵
-
-| 大师 | 最重要的建议 | 最尖锐的批评 |
-|------|-------------|-------------|
-| Rob Walling | 先扩到 15-20 家验证留存,再谈规模 | 样本太小,现在下结论为时过早 |
-| 张小龙 | 从"手动报销"改成"无感报销" | 产品目前只是把老流程照搬进小程序 |
-| Jason Fried | 保持小团队,不融资,想清楚要不要做 | 可能在追逐"应该做大"的默认叙事 |
-| Alex Hormozi | 亲自下场做销售,设计更强的 offer | 300 元流水暴露的是没人卖,不是没需求 |
-| April Dunford | 先搞清楚"真正的替代品"是谁 | 定位模糊,产品目前"四不像" |
-
-### 我的决策与理由
-
-五位大师的意见比我预想的更尖锐，但也让我看清了几个此前没认真想过的问题。
-
-#### 采纳的建议
-
-1. **先扩种子用户到 15-20 家、观察 3 个月留存，再谈规模化**
-   - 来源: Rob Walling
-   - 采纳理由: 300 元流水的样本量确实太小，任何战略决策都应该建立在更扎实的留存数据上。
-
-2. **亲自下场做销售，用更强的 offer 换转化**
-   - 来源: Alex Hormozi
-   - 采纳理由: 我确实一直在"等客户来"，而不是主动推。这是最容易立刻改变的行为。
-
-3. **做一次"真正的替代品"访谈，重新定义产品定位**
-   - 来源: April Dunford
-   - 采纳理由: 我们内部对"竞品是谁"从来没有达成一致，这确实拖慢了产品和营销的所有决策。
-
-#### 不采纳的建议
-
-1. **把产品重做成"无感报销"（拍照+AI 自动分类）**
-   - 来源: 张小龙
-   - 不采纳理由: 方向是对的，但现阶段团队只有 3 人，AI 自动分类的开发投入和当前验证阶段不匹配。会作为 6 个月后的路线图，而不是现在就重做。
-
-2. **保持小而美，不追求规模**
-   - 来源: Jason Fried
-   - 不采纳理由: 认同"想清楚再做"的精神，但现在下结论为时过早——先把获客和留存跑通，规模与否是后面的选择，不该现在就替自己关上门。
-
-#### 关键战略决策
-
-1. **销售优先于产品，未来 2 个月不加新功能**:
-   创始人亲自联系下一批 20 家目标客户，用"首月免费+对账时间承诺"作为 offer，先验证获客路径是否可复制。
-
-2. **定位访谈先行**:
-   在做任何营销素材之前，先访谈现有 3 家客户和 5 个潜在客户，搞清楚"真正的替代品"是谁，再重新写产品定位。
-
-3. **AI 自动分类进路线图，不进当前迭代**:
-   保留"无感报销"作为 6 个月后的方向，但不影响当前的获客验证节奏。
+**Longer-Term Future**: If it can truly achieve "invisible reimbursement," this might evolve into an entry point for enterprise financial automation, but the current product form is still far from that step.
 
 ---
 
-## 第四部分：重写后的商业计划书
+### Reviewer #3: Jason Fried
 
-**核心价值主张**: 让 20-200 人规模的中小企业，用比传统财务软件更轻、比 Excel 更省心的方式完成报销全流程。
+#### Investment Decision
 
-**问题与解决方案**: 中小企业财务人员每月花大量时间手工核对报销单据和 Excel 台账；微信报销通把整个流程搬进员工已经在用的微信小程序，零学习成本，7 天内即可切换。
+**Decision**: Conditional Invest
 
-**产品设计与用户体验**: 员工在小程序内提交报销申请并拍照上传票据，财务人员在同一小程序内审批、导出台账；下一阶段引入 AI 自动分类以减少手动录入。
+**Reason**: This project's size is just right for a small team, no need for outside capital — but the founder needs to think clearly whether they truly want to run a "slowly profitable" business, rather than being pushed by the default narrative of "should raise funds/should expand."
 
-**目标用户与使用场景**: 20-200 人的中小企业，尤其是没有能力/意愿采购金蝶、用友这类重型财务系统的团队。
+#### If I Were the Founder
 
-**市场策略与增长路径**: 创始人直接销售 + 客户转介绍为主，暂不投入付费获客；先验证 15-20 家客户的 3 个月留存，再决定是否加大销售投入。
+I would keep the team at 2–3 people, not hire sales, not fundraise, and grow through the product itself and customer referrals. If after 6 months MRR still hasn't picked up, I would seriously consider whether this is a "worth doing but not worth me doing" project.
 
-**商业模式与单位经济学**: 99 元/月订阅制，目标 12 个月内做到 30 家付费客户（MRR ~3,000 元），验证获客成本和留存后再考虑提价或加值服务。
+#### Vision
 
-**竞争壁垒**: 短期内没有强壁垒，核心是"微信原生 + 足够轻"这个定位差异化；长期壁垒需要靠 AI 自动分类的数据积累和财务顾问渠道关系。
+**1–3 Year Vision**: A healthy small business with a 3–5 person team, stable MRR ¥30k–80k, founder with a good quality of life.
 
-**团队与执行**: 3 人团队，创始人亲自负责销售和客户成功，暂不扩张团队规模。
-
-**融资需求与里程碑**: 暂不融资；里程碑为 3 个月内验证 15-20 家客户留存 ≥ 80%，MRR 达到 1,500 元。
+**Longer-Term Future**: Most likely maintain a "small but beautiful" scale, which in itself is not a problem — not all businesses need to become big.
 
 ---
 
-## 总结
+### Reviewer #4: Alex Hormozi
 
-这个项目最核心的价值是"足够轻的中小企业报销工具"，但当前 300 元流水说明获客路径和产品定位都还没验证清楚。最大的风险不是产品做得不够好，而是创始人一直在"等客户来"而不是主动验证需求和销售。成功的关键路径是：创始人亲自下场做 15-20 家客户的销售和访谈，用真实数据回答"谁是真正的替代品"和"留存率如何"这两个问题，再决定要不要扩大规模。
+#### Investment Decision
+
+**Decision**: No Invest
+
+**Reason**: ¥300/month revenue under any reasonable customer acquisition cycle shows the offer is too weak — either pricing doesn't match value, or there is essentially no real sales effort (only listing the product and waiting). I see no design of urgency on "why buy now."
+
+#### If I Were the Founder
+
+I would first split the pricing: ¥99/month is very low decision cost for a 20-person company; the problem isn't whether it's expensive, but that "no one is actively pushing it." I would personally go talk to the next batch of 20 customers, using a strong offer like "1 month free + promise to save you the first month's reconciliation time" to convert, rather than just waiting for organic growth.
+
+#### Vision
+
+**1–3 Year Vision**: If willing to personally get into sales, MRR could reach ¥20k–30k within 12 months; if continuing to wait for organic growth, it will likely stay where it is.
+
+**Longer-Term Future**: The ceiling for this type of tool itself isn't high, unless a stronger offer is combined (like bundling financial advisory services), otherwise it's not a direction worth betting on long-term.
 
 ---
 
-*本报告由 Master BP Review 生成（示例）*
-*评审日期: 2026-07-19*
-*入选评审视角: Rob Walling | 张小龙 | Jason Fried | Alex Hormozi | April Dunford*
+### Reviewer #5: April Dunford
+
+#### Investment Decision
+
+**Decision**: Conditional Invest
+
+**Reason**: Fuzzy positioning is the biggest hidden risk of this project right now — in the category of "reimbursement tools," is the user's "real alternative" paper receipts, Excel, or financial software like Kingdee/Yonyou? The three opponents correspond to completely different strategies, and the BP doesn't clarify.
+
+#### If I Were the Founder
+
+I would first conduct a "competitive alternative" interview: directly ask the 3 seed customers, "If you didn't have us, how would you currently handle reimbursement?" Based on the answer, redefine the category — if the competitor is "paper-based process," the selling point is "digitization"; if the competitor is financial software, the selling point must be "lighter and faster to get started than them."
+
+#### Vision
+
+**1–3 Year Vision**: Once positioning is clear, it can secure a foothold in the niche of "lightweight, WeChat-native," becoming the first choice for small and micro enterprises who don't want to use heavy financial software.
+
+**Longer-Term Future**: If positioning remains fuzzy, it will be stuck in a long-term "neither fish nor fowl" state, getting eroded by more focused competitors.
+
+---
+
+## Part 3: Founder Response and Strategic Decisions
+
+### Summary of Masters' Opinions
+
+#### Investment Decision Statistics
+
+- Invest: 0
+- No Invest: 2
+- Conditional Invest: 3
+
+#### Core Advice Matrix
+
+| Master | Most Important Advice | Sharpest Criticism |
+|--------|-----------------------|-------------------|
+| Rob Walling | First expand to 15–20 users to validate retention, then talk about scale | Sample too small, drawing conclusions now is premature |
+| Zhang Xiaolong | Change from "manual reimbursement" to "invisible reimbursement" | Product currently just copies the old process into a mini program |
+| Jason Fried | Keep a small team, no fundraising, think clearly whether you want to do it | May be chasing the default narrative of "should grow big" |
+| Alex Hormozi | Personally get into sales, design a stronger offer | ¥300 revenue exposes that no one is selling, not that there is no demand |
+| April Dunford | First figure out who the "real alternative" is | Fuzzy positioning, product currently "neither fish nor fowl" |
+
+### My Decision and Reasoning
+
+The five masters' opinions were sharper than I expected, but also made me see several problems I hadn't seriously thought about before.
+
+#### Adopted Suggestions
+
+1. **First expand seed users to 15–20, observe 3-month retention, then talk about scaling**
+   - Source: Rob Walling
+   - Reason for adoption: The sample size of ¥300 revenue is indeed too small; any strategic decision should be based on more solid retention data.
+
+2. **Personally get into sales, use a stronger offer to drive conversion**
+   - Source: Alex Hormozi
+   - Reason for adoption: I was indeed "waiting for customers to come" instead of proactively pushing. This is the easiest behavior to change immediately.
+
+3. **Conduct a "real alternative" interview to redefine product positioning**
+   - Source: April Dunford
+   - Reason for adoption: Internally we have never reached consensus on "who the competitor is," which indeed delays all product and marketing decisions.
+
+#### Suggestions Not Adopted
+
+1. **Rebuild the product as "invisible reimbursement" (photo + AI auto-categorization)**
+   - Source: Zhang Xiaolong
+   - Reason for not adopting: The direction is right, but at this stage the team is only 3 people; the development investment for AI auto-categorization does not match the current validation phase. Will put it on the roadmap for 6 months later, not rebuild now.
+
+2. **Keep small and beautiful, don't pursue scale**
+   - Source: Jason Fried
+   - Reason for not adopting: I agree with the spirit of "think clearly before doing," but it's too early to draw conclusions now — first get customer acquisition and retention working, scale is a later choice, shouldn't close that door now.
+
+#### Key Strategic Decisions
+
+1. **Sales before product, no new features for the next 2 months**: Founder personally contacts the next batch of 20 target customers, uses "first month free + reconciliation time promise" as the offer, first validate if the customer acquisition path is replicable.
+
+2. **Positioning interview first**: Before making any marketing materials, first interview the 3 existing customers and 5 potential customers to figure out who the "real alternative" is, then rewrite the product positioning.
+
+3. **AI auto-categorization goes on the roadmap, not into the current iteration**: Keep "invisible reimbursement" as a direction for 6 months later, but not affect the current customer acquisition validation rhythm.
+
+---
+
+## Part 4: Rewritten Business Plan
+
+**Core Value Proposition**: Enable SMEs with 20–200 employees to complete the entire reimbursement process in a way that is lighter than traditional financial software and far less hassle than Excel.
+
+**Problem and Solution**: SME finance staff spend a lot of time each month manually reconciling reimbursement receipts and Excel ledgers; WeChat Reimburse moves the whole process into the WeChat Mini Program employees already use, zero learning curve, switch within 7 days.
+
+**Product Design and User Experience**: Employees submit reimbursement requests via the Mini Program and take photos of receipts; finance personnel approve within the same Mini Program, export ledgers; next phase introduces AI auto-categorization to reduce manual entry.
+
+**Target Users and Use Scenarios**: SMEs with 20–200 people, especially teams lacking the ability or willingness to adopt heavy financial systems like Kingdee and Yonyou.
+
+**Market Strategy and Growth Path**: Founder direct sales + customer referrals as the main approach, no paid acquisition for now; first validate 3-month retention with 15–20 customers, then decide whether to increase sales investment.
+
+**Business Model and Unit Economics**: ¥99/month subscription, target 30 paying customers within 12 months (MRR ~¥3,000), validate customer acquisition cost and retention, then consider price increases or value-added services.
+
+**Competitive Moat**: No strong moat in the short term; the core is the positioning differentiation of "WeChat-native + sufficiently lightweight"; long-term moat relies on data accumulation from AI auto-categorization and financial advisor channel relationships.
+
+**Team and Execution**: 3-person team, founder personally responsible for sales and customer success, no team expansion for now.
+
+**Funding Needs and Milestones**: No fundraising for now; milestone: within 3 months validate 15–20 customers with ≥80% retention, MRR reaching ¥1,500.
+
+---
+
+## Summary
+
+The core value of this project is a "sufficiently lightweight reimbursement tool for SMEs," but the current ¥300 revenue shows that neither the customer acquisition path nor the product positioning has been validated. The biggest risk isn't that the product isn't good enough, but that the founder has been "waiting for customers to come" instead of proactively validating demand and selling. The key path to success: the founder personally gets into sales and interviews with 15–20 customers, uses real data to answer the two questions of "who is the real alternative" and "what is the retention rate," then decides whether to scale.
+
+---
+
+*This report was generated by Master BP Review (sample)*
+*Review Date: 2026-07-19*
+*Review Perspectives Selected: Rob Walling | Zhang Xiaolong | Jason Fried | Alex Hormozi | April Dunford*

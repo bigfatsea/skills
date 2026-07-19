@@ -1,64 +1,63 @@
 <!-- Ver 2026-07-18 20:00, by Claude Fable 5 -->
 
-# Dart / Flutter —— 权威管理器: 官方 SDK（单版本）/ fvm（多版本）
+# Dart / Flutter — Authoritative Managers: Official SDK (single‑version) / fvm (multi‑version)
 
-## 1. 基线
+## 1. Baseline
 
-- **单版本场景**：直接装官方 Flutter SDK（自带 Dart，flutter.dev 下载或 `git clone` flutter 仓库）。不需要引入额外工具——fvm 是为"多项目各自锁定不同 Flutter 版本"设计的，单版本用户装它属于过度设计。
-- **多版本场景**：**fvm**（Flutter Version Management）是 Flutter 社区事实标准，虽非 Google 官方发布，但被广泛采纳，支持按项目锁定版本、`.fvmrc`/`.fvm/` 目录标识。
-- 达标最小特征集：
-  - `flutter --version` 解析到预期版本
-  - 多项目场景下每个项目实际用的是 `.fvm/flutter_sdk` 指向的版本，不是全局默认版本
+- **Single‑version scenario**: install the official Flutter SDK directly (includes Dart; download from flutter.dev or `git clone` the Flutter repository). No extra tools are needed — fvm is designed for “locking different Flutter versions per project”; installing it for single‑version users is over‑engineering.
+- **Multi‑version scenario**: **fvm** (Flutter Version Management) is the de facto standard in the Flutter community. Although not an official Google release, it is widely adopted and supports per‑project version locking, identified by `.fvmrc`/`.fvm/` directories.
+- Minimum feature set for compliance:
+  - `flutter --version` resolves to the expected version
+  - Under a multi‑project scenario, each project actually uses the version pointed to by `.fvm/flutter_sdk`, not the global default version
 
-## 2. 深挖探测（只读）
+## 2. Deep Probe (Read‑Only)
 
 ```bash
 which -a flutter dart fvm
 dart --version
 
-# 不要跑 flutter --version:它会做更新检查(联网),fresh clone 上首次运行还会下载
-# 整个 Dart SDK——版本从 SDK 根目录的 version 文件读(flutter 命令在 <SDK>/bin/ 下):
+# Do not run flutter --version: it performs update checks (network) and, on a fresh clone, it will also download the entire Dart SDK on first run — read the version from the version file in the SDK root (the flutter command is under <SDK>/bin/):
 cat "$(dirname "$(dirname "$(command -v flutter)")")/version" 2>/dev/null
 
 fvm list 2>/dev/null
 
-# 项目级线索:仅当用户在项目目录里运行审计时有意义,不是机器级必查项
+# Project‑level clues: meaningful only when the audit is run inside a project directory; not a machine‑wide must‑check
 find . -maxdepth 2 -name '.fvmrc' -o -maxdepth 2 -path '*/.fvm' 2>/dev/null
 ```
 
-## 3. 判定规则
+## 3. Judgment Rules
 
-| 发现 | 判定 | 理由 |
+| Finding | Verdict | Rationale |
 |---|---|---|
-| 单版本场景，官方 SDK 唯一 | OK | 达标，不需要 fvm |
-| 多版本场景，fvm 管理且项目都有 `.fvmrc`/`.fvm` | OK | 达标 |
-| 多个项目需要不同 Flutter 版本，但只有一个全局 SDK、无 fvm | WARN | 容易出现"这个项目在别人机器上能跑,我这里报错"的版本漂移问题 |
-| fvm 装了但某项目没有 `.fvmrc`，用的是全局版本 | INFO | 不一定是问题，确认该项目是否真的不需要锁版本 |
+| Single‑version scenario; official SDK is the sole one | OK | Compliant; fvm is unnecessary |
+| Multi‑version scenario; managed by fvm and every project has `.fvmrc`/`.fvm` | OK | Compliant |
+| Multiple projects require different Flutter versions, but only one global SDK and no fvm | WARN | Prone to version drift: “this project runs on someone else’s machine but fails on mine” |
+| fvm installed, but a certain project lacks `.fvmrc` and uses the global version | INFO | Not necessarily a problem; verify whether the project truly does not need version locking |
 
-## 4. 迁移方案（五步法）
+## 4. Migration Plan (Five Steps)
 
-1. **检测现状** —— §2 全套。
-2. **装权威管理器**：
+1. **Detect current state** — §2 full set.
+2. **Install the authoritative manager(s)**:
    ```bash
-   # 单版本：官方 SDK
+   # Single‑version: Official SDK
    git clone https://github.com/flutter/flutter.git -b stable
    export PATH="$PATH:`pwd`/flutter/bin"
 
-   # 多版本：fvm
+   # Multi‑version: fvm
    brew tap leoafarias/fvm && brew install fvm
    fvm install stable
-   fvm use stable            # 在项目目录内执行，生成 .fvmrc/.fvm
+   fvm use stable            # Run inside the project directory; generates .fvmrc/.fvm
    ```
-3. **处理旧的**：如果之前是手动装的多份 Flutter SDK（不同目录代表不同版本，手动切 PATH），迁移到 fvm 后可以删除，改用 `fvm install <version>` 统一管理。
-4. **【可选】外置存储**：fvm 的版本缓存目录可以通过 `FVM_HOME` 环境变量调整，装前设好。
-5. **验证**：
+3. **Handle old installations**: if multiple Flutter SDKs were previously installed manually (different directories for different versions, manually switching PATH), after migrating to fvm they can be deleted, and use `fvm install <version>` for unified management instead.
+4. **[Optional] External storage**: fvm’s version cache directory can be adjusted via the `FVM_HOME` environment variable; set it before installation.
+5. **Verification**:
    ```bash
    flutter --version; dart --version
    fvm list
    flutter doctor
    ```
 
-## 5. 已知坑
+## 5. Known Pitfalls
 
-- **fvm 是项目级锁定，不是全局替代**：`fvm use` 是在具体项目目录下执行的，生成的 `.fvm` 软链接只对该项目生效，不要指望装了 fvm 就自动解决全局版本问题——它解决的是"不同项目要不同版本"这个问题。
-- **`flutter doctor` 是权威验证入口**：任何版本/工具链问题优先跑这个命令，它会检查 Xcode/Android Studio/CocoaPods 等一整套外围依赖，不只是 Flutter 本身的版本。注意它和 `flutter --version` 一样会联网（更新检查/首次初始化下载 Dart SDK），所以只出现在 §4/§5 让**用户自己跑**，审计探测阶段禁止执行。
+- **fvm is per‑project locking, not a global replacement**: `fvm use` is executed inside a specific project directory; the generated `.fvm` symlink only takes effect for that project. Don’t expect that installing fvm will automatically solve global version issues — it solves the problem of “different projects needing different versions”.
+- **`flutter doctor` is the authoritative verification entry point**: when encountering any version or toolchain issue, run this command first. It checks a whole set of peripheral dependencies such as Xcode/Android Studio/CocoaPods, not just the Flutter version itself. Note that it, like `flutter --version`, will go online (update checks / first‑time Dart SDK download), so it only appears in §4/§5 for the **user to run themselves**; it is prohibited to execute during the audit probe phase.

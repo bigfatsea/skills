@@ -45,30 +45,30 @@ zsh scripts/render-card.sh /tmp/dev-env-audit-summary.json <output.html> [termin
 
 ---
 
-## Top-Level Fields
+## 顶层字段
 
-| Field | Type | Required | Description |
+| 字段 | 类型 | 必填 | 说明 |
 |---|---|---|---|
-| `timestamp` | string | ✅ | ISO 8601, e.g. `"2026-07-18T21:30:00+08:00"` |
-| `host` | object | ✅ | `{os: string, shell: string}`, e.g. `{"os": "macOS 14.5", "shell": "/bin/zsh"}` |
-| `score` | int | ✅ | 0-100 total score (calculated by SKILL.md §4.2 rules) |
-| `tier` | string | ✅ | see "Tier Mapping" below; the HTML card derives the large letter grade (A-F) from this, no need to provide a letter field separately |
-| `tier_label` | string | ✅ | human-readable label, in English (rendered directly in the template), e.g. `"Needs Attention"` |
-| `tier_emoji` | string | ✅ | `"🟢"` / `"🟡"` / `"🟠"` / `"🔴"` (not used by current renderer, reserved for future/other consumers) |
-| `counts` | object | ✅ | `{ok: int, warn: int, fail: int}`, total across all languages |
-| `scores` | object | ✅ | `{stability: int, consistency: int, modernity: int}`, each 0-100, rendered as three compact progress bars |
-| `languages` | array | ✅ | see Languages section |
-| `top_actions` | array | ✅ | see Top Actions section (max 3 items) |
-| `positive_findings` | array | ✅ | see Positive Findings section (at least 1 item) |
-| `report_md` | string | ❌ | see Report Link section; if provided, the HTML card will display an "Open Markdown Report" link |
-| `conflicts` | array | ❌ | see Conflicts section (optional; if the agent already included it in the Markdown report, this can be omitted) |
-| `cache_status` | array | ❌ | see Cache Status section (optional; reserved for extension) |
+| `timestamp` | string | ✅ | ISO 8601，例如 `"2026-07-18T21:30:00+08:00"` |
+| `host` | object | ✅ | `{os: string, shell: string}`，例如 `{"os": "macOS 14.5", "shell": "/bin/zsh"}` |
+| `score` | int | ✅ | 0-100 总分（按 SKILL.zh.md §4.2 规则算） |
+| `tier` | string | ✅ | 见下方"tier 映射"；HTML 卡片据此派生大号字母等级(A-F)，不需要单独提供字母字段 |
+| `tier_label` | string | ✅ | 人类可读标签，英文（模板里直接渲染），例如 `"Needs Attention"` |
+| `tier_emoji` | string | ✅ | `"🟢"` / `"🟡"` / `"🟠"` / `"🔴"`（当前渲染器不使用，保留供未来/其他消费者用） |
+| `counts` | object | ✅ | `{ok: int, warn: int, fail: int}`，跨所有语言的合计 |
+| `scores` | object | ✅ | `{stability: int, consistency: int, modernity: int}`，每个 0-100，渲染为三条紧凑进度条 |
+| `languages` | array | ✅ | 见 Languages 段 |
+| `top_actions` | array | ✅ | 见 Top Actions 段（最多 3 条） |
+| `positive_findings` | array | ✅ | 见 Positive Findings 段（至少 1 条） |
+| `report_md` | string | ❌ | 见 Report Link 段；提供后 HTML 卡片会显示一个"打开 Markdown 报告"的链接 |
+| `conflicts` | array | ❌ | 见 Conflicts 段（可选；agent 已写进 Markdown 报告的，这里可省） |
+| `cache_status` | array | ❌ | 见 Cache Status 段（可选；预留扩展） |
 
 ---
 
 ## Languages
 
-Each item:
+每项：
 
 ```json
 {
@@ -79,20 +79,20 @@ Each item:
 }
 ```
 
-`status` ∈ `"ok"` / `"warn"` / `"fail"` / `"info"`. Rendered as CSS coloured dots (not emoji):
-- `ok` → green dot
-- `warn` → yellow/amber dot
-- `fail` → red dot
-- `info` → grey dot (e.g. "system default, unmanaged")
+`status` ∈ `"ok"` / `"warn"` / `"fail"` / `"info"`。渲染时对应 CSS 圆点颜色（不是 emoji）：
+- `ok` → 绿色圆点
+- `warn` → 黄/琥珀色圆点
+- `fail` → 红色圆点
+- `info` → 灰色圆点（例如"系统默认未治理"）
 
-**Only list languages that actually exist on the machine** (hit by scan.sh). Each row in the TL;DR table corresponds to one item.
-For languages like Java/Swift that "come with Xcode", after being hit by scan.sh, ask the user whether to deep-dive (see SKILL.md references table for details).
+**只列本机实际存在的语言**（scan.sh 命中的）。TL;DR 表里每条对应一行。
+Java/Swift 这种"装了 Xcode 通常就有"的语言，按 scan.sh 命中后再问用户是否深挖（详见 SKILL.zh.md references 表）。
 
 ---
 
 ## Top Actions
 
-Each item:
+每项：
 
 ```json
 {
@@ -102,15 +102,15 @@ Each item:
 }
 ```
 
-`severity` ∈ `"fail"` / `"warn"` (no `"ok"` — correct configuration goes to `positive_findings`).
+`severity` ∈ `"fail"` / `"warn"`（没有 `"ok"`——正确的配置进 `positive_findings`）。
 
-**Max 3 items**, sorted by severity (fail takes precedence over warn). The renderer will take only the first 3 if there are more.
+**最多 3 条**，按严重度排序（fail 优先于 warn）。超出的渲染器只取前 3。
 
 ---
 
-## Positive Findings
+## Positive Findings（乐观发现）
 
-Each item:
+每项：
 
 ```json
 {
@@ -119,13 +119,13 @@ Each item:
 }
 ```
 
-**At least 1 item** — this is a key design principle: the report cannot be all problems; it must highlight "what's done right" to give junior/intermediate users a sense of accomplishment and to prevent the shared report from feeling negative. 3-5 items is the sweet spot.
+**至少 1 条**——这是方案设计的关键：报告不能全是问题，必须有"做对了什么"让初中级用户获得完成感，也让晒出去的报告不显负能量。3-5 条是甜蜜点。
 
-**What if you can't come up with positive findings?** Every machine has at least one OK item (e.g., Git resolution works, Python has uv, cache isn't drifting). If you truly cannot find any (extreme case), write a fallback like `"Audit completed"` — but please genuinely search; **don't resort to this step lightly**.
+**写不出正面发现怎么办**：每台机器至少有一项 OK（如 Git 解析正常、Python 有 uv、缓存至少没漂移）。如果实在找不到（极端情况），写一条兜底如 `"Audit completed"`——但请认真找，**不要轻易退到这一步**。
 
 ---
 
-## Report Link (Optional, strongly recommended)
+## Report Link（可选，强烈建议提供）
 
 ```json
 {
@@ -133,17 +133,18 @@ Each item:
 }
 ```
 
-A **relative path** (usually just a filename without a directory), pointing to the Markdown report file written to disk simultaneously during Phase 4.
-The HTML produced by `render-card.sh` and this Markdown report **must be placed in the same directory** (e.g., both under `~/Desktop/dev-env-audit/`), so that the relative link works without path concatenation.
+一个**相对路径**（通常就是不带目录的文件名），指向 Phase 4 同时写到磁盘的 Markdown 报告文件。
+`render-card.sh` 产出的 HTML 和这份 Markdown 报告**必须写在同一个目录**（例如都放在
+`~/Desktop/dev-env-audit/` 下），这样相对链接不需要处理路径拼接就能点开。
 
-If this field is provided, the card will display a prominent "Full details in the Markdown report →" link/button;
-if not provided, it won't be shown (e.g., you are just testing rendering with sample data and there's no corresponding md file).
+提供了这个字段，卡片就会显示一个醒目的"Full details in the Markdown report →"链接/按钮；
+不提供就不显示（比如你只是拿示例数据测渲染效果，没有对应的 md 文件）。
 
 ---
 
-## Conflicts (Optional)
+## Conflicts（可选）
 
-Each item:
+每项：
 
 ```json
 {
@@ -153,13 +154,13 @@ Each item:
 }
 ```
 
-If provided, the renderer may add a section in the card in future extensions; the current version does not display it.
+如果提供了，渲染器将来扩展时可在卡片里加一节；当前版本不展示。
 
 ---
 
-## Cache Status (Optional)
+## Cache Status（可选）
 
-Each item:
+每项：
 
 ```json
 {
@@ -168,13 +169,13 @@ Each item:
 }
 ```
 
-`state` ∈ `"external"` / `"local"` / `"drift"` / `"unmounted"`. Not displayed by the current renderer; reserved for extension.
+`state` ∈ `"external"` / `"local"` / `"drift"` / `"unmounted"`。当前渲染器不展示，预留扩展。
 
 ---
 
-## Tier Mapping (identical to SKILL.md §4.2)
+## tier 映射（与 SKILL.zh.md §4.2 完全一致）
 
-| Score | tier | tier_label | tier_emoji | Card Large Letter |
+| 分数 | tier | tier_label | tier_emoji | 卡片大号字母 |
 |---|---|---|---|---|
 | 90-100 | `excellent` | `Excellent` | 🟢 | A |
 | 75-89 | `good` | `Good` | 🟢 | B |
@@ -182,23 +183,23 @@ Each item:
 | 40-59 | `at-risk` | `At Risk` | 🟠 | D |
 | 0-39 | `critical` | `Critical` | 🔴 | F |
 
-The large letter is derived by the template's embedded JS from `tier` (`GRADE_MAP`), no need for the agent to provide a separate letter field.
+大号字母由模板内嵌 JS 从 `tier` 派生（`GRADE_MAP`），不需要 agent 额外提供字母字段。
 
 ---
 
-## Three-Dimension Scoring Formula (identical to SKILL.md §4.2)
+## 三维度分公式（与 SKILL.zh.md §4.2 完全一致）
 
 - `scores.stability` = `max(0, 100 - 20 × fail_count)`
 - `scores.consistency` = `max(0, 100 - 15 × path_drift_count - 15 × cache_drift_count)`
 - `scores.modernity` = `max(0, 100 - 8 × non_authoritative_manager_count)`
 
-`path_drift_count` = number of inconsistent commands reported by probe-path.sh (the same command resolving to different paths in the three scenarios A/B/C).
-`cache_drift_count` = number of items classified as "drift" in the probe-cache.sh report (part external, part default).
-`non_authoritative_manager_count` = number of languages using a non-recommended baseline manager (e.g., Python using conda instead of uv, Node using nvm instead of fnm, etc., determined per references §3).
+`path_drift_count` = probe-path.sh 报告的不一致命令数（同一命令在 A/B/C 三场景解析到不同路径）。
+`cache_drift_count` = probe-cache.sh 报告中归类为"drift"的项数（部分外置部分默认）。
+`non_authoritative_manager_count` = 用了非基线推荐的管理器的语言数（如 Python 不用 uv 而用 conda、Node 不用 fnm 而用 nvm 等，按 references §3 判定）。
 
 ---
 
-## Minimum Working Example
+## 最小可工作示例
 
 ```json
 {
@@ -240,12 +241,12 @@ The large letter is derived by the template's embedded JS from `tier` (`GRADE_MA
 
 ---
 
-## Renderer Behaviour Assumptions (can be assumed when writing the JSON)
+## 渲染器行为约定（写 JSON 时可以预设）
 
-- `top_actions` exceeds 3 items → renderer takes only the first 3, **no error**
-- `languages` is empty → display a line `"—"`
-- `positive_findings` / `top_actions` is empty → renderer still renders a line `"None"`, **but the agent should actively avoid this situation** (this is the design intent)
-- Missing fields → JS falls back with `|| {}` / `|| []`, no crash; when `report_md` is missing, the entire link block is not rendered
-- `score` exceeds [0,100] or is not a number → renderer clamps to boundary (`clampScore()`)
-- If the JSON itself is malformed (agent wrote it incorrectly) → opening the page will show a clear error alert box, not a blank page or crash
-- The three templates share exactly the same JS rendering logic and DOM class names, only `<style>` differs — if rendering behaviour needs to be adjusted later, all three files must be modified in sync
+- `top_actions` 超 3 条 → 渲染器只取前 3，**不报错**
+- `languages` 为空 → 显示一行 `"—"`
+- `positive_findings` / `top_actions` 为空 → 渲染器仍渲染一行 `"None"`，**但 agent 应主动避免此情况**（这是设计本意）
+- 缺字段 → JS 用 `|| {}` / `|| []` 兜底，不崩溃；`report_md` 缺失时链接整块不渲染
+- `score` 超出 [0,100] 或非数字 → 渲染器 clamp 到边界（`clampScore()`）
+- JSON 本身格式错误（agent 写坏了）→ 打开页面会看到一个明确的错误提示框，而不是空白页或崩溃
+- 三个模板共享完全相同的 JS 渲染逻辑和 DOM class 名，只有 `<style>` 不同——以后如果要调整渲染行为，三个文件要同步改

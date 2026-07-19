@@ -1,16 +1,16 @@
 <!-- Ver 2026-07-18 17:40, by Claude Fable 5 -->
 
-# Lua —— 权威管理器: Homebrew（单版本）/ ASDF（多版本）
+# Lua — Authoritative Manager: Homebrew (Single Version) / ASDF (Multi-Version)
 
-## 1. 基线
+## 1. Baseline
 
-- **单版本场景**：`brew install lua` 即可。Lua 生态没有强势的专属版本管理器（不像 Python 有 uv、Ruby 有 rbenv），社区没有形成"必须用某个专用工具"的共识。
-- **多版本场景**：`asdf-lua` 插件是多语言统一场景下的通用最优解。
-- 达标最小特征集：
-  - `lua -v` 解析到预期版本
-  - 没有系统自带 lua（部分 Linux 发行版/macOS 历史版本自带）和 brew/asdf 装的版本互相冲突
+- **Single-version scenario**: `brew install lua` suffices. The Lua ecosystem has no dominant dedicated version manager (unlike Python with uv and Ruby with rbenv), and the community has not formed a consensus that “a specific tool must be used.”
+- **Multi-version scenario**: The `asdf-lua` plugin is the optimal universal choice in multi-language unified scenarios.
+- Minimum acceptable feature set:
+  - `lua -v` resolves to the expected version
+  - No conflict between a system-packaged Lua (found on some Linux distros / historical macOS versions) and the version installed via brew/asdf
 
-## 2. 深挖探测（只读）
+## 2. Deep Probe (Read-Only)
 
 ```bash
 which -a lua lua5.1 lua5.3 lua5.4
@@ -21,43 +21,43 @@ asdf current lua 2>/dev/null
 asdf list lua 2>/dev/null
 
 luarocks --version 2>/dev/null
-luarocks config lua_version 2>/dev/null   # luarocks 是按 Lua 版本区分 rocks 目录的
+luarocks config lua_version 2>/dev/null   # luarocks separates rocks directories by Lua version
 ```
 
-## 3. 判定规则
+## 3. Judgment Rules
 
-| 发现 | 判定 | 理由 |
+| Finding | Judgment | Reason |
 |---|---|---|
-| lua 唯一来源，版本符合预期 | OK | 达标 |
-| brew lua 与 asdf lua 同时存在 | WARN | 不一定冲突（取决于谁在 PATH 前面），但容易混淆当前生效版本，建议统一到一个 |
-| 版本是 5.1 但项目/依赖要求 5.3/5.4（或反之） | FAIL | Lua 大版本之间有真实的语言不兼容（不像多数语言的小版本升级），不是简单的"新版本更好" |
-| LuaRocks 装的 rocks 在切换 Lua 版本后找不到 | INFO | LuaRocks 的 rocks 目录是按 Lua 版本分开的，切版本后需要重新安装依赖，不是丢失 |
+| Only one source of lua exists and the version matches expectations | OK | Meets requirements |
+| brew lua and asdf lua both present | WARN | Not necessarily a conflict (depends on which one is earlier in PATH), but it’s easy to lose track of which version is actually effective; recommend consolidating onto one |
+| Version is 5.1 but the project/dependencies require 5.3/5.4 (or vice versa) | FAIL | There are genuine language incompatibilities between Lua major versions (unlike minor upgrades in many languages); it’s not simply “newer is better” |
+| Rocks installed with LuaRocks are not found after switching Lua versions | INFO | LuaRocks stores rocks in directories keyed by Lua version; after switching you need to reinstall dependencies — they aren’t lost |
 
-## 4. 迁移方案（五步法）
+## 4. Migration Plan (Five-Step Method)
 
-1. **检测现状** —— §2 全套，**注意确认项目实际需要哪个 Lua 大版本**（5.1/5.3/5.4 互不兼容）。
-2. **装权威管理器**：
+1. **Inspect current state** — full §2 probe; **pay special attention to which Lua major version the project actually requires** (5.1/5.3/5.4 are mutually incompatible).
+2. **Install the authoritative manager**:
    ```bash
-   # 单版本
+   # Single version
    brew install lua
 
-   # 多语言全栈统一
+   # Multi-language full-stack unification
    asdf plugin add lua
    asdf install lua <version>
-   asdf set -u lua <version>    # -u/--home 写入家目录 .tool-versions;asdf ≤0.15 旧语法是 asdf global lua <version>
+   asdf set -u lua <version>    # -u/--home writes .tool-versions in home directory; for asdf ≤0.15 old syntax was asdf global lua <version>
    ```
-3. **处理旧的**：确认系统自带的 lua（如有）不在 PATH 前排，不需要卸载（通常也卸不掉）。
-4. **【可选】外置存储**：
+3. **Handle old items**: Ensure the system-packaged lua (if any) is not early in PATH; no need to uninstall (usually impossible to remove anyway).
+4. **[Optional] External storage**:
    ```bash
-   export LUAROCKS_CONFIG="/Volumes/<盘>/dev-cache/luarocks/config.lua"   # 需要在 config 文件里指定 rocks_trees 路径
+   export LUAROCKS_CONFIG="/Volumes/<disk>/dev-cache/luarocks/config.lua"   # must specify the rocks_trees path in the config file
    ```
-5. **验证**：
+5. **Verify**:
    ```bash
    lua -v; which lua
    luarocks --version
    ```
 
-## 5. 已知坑
+## 5. Known Pitfalls
 
-- **Lua 大版本之间不兼容**：5.1→5.2→5.3→5.4 每次大版本都有真实的语法/语义变化（不是简单的新特性叠加），装错大版本会导致脚本直接报语法错误，排查时第一步永远是确认版本号对不对，而不是怀疑代码本身。
-- **LuaRocks 的 rocks 目录按 Lua 版本分离**：切换 Lua 版本后看起来"包都不见了"，其实是装在另一个版本的目录里，需要针对新版本重新 `luarocks install`。
+- **Incompatibility between Lua major versions**: Every major release from 5.1→5.2→5.3→5.4 introduces real syntax/semantic changes (not just additive features). Installing the wrong major version can cause scripts to fail with syntax errors. The first step in troubleshooting should always be to confirm the version number, not to doubt the code itself.
+- **LuaRocks separates rock directories by Lua version**: After switching Lua versions it may appear that “all packages are gone,” but they are actually installed in the directory for the other version. You need to run `luarocks install` again for the new version.

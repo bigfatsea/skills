@@ -98,7 +98,7 @@ Constraints: Faithful to narrator's phrasing — do not improve their language. 
 **Output:**
 1. Theme identification — five-method table (frequency / intensity / contrast / binary opposition / omission)
 2. Story arc — setup / confrontation / resolution + turning points, low point, epiphany
-3. Six-angle assessment — struggle / growth / relationship / conflict / era / reversal / commitment (applicability + one-sentence pitch per angle)
+3. Six-angle assessment — struggle/growth / relationship / conflict / era / reversal / commitment (applicability + one-sentence pitch per angle)
 4. Recommended angle — reasoning: narrator's emotional peak + strongest scene material + project goal fit
 5. Key scene list — concrete, sensory, specific moments for reconstruction
 6. One-sentence story test: `[person] in [context] who experienced [turning point] and ultimately [change/choice]`
@@ -115,7 +115,7 @@ Input: structured notes + subject background + project goal
 Output:
 1. Theme identification (five-method table: frequency / intensity / contrast / binary opposition / omission)
 2. Story arc (setup / confrontation / resolution; turning points, low point, epiphany)
-3. Six-angle table (struggle / growth / relationship / conflict / era / reversal / commitment — applicability + one-sentence pitch)
+3. Six-angle table (struggle/growth / relationship / conflict / era / reversal / commitment — applicability + one-sentence pitch)
 4. Recommended angle + reasoning (narrator emotional peak + strongest scene material + project goal fit)
 5. Key scene list (concrete, sensory, timestamped where possible)
 6. One-sentence story test for recommended angle

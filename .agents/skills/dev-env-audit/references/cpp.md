@@ -1,21 +1,21 @@
 <!-- Ver 2026-07-18 10:00, by Claude Sonnet 5 -->
 
-# C / C++ —— 权威工具链: Homebrew(gcc/clang)（单版本）/ 系统原生多版本机制（多版本）
+# C / C++ – Authoritative Toolchain: Homebrew (gcc/clang) (Single Version) / System-Native Multi-Version Mechanism (Multi-Version)
 
-## 1. 基线
+## 1. Baseline
 
-- C/C++ 生态没有统一的语言级版本管理器（不像 Python/Node/Ruby 那样有事实标准工具）。macOS 上单版本场景直接用 Xcode Command Line Tools 自带的 clang，或 `brew install gcc` 装一份真正的 GCC。
-- **多版本场景**：靠系统原生机制并存，不是某个第三方版本管理器：
-  - Homebrew 的 `gcc@13`/`gcc@14` 这类具体版本 formula 会装出带版本号的独立命令（`gcc-13`），天然并存，不需要切换工具。
-  - Xcode 侧靠装多个 Xcode.app + `xcode-select`（详见 `swift.md`）切换 clang 版本。
-  - Linux 上是系统包管理器的 `update-alternatives`。
-  - **ASDF 的 gcc/clang 插件维护活跃度低，只在需要跨 Linux/macOS 统一脚本化管理的边缘场景下才考虑**，不是主流选择。
-- 包/构建管理器：**vcpkg + CMake**（微软发布的跨平台 C++ 包管理器，和 CMake 集成最成熟）；Conan 是另一个同级的成熟选项，两者目前仍在互相竞争，不是分出胜负的领域，选哪个更多看团队习惯和现有项目集成情况。
-- 达标最小特征集：
-  - `cc --version`/`gcc --version`/`clang --version` 解析到预期的编译器和版本
-  - 项目实际使用的编译器（通过 `CC`/`CXX` 环境变量或 CMake 里显式指定）和检测到的版本一致，没有隐性使用了另一个编译器
+- The C/C++ ecosystem lacks a unified language-level version manager (unlike Python/Node/Ruby, which have de facto standard tools). On macOS, for single-version scenarios, simply use the clang bundled with Xcode Command Line Tools, or `brew install gcc` to install a real GCC.
+- **Multi-version scenarios**: rely on native system mechanisms to co-exist, not on a third-party version manager:
+  - Homebrew’s version-specific formulas like `gcc@13`/`gcc@14` install independent commands with version suffixes (`gcc-13`) – they naturally coexist without a switching tool.
+  - On the Xcode side, install multiple Xcode.app bundles and use `xcode-select` (see `swift.md` for details) to switch clang versions.
+  - On Linux, that role is filled by the system package manager’s `update-alternatives`.
+  - **The ASDF gcc/clang plugins have low maintenance activity; consider them only in fringe scenarios that require unified scripted management across Linux/macOS** – they are not a mainstream choice.
+- Package / build manager: **vcpkg + CMake** (Microsoft’s cross-platform C++ package manager, with the most mature CMake integration); Conan is another equally mature option. The two are still competing and no clear winner has emerged – the choice is more a matter of team habits and existing project integration.
+- Minimum feature set to pass:
+  - `cc --version` / `gcc --version` / `clang --version` resolve to the expected compiler and version.
+  - The compiler actually used by the project (via `CC`/`CXX` environment variables or explicitly specified in CMake) matches the detected version, with no hidden use of a different compiler.
 
-## 2. 深挖探测（只读）
+## 2. Deep Probe (Read-Only)
 
 ```bash
 which -a cc gcc clang cmake
@@ -34,45 +34,45 @@ conan --version 2>/dev/null
 echo "CC=$CC CXX=$CXX"
 ```
 
-## 3. 判定规则
+## 3. Judgment Rules
 
-| 发现 | 判定 | 理由 |
+| Finding | Judgment | Reason |
 |---|---|---|
-| clang（Xcode CLT）或 brew gcc 唯一，版本符合预期 | OK | 达标 |
-| 多个 brew gcc@x 版本共存，各自带版本号命令，无人手动改动默认 `gcc` alias | OK | 达标，多版本场景的自然状态，不需要额外工具 |
-| `CC`/`CXX` 环境变量指向的编译器和实际检测到的默认编译器不一致 | WARN | 项目构建时容易混用两种编译器产出的目标文件，导致 ABI 不兼容的链接错误 |
-| 用 asdf-gcc/asdf-clang 插件 | INFO | 能用，但维护活跃度低，非主流选择，不视为问题也不特别推荐 |
-| 没装 vcpkg/Conan，项目有第三方 C++ 依赖但靠手动下载源码管理 | WARN | 建议引入包管理器，减少手动管理依赖版本的负担 |
+| Single clang (Xcode CLT) or brew gcc, version matches expectations | OK | Passes baseline |
+| Multiple brew gcc@x versions coexist, each with its own versioned command, and no one has manually altered the default `gcc` alias | OK | Passes baseline; natural state in a multi-version scenario, no extra tool needed |
+| `CC`/`CXX` environment variables point to a compiler different from the detected default compiler | WARN | During builds, it’s easy to mix object files from two compilers, leading to ABI-incompatible link errors |
+| asdf-gcc / asdf-clang plugin is used | INFO | Works, but low maintenance activity; not a problem, but also not particularly recommended |
+| vcpkg/Conan not installed, and the project has third-party C++ dependencies managed by manually downloading source code | WARN | Recommend introducing a package manager to reduce the burden of manual dependency-version management |
 
-## 4. 迁移方案（五步法）
+## 4. Migration Plan (Five-Step Method)
 
-1. **检测现状** —— §2 全套，确认项目实际要求的编译器和版本。
-2. **装编译器**：
+1. **Audit current state** — Full §2, confirm the compiler and version the project actually requires.
+2. **Install compiler**:
    ```bash
-   xcode-select --install       # Xcode CLT 自带 clang，多数场景够用
-   brew install gcc             # 需要真正 GCC（而非 clang）时
-   brew install gcc@13          # 需要具体版本共存时
+   xcode-select --install       # Xcode CLT brings its own clang; sufficient in most cases
+   brew install gcc             # When a real GCC (not clang) is needed
+   brew install gcc@13          # When a specific version must coexist
    ```
-   包管理器：
+   Package manager:
    ```bash
    git clone https://github.com/microsoft/vcpkg.git
    ./vcpkg/bootstrap-vcpkg.sh
    brew install cmake
    ```
-3. **处理旧的**：多个 brew gcc@x 版本本身不冲突，可以并存；只在磁盘紧张时卸载不用的具体版本。
-4. **【可选】外置存储**：
+3. **Deal with old versions**: Multiple brew gcc@x versions do not conflict and can coexist; uninstall unused specific versions only when disk space is tight.
+4. **[Optional] External storage**:
    ```bash
-   export VCPKG_DOWNLOADS="/Volumes/<盘>/dev-cache/vcpkg-downloads"
-   export VCPKG_DEFAULT_BINARY_CACHE="/Volumes/<盘>/dev-cache/vcpkg-cache"
+   export VCPKG_DOWNLOADS="/Volumes/<volume>/dev-cache/vcpkg-downloads"
+   export VCPKG_DEFAULT_BINARY_CACHE="/Volumes/<volume>/dev-cache/vcpkg-cache"
    ```
-5. **验证**：
+5. **Verify**:
    ```bash
    cc --version; cmake --version
    vcpkg version
    ```
 
-## 5. 已知坑
+## 5. Known Pitfalls
 
-- **混用编译器导致 ABI 不兼容**：同一个项目如果部分目标文件用 clang 编译、部分用 gcc 编译，链接阶段可能报出令人困惑的符号找不到错误，根因通常是 `CC`/`CXX` 在构建过程中被不同工具/脚本设置成了不同值。
-- **ASDF 的 C/C++ 编译器插件不是主流**：C/C++ 生态本身缺乏对"用统一版本管理器管编译器"这件事的强共识，不要把 asdf-gcc/asdf-clang 当成理所当然的默认选择去推荐。
-- **vcpkg 和 Conan 的选择目前仍是团队偏好问题**：不是本 reference 需要强行分出胜负的领域，审计时发现任一都不算 WARN。
+- **Mixing compilers causes ABI incompatibility**: If within the same project some object files are compiled with clang and others with gcc, the link step may produce confusing “undefined symbol” errors. The root cause is usually that `CC`/`CXX` were set to different values by different tools/scripts during the build process.
+- **ASDF’s C/C++ compiler plugins are not mainstream**: The C/C++ ecosystem lacks strong consensus on using a unified version manager to manage compilers. Do not promote asdf-gcc/asdf-clang as a sensible default.
+- **Choosing between vcpkg and Conan remains a matter of team preference**: It is not an area where this reference needs to anoint a winner. Finding either during an audit is not a WARN.

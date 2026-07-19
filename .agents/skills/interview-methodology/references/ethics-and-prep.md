@@ -35,7 +35,7 @@ When the interview involves a subject from a community that is politically, lega
 
 ### A.4 Narrator Subjectivity — A Feature, Not a Flaw
 
-Oral sources tell us less about events than about their *meaning*. The unique element oral history forces upon the historian is the speaker's subjectivity. (Alessandro Portelli)
+Oral sources tell us less about events than about their *meaning*. The unique and precious element oral history forces upon the historian is the speaker's subjectivity. (Alessandro Portelli)
 
 Different versions of the same event across sessions are not dishonesty — they are *narrative reconstruction*. Mark contradictions with timestamps; do not reconcile them into a single authoritative version. Pursue the narrator's truth, not an objective "what really happened."
 
@@ -143,7 +143,7 @@ Topic 3: Core Relationship / Event  [20 min]
 - [Based on known key relationship from pre-interview research]
 - ...
 
-Topic 4: Present & Future  [10 min]
+Topic 4: Present & Looking Back  [10 min]
 - How do you see that period now, from where you stand today?  [purpose: retrospective meaning]
 - If you could say one thing to your younger self, what would it be?  [purpose: inner theme]
 

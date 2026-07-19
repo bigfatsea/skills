@@ -1,17 +1,17 @@
 <!-- Ver 2026-07-18 17:40, by Claude Fable 5 -->
 
-# Erlang / Elixir —— 权威管理器: ASDF（asdf-erlang + asdf-elixir，单/多版本都推荐）
+# Erlang / Elixir — Authoritative Manager: ASDF (asdf-erlang + asdf-elixir, recommended for both single and multiple versions)
 
-## 1. 基线
+## 1. Baseline
 
-- 推荐工具：**ASDF**（`asdf-erlang` + `asdf-elixir` 两个插件配套使用），**即使只用一个版本也推荐**，不是"多版本才需要"。
-- 为什么单版本也不推荐 Homebrew：OTP（Erlang 虚拟机）和 Elixir 之间有严格的版本兼容矩阵（见 hexdocs.pm/elixir 的 Compatibility and Deprecations 页面），Homebrew 装的系统 OTP 版本经常和目标 Elixir 版本要求的范围对不上，报错通常是隐晦的运行时/编译错误，不是清晰的"版本不兼容"提示——ASDF 能显式钉死两者的搭配版本，容错性明显更高。
-- 达标最小特征集：
-  - `erl -eval 'halt().' -noshell` 之类的探测能确认 OTP 版本
-  - `elixir --version` 显示的 Elixir/OTP 搭配落在官方兼容矩阵范围内
-  - `.tool-versions` 里 erlang 和 elixir 两行版本号是匹配的搭配
+- Recommended tool: **ASDF** (using the `asdf-erlang` and `asdf-elixir` plugins together), **even if you need only a single version**. This is not a “only needed for multiple versions” scenario.
+- Why Homebrew is not recommended even for a single version: OTP (the Erlang virtual machine) and Elixir have a strict version compatibility matrix (see the Compatibility and Deprecations page on hexdocs.pm/elixir). The system OTP version installed by Homebrew often falls outside the range required by the target Elixir version, resulting in obscure runtime/compile errors instead of clear “incompatible version” messages. ASDF can explicitly pin a matching pairing of the two, with significantly better fault tolerance.
+- Minimum acceptable feature set:
+  - A probe like `erl -eval 'halt().' -noshell` confirms the OTP version.
+  - The Elixir/OTP pairing shown by `elixir --version` falls within the official compatibility matrix.
+  - The `erlang` and `elixir` version lines in `.tool-versions` correspond to a matching pair.
 
-## 2. 深挖探测（只读）
+## 2. Deep diagnostic (read-only)
 
 ```bash
 which -a erl elixir mix
@@ -24,47 +24,47 @@ asdf current elixir 2>/dev/null
 
 brew list --formula 2>/dev/null | grep -E '^(erlang|elixir)$'
 
-# 项目锁定的版本搭配
+# Project‑locked version pairing
 cat .tool-versions 2>/dev/null | grep -E 'erlang|elixir'
 ```
 
-## 3. 判定规则
+## 3. Decision rules
 
-| 发现 | 判定 | 理由 |
+| Observation | Verdict | Reason |
 |---|---|---|
-| asdf 管理 erlang+elixir，两者搭配落在官方兼容矩阵内 | OK | 达标 |
-| brew erlang/elixir 装的版本搭配不在官方兼容矩阵内 | FAIL | 大概率触发隐晦的运行时错误，需要重新按矩阵搭配安装 |
-| `.tool-versions` 只写了 elixir 没写 erlang（或反之） | WARN | 两者必须配套钉版本，只写一个会跟着 asdf 全局/系统默认走，容易漂移 |
-| asdf 与 brew 装的 erlang/elixir 同时存在 | WARN | 谁生效取决于 PATH 顺序，建议统一到 asdf |
+| ASDF manages erlang+elixir as a pairing that falls inside the official compatibility matrix | OK | Meets requirements |
+| Brew-installed erlang/elixir pairing does **not** fall inside the official compatibility matrix | FAIL | Very likely to trigger obscure runtime errors; must reinstall a matching pair according to the matrix |
+| `.tool-versions` specifies elixir but not erlang (or vice‑versa) | WARN | Both must be pinned together; specifying only one lets ASDF follow the global/system default, which invites drift |
+| Both ASDF- and brew‑managed erlang/elixir are present | WARN | Which one takes effect depends on PATH order; it’s recommended to unify under ASDF |
 
-## 4. 迁移方案（五步法）
+## 4. Migration plan (five steps)
 
-1. **检测现状** —— §2 全套，**务必先查官方兼容矩阵确认目标版本搭配**（hexdocs.pm/elixir/compatibility-and-deprecations.html）。
-2. **装 asdf 插件**：
+1. **Inspect the current state** – run the full §2 diagnostic; **be sure to check the official compatibility matrix first to confirm the target version pairing** (hexdocs.pm/elixir/compatibility-and-deprecations.html).
+2. **Install ASDF plugins**:
    ```bash
    asdf plugin add erlang
    asdf plugin add elixir
    asdf install erlang <version>
    asdf install elixir <version>
-   asdf set -u erlang <version>   # -u/--home 写入家目录 .tool-versions;asdf ≤0.15 旧语法是 asdf global <name> <version>
+   asdf set -u erlang <version>   # -u/--home writes to the home-directory .tool-versions; for asdf ≤0.15 the old syntax was asdf global <name> <version>
    asdf set -u elixir <version>
    ```
-3. **处理旧的**：
+3. **Remove the old**:
    ```bash
-   brew uninstall erlang elixir   # 之前 brew 装的
+   brew uninstall erlang elixir   # previously installed via brew
    ```
-4. **【可选】外置存储**：
+4. **[Optional] External storage**:
    ```bash
-   export ASDF_DATA_DIR="/Volumes/<盘>/dev-cache/asdf"   # 必须在装插件之前设好，erlang/elixir 都装在这下面
+   export ASDF_DATA_DIR="/Volumes/<drive>/dev-cache/asdf"   # must be set before adding plugins; erlang/elixir will be installed under this path
    ```
-5. **验证**：
+5. **Verify**:
    ```bash
    elixir --version
    erl -noshell -eval 'io:format("~s~n", [erlang:system_info(otp_release)]), halt().'
    asdf current erlang; asdf current elixir
    ```
 
-## 5. 已知坑
+## 5. Known pitfalls
 
-- **OTP/Elixir 版本必须配套，不能各自为政**：官方有明确的兼容矩阵，装了不匹配的搭配不会在安装阶段报错，而是在实际编译/运行项目时才暴露，排查成本高，装之前先查矩阵比装完再排查省事得多。
-- **Rebar3（Erlang 的构建工具）有时需要单独安装**：不是所有 asdf-erlang 安装都会自动带上 Rebar3，缺失时用 `mix local.rebar` 或参考 rebar3 官方安装说明单独补装。
+- **OTP and Elixir versions must be paired – they cannot be chosen independently**: There is a clear official compatibility matrix. A mismatched pairing will not be caught during installation; the problem surfaces only when compiling or running a project, making diagnosis costly. Checking the matrix before installing saves far more time than debugging afterward.
+- **Rebar3 (the Erlang build tool) sometimes requires separate installation**: Not every `asdf-erlang` installation automatically includes Rebar3. If it’s missing, use `mix local.rebar` or refer to the official Rebar3 installation guide to install it separately.

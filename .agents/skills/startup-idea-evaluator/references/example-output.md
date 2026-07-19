@@ -1,263 +1,263 @@
-# 完整输出示例：Mode B — Investment Memo
+# Full Output Example: Mode B — Investment Memo
 
-> 虚构案例，仅用于展示输出格式和深度标准。
+> Fictional case, used only to demonstrate output format and depth standards.
 
-**用户输入**：
-> 我想做一个 AI 合同审查工具，面向中国中小律所（5-20人规模），帮他们自动识别合同风险条款。技术栈 JS/Python + openrouter.ai。目前还没有任何用户，想知道值不值得做，从哪里开始。
+**User Input**:
+> I want to build an AI contract review tool targeting small and medium-sized law firms in China (5–20 people), helping them automatically identify risky contract clauses. Tech stack: JS/Python + openrouter.ai. Currently have zero users and want to know whether it’s worth doing and where to start.
 
 ---
 
 ## Step 1: Rapid Framing
 
-**Thesis**：为中国中小律所提供 AI 合同风险识别 SaaS，以"初级律师助手"替代人工初审环节。
+**Thesis**:Provide AI-powered contract risk identification SaaS for Chinese SME law firms, functioning as a “junior lawyer assistant” that replaces the manual first-pass review.
 
-**Stage**：Idea — 无原型、无用户、无收入。
+**Stage**:Idea — no prototype, no users, no revenue.
 
-**Archetype**：AI Vertical SaaS（法律行业）
+**Archetype**:AI Vertical SaaS (Legal Industry)
 
-**Kill Switch**：这个项目生死在于——**律所愿意为 AI 工具付费，而非认为这侵蚀了律师的核心价值**。中国律师对 AI 工具的接受度尚未被大规模验证。
+**Kill Switch**:The life or death of this project depends on one thing — **whether law firms are willing to pay for an AI tool, rather than perceiving it as eroding the core value of a lawyer**. The willingness of Chinese lawyers to adopt AI tools has not been validated at scale.
 
 ---
 
 ## Step 2: Adaptive Lens Analysis
 
-*选用 lens：Problem intensity & WTP / Team-idea fit / GTM & distribution / Business model / Regulatory & structural risk*
+*Lens selected:Problem intensity & WTP / Team-idea fit / GTM & distribution / Business model / Regulatory & structural risk*
 
-### Lens 1：Problem Intensity & Willingness to Pay
+### Lens 1:Problem Intensity & Willingness to Pay
 
-**评估**：合同审查是真实痛点——中小律所通常由初级律师手动完成，耗时 2-4 小时/份合同，出错率高，且价格竞争激烈导致利润微薄。律所有动力降本，这是正向信号。
+**Assessment**:Contract review is a real pain point — in SME law firms it is typically done manually by junior lawyers, consuming 2–4 hours per contract, with high error rates, and intense price competition leading to thin margins. Law firms have an incentive to reduce costs; this is a positive signal.
 
-**关键假设**：律所愿意为单份合同的审查工具付费，而非要求买断或项目制定价。
+**Key Assumption**:Law firms are willing to pay on a per-contract basis for the review tool, rather than demanding a perpetual license or project-based pricing.
 
-**Bull case**：律所每月处理 20+ 份合同，若每份节省 1.5 小时，ROI 清晰。
-**Bear case**：律师文化偏向保守，可能认为"AI 做的不算数"，需要律师全程复核——等于没省时间。
-
----
-
-### Lens 2：Team-idea Fit & Execution
-
-**评估**：JS/Python + openrouter.ai 技术栈完全能构建 MVP：PDF 解析 + LLM 风险条款识别 + 结构化报告输出。技术可行性高，3 人团队 4-6 周可出原型。
-
-**核心障碍不在技术**：在于如何进入律所圈子——律师是高度依赖口碑和关系的行业。3 人团队无法靠内容 SEO 或产品自增长快速获客，必须有一个人拥有律所人脉或法律行业背景。
-
-**关键假设**：团队中至少有一人能直接联系到 3-5 家愿意试用的律所（前同事、朋友、校友）。
-
-**Bull case**：若有律所人脉，冷启动可靠关系驱动。
-**Bear case**：3 人全部是技术背景，进入法律圈困难，冷启动成本极高。
+**Bull case**:A law firm processes 20+ contracts per month; if each saves 1.5 hours, the ROI is clear.
+**Bear case**:Lawyer culture tends to be conservative; they may think “AI’s output doesn’t count,” requiring a full re-check by a lawyer — which means no time is actually saved.
 
 ---
 
-### Lens 3：GTM & Distribution Wedge
+### Lens 2:Team-idea Fit & Execution
 
-**评估**：法律 SaaS 圈子小，口碑传播快，但进入门槛高。中国律所圈的主要信息渠道是：律师行业微信群、律协活动、垂直法律媒体（如无讼、法律读库）。
+**Assessment**:The JS/Python + openrouter.ai stack is fully capable of building an MVP: PDF parsing + LLM risk clause identification + structured report output. Technical feasibility is high; a 3-person team can produce a prototype in 4–6 weeks.
 
-**分销优势**：若能让一家有影响力的律所成为案例，圈内扩散速度快。
-**分销劣势**：冷启动完全依赖人脉；没有 PLG 路径（律所不会"邀请同事"用合同审查工具）。
+**Core obstacle is not technical**:it lies in how to enter the law firm circle — the legal profession is an industry that highly relies on word-of-mouth and personal relationships. A 3-person team cannot quickly acquire customers through content SEO or product-led self-growth; at least one person must have law firm connections or a legal industry background.
 
-**关键假设**：找到第一家律所，能在 60 天内通过律协群/行业媒体实现 5-10 家转介绍。
+**Key Assumption**:At least one person on the team can directly contact 3–5 law firms willing to trial (former colleagues, friends, alumni).
 
----
-
-### Lens 4：Business Model & Unit Economics
-
-| 指标 | 估算 |
-|------|------|
-| 定价假设 | ¥2,000-5,000/月（含 100 份合同/月）|
-| 目标客户 ARPU | ¥3,000/月 = ¥36,000/年 |
-| 到达 $300K ARR 需要 | ~58 家付费律所 |
-| 到达 $1M ARR 需要 | ~194 家付费律所 |
-| 毛利率 | ~75%（主要成本为 LLM API + 少量存储）|
-
-**小而美 check**：58 家律所达到 $300K ARR，对 3 人团队完全 viable；194 家是更高目标，但需要更强的获客机制。
-
-**隐藏成本**：法律垂直模型如果需要 fine-tune，成本显著上升；客服支持压力也比普通 SaaS 高（律师对结果要求高）。
+**Bull case**:If law firm connections exist, the cold start can be driven by warm relationships.
+**Bear case**:All three members have only a technical background; entering the legal circle is extremely difficult, and the cold start cost is exceedingly high.
 
 ---
 
-### Lens 5：Regulatory & Structural Risk
+### Lens 3:GTM & Distribution Wedge
 
-**评估**：中国《律师法》对法律服务有严格资质要求，AI 工具不能"提供法律意见"，只能作为辅助工具。这实际上是保护——定位成"审查助手"而非"替代律师"，可规避监管风险。
+**Assessment**:The legal SaaS circle is small; word-of-mouth spreads quickly, but the barrier to entry is high. The main information channels for Chinese law firm circles are: lawyer industry WeChat groups, Bar Association events, vertical legal media (e.g., Wusong, Legal Reader).
 
-**关键风险**：如果 AI 输出被律所作为最终结论而非参考，发生漏审事故，产品可能面临声誉风险。需要在产品 UI 上做好免责设计。
+**Distribution advantage**:If an influential law firm can be turned into a case study, diffusion within the circle is fast.
+**Distribution disadvantage**:The cold start entirely depends on personal networks; there is no PLG path (law firms will not “invite colleagues” to use a contract review tool).
+
+**Key Assumption**:Once the first law firm is secured, it is possible to achieve 5–10 referrals within 60 days via Bar Association groups / industry media.
 
 ---
 
-### 三层挑战汇总
+### Lens 4:Business Model & Unit Economics
 
-**Survival Layer**：
-找到第一批 10 家付费律所——这是最难的一步。没有行业人脉则无法冷启动，需在 90 天内验证。
+| Metric | Estimate |
+|--------|----------|
+| Pricing assumption | ¥2,000–5,000/month (incl. 100 contracts/month) |
+| Target customer ARPU | ¥3,000/month = ¥36,000/year |
+| To reach $300K ARR requires | ~58 paying law firms |
+| To reach $1M ARR requires | ~194 paying law firms |
+| Gross margin | ~75% (main costs: LLM API + small amount of storage) |
 
-**Growth Layer**：
-建立口碑传播机制。法律行业靠案例和背书，需要 3-5 个可公开引用的标杆客户，才能解锁行业媒体和律协渠道。
+**Small & beautiful check**:58 law firms to reach $300K ARR is completely viable for a 3-person team; 194 is a higher target but would require a stronger customer acquisition engine.
 
-**Moat Layer**：
-积累律所专属的合同模板库和风险条款数据库——这是唯一可防御的 moat，通用 LLM 替代不了行业专属数据。
+**Hidden costs**:If a legal vertical model needs fine-tuning, costs rise significantly; customer support pressure is also higher than typical SaaS (lawyers have very high expectations for output quality).
+
+---
+
+### Lens 5:Regulatory & Structural Risk
+
+**Assessment**:China’s Lawyers Law imposes strict qualification requirements for legal services; an AI tool cannot “provide legal advice” and can only act as an auxiliary tool. This is actually a form of protection — positioning as a “review assistant” rather than “replacing lawyers” can sidestep regulatory risks.
+
+**Key risk**:If the AI output is accepted as a final conclusion rather than a reference by the law firm, and a missed review incident occurs, the product could face reputation risk. Disclaimer design must be done on the product UI.
+
+---
+
+### Three-Layer Challenge Summary
+
+**Survival Layer**:
+Acquiring the first 10 paying law firms — this is the hardest step. Without industry connections, a cold start is impossible; this must be validated within 90 days.
+
+**Growth Layer**:
+Establish a word-of-mouth flywheel. The legal industry relies on case studies and endorsements; 3–5 publicly referenceable flagship clients are needed to unlock industry media and Bar Association channels.
+
+**Moat Layer**:
+Accumulate a law-firm-specific contract template library and risk clause database — this is the only defensible moat; generic LLMs cannot replace industry-specific data.
 
 ---
 
 ## Step 3: Assumption Mapping + Validation Plan
 
-*从 Step 2 lens 分析提取最危险的 3 个假设，按"错误概率 × 错误代价"排序：*
+*Extracted the 3 most dangerous assumptions from Step 2 lens analysis, ranked by “probability of being wrong × cost of being wrong”:*
 
-**Priority 1（本周验证）**：「律所愿意为 AI 合同审查工具付费」
-- 测试：联系 10 位认识的律师朋友，展示 PDF + 简单原型，直接报价 ¥500/月 pilot
-- 成功标准：≥3 人表达购买意愿或愿意签 LOI
+**Priority 1 (validate this week)**:“Law firms are willing to pay for an AI contract review tool”
+- Test:Contact 10 lawyer acquaintances, show a PDF + simple prototype, directly quote a ¥500/month pilot.
+- Success criteria:≥3 people express purchase intent or are willing to sign an LOI.
 
-**Priority 2**：「我们能接触到目标律所」
-- 测试：2 周内通过校友/前同事渠道联系 20 家律所，邀请免费试用
-- 成功标准：≥5 家同意试用（25% 响应率意味着渠道可行）
+**Priority 2**:“We can access target law firms”
+- Test:Contact 20 law firms within 2 weeks through alumni/former-colleague channels, inviting them to a free trial.
+- Success criteria:≥5 agree to trial (25% response rate means the channel is viable).
 
-**Priority 3**：「AI 在中文合同上的准确率足够高」
-- 测试：用 openrouter.ai + 现有模型，手动跑 30 份真实合同，与律师人工审查对比
-- 成功标准：关键风险条款漏报率 <10%（宁可多报，不能漏）
+**Priority 3**:“AI’s accuracy on Chinese contracts is sufficiently high”
+- Test:Use openrouter.ai + existing models, manually run 30 real contracts, and compare results against a lawyer’s manual review.
+- Success criteria:Miss rate for critical risk clauses <10% (better to flag too many than to miss any).
 
-**规则**：Priority 1 未通过前，不启动产品开发。律所不付费 = Kill Switch 触发。
+**Rule**:Do not start product development before Priority 1 is validated. Law firms not willing to pay = Kill Switch triggered.
 
 ---
 
 ## Step 4: Market Analysis
 
-### 市场规模
+### Market Size
 
-**Method A：Bottom-Up Unit Economics**
+**Method A:Bottom-Up Unit Economics**
 
-- 中国律所约 3.8 万家，5-20 人规模约 1.5 万家（参考司法部数据）
-- 筛选：使用 SaaS 工具且有合同审查需求 → 约 4,000 家
-- 保守渗透 3%（3 年内） = 120 家付费律所
-- ARPU ¥3,000/月 = ¥4,320,000 ARR 基础市场
+- Approximately 38,000 law firms in China; those with 5–20 people are about 15,000 (referencing Ministry of Justice data).
+- Filter: those that use SaaS tools and have contract review needs → roughly 4,000 firms.
+- Conservative penetration of 3% (within 3 years) = 120 paying law firms.
+- ARPU ¥3,000/month = ¥4,320,000 ARR base market.
 
-**Method B：Spend Displacement**
+**Method B:Spend Displacement**
 
-- 中小律所聘用 1 名初级律师专门做合同审查：¥8,000-12,000/月
-- 若 AI 工具替代 40% 的工作量 → 节省 ¥3,200-4,800/月
-- 定价 ¥2,000-3,000/月 → 节省金额大于工具费用，ROI 成立
-- 对应市场规模与 Method A 接近
+- SME law firm hires one junior lawyer dedicated to contract review: ¥8,000–12,000/month.
+- If the AI tool replaces 40% of the workload → saves ¥3,200–4,800/month.
+- Pricing at ¥2,000–3,000/month → savings exceed the tool cost, ROI is justified.
+- Corresponding market size aligns closely with Method A.
 
-**范围**：¥3M–¥8M ARR（SAM，中国中小律所）
+**Range**:¥3M–¥8M ARR (SAM, Chinese SME law firms).
 
-**小而美 check**：✅ 完全成立。¥4M ARR 对 3 人团队是极好结果，且毛利率高。
+**Small & beautiful check**:✅ Fully viable. ¥4M ARR is an excellent outcome for a 3-person team, with high gross margins.
 
-**国际市场**：暂不考虑，中国法律体系差异大，国际化需要独立的法规训练数据，建议先做深中国市场。
+**International market**:Not considered for now; China’s legal system differs greatly, and internationalization would require separate regulatory training data. Recommend going deep in the China market first.
 
-### 竞品格局
+### Competitive Landscape
 
-**直接竞品**：
-- 无讼（Westlaw China 类工具，侧重案例检索，不做合同审查）
-- 法大大（电子签约平台，不做风险识别）
-- 国内新兴 Legal AI 创业（多数面向大型律所或法务部门，SMB 无人服务）
+**Direct competitors**:
+- Wusong (Westlaw China–type tool, focused on case search, not contract review).
+- Fadada (e-signature platform, no risk identification).
+- A few emerging domestic Legal AI startups (most target large law firms or legal departments; SMBs are unserved).
 
-**间接替代**：律师直接用 GPT-4o / 文心一言 提问——这是最真实的竞争压力。
+**Indirect substitute**:Lawyers directly querying GPT-4o / ERNIE Bot — this is the most real competitive pressure.
 
-**Kill-zone risk**：低。大厂（阿里/腾讯法务云）目前聚焦大企业法务，5-20 人律所不在其服务半径。
+**Kill-zone risk**:Low. Big players (Alibaba / Tencent Legal Cloud) currently focus on large enterprise legal departments; 5–20 person law firms are outside their service radius.
 
-**定位空白**：面向中小律所、中文合同、订阅制、无需私有化部署——现有竞品均未覆盖该细分。
+**Positioning white space**:Targeting SME law firms, Chinese contracts, subscription-based, no on-premise deployment required — none of the existing competitors cover this niche.
 
-### 定价模型
+### Pricing Model
 
-**推荐模型**：SaaS 订阅，¥2,000–5,000/月（含每月 100 份合同处理量），超量按份计费
+**Recommended model**:SaaS subscription, ¥2,000–5,000/month (including 100 contracts processed per month), overage charged per contract.
 
-**ARPU benchmark**：
-- 国内法律 SaaS 参考（案例数据库类）¥1,000–3,000/月
-- 美国同类 Legal AI（Lawgeex、Luminance）$500–2,000/月；中国市场 WTP 折扣约 40%
+**ARPU benchmark**:
+- Domestic legal SaaS reference (case-database category) ¥1,000–3,000/month.
+- U.S. equivalents (Lawgeex, Luminance) $500–2,000/month; China market WTP roughly 40% discount.
 
-**Path to $1M ARR**：194 家律所 × ¥3,000/月 = ¥7M ≈ $1M USD — 需要约 3 年在中国 SMB 律所圈建立口碑
+**Path to $1M ARR**:194 law firms × ¥3,000/month = ¥7M ≈ $1M USD — needs roughly 3 years to build word-of-mouth in the Chinese SMB law firm circle.
 
-**WTP evidence**：律所目前为初级律师支付 ¥8,000–12,000/月做合同审查，工具定价 ¥3,000/月 ROI 清晰，WTP 存在；关键障碍是信任，不是价格。
+**WTP evidence**:Law firms currently pay ¥8,000–12,000/month for a junior lawyer to do contract review; tool priced at ¥3,000/month means clear ROI and WTP exists; the critical barrier is trust, not price.
 
 ---
 
 ## Step 5: Unit Economics Sanity Check
 
 **Revenue side:**
-- ARPU：¥3,000/月（¥36,000/年）
-- 月 12 目标客户：20 家律所（基于温热关系渠道容量）
-- ARR at month 12：¥720,000（约 $100K USD）
+- ARPU:¥3,000/month (¥36,000/year).
+- Target customers by month 12:20 law firms (based on warm relationship channel capacity).
+- ARR at month 12:¥720,000 (approx. $100K USD).
 
 **Cost side:**
-- LLM API：约 ¥500/律所/月（合同解析 + 风险识别，按 openrouter.ai 定价）
-- 基础设施 + 工具：约 ¥2,000/月固定
-- 20 家律所时月总成本：¥10,000 + ¥2,000 = ¥12,000
-- 毛利率：(¥60,000 − ¥12,000) ÷ ¥60,000 = **80%** ✅
+- LLM API:~¥500/law firm/month (contract parsing + risk identification, per openrouter.ai pricing).
+- Infrastructure + tools:~¥2,000/month fixed.
+- Total monthly cost at 20 firms:¥10,000 + ¥2,000 = ¥12,000.
+- Gross margin:(¥60,000 − ¥12,000) ÷ ¥60,000 = **80%** ✅.
 
 **Key ratios:**
-- 盈亏平衡：固定成本 ¥2,000 ÷ 毛利/律所 ¥2,500 = **仅需 1 家付费律所** — 极低门槛
-- LTV:CAC：获客靠温热关系（CAC ≈ 创始人时间成本），律所年均续费率估 75%，LTV ≈ ¥108,000；LTV:CAC 极高，不是瓶颈
-- 首次收入时间：温热关系外展 → pilot → 付费，预计 **6-8 周**
+- Breakeven:Fixed cost ¥2,000 ÷ contribution margin/firm ¥2,500 = **only 1 paying law firm needed** — extremely low threshold.
+- LTV:CAC:Customer acquisition via warm relationships (CAC ≈ founder time cost), estimated annual renewal rate 75%, LTV ≈ ¥108,000; LTV:CAC is extremely high, not a bottleneck.
+- Time to first revenue:warm relationship outreach → pilot → paying, estimated **6–8 weeks**.
 
 **Bootstrap survival check:**
-- 月度 burn：产品未上线前接近 ¥0（无员工工资，创始人自担）
-- 首次收入前需要的储备：6 周生活费
-- ✓ 数学成立：毛利率高、盈亏平衡极低、资金需求几乎为零
+- Monthly burn:Before product launch near ¥0 (no employee salaries, founders self-sustaining).
+- Reserves needed before first revenue:6 weeks of living expenses.
+- ✓ Math works:High gross margin, extremely low breakeven, nearly zero capital requirements.
 
-**Verdict：✓ Math works** — 20 家客户达到 ¥720K ARR，对 3 人团队是极好结果；若渗透率到 58 家则 ≈ $300K USD，达到小而美目标。唯一变量是获客，不是商业模式。
+**Verdict:✓ Math works** — 20 customers reach ¥720K ARR, an excellent outcome for a 3-person team; if penetration reaches 58 firms ≈ $300K USD, achieving the small-and-beautiful goal. The only variable is customer acquisition, not the business model.
 
 ---
 
 ## Step 6: MV-GTM
 
-**产品类型**：止痛药（painkiller）——合同审查是必须完成的工作，不是可选改善。
+**Product type**:Painkiller — contract review is a must-do task, not an optional improvement.
 
-**Phase 0→1（0-10 家付费）**
+**Phase 0→1 (0–10 paying)**
 
-- Beachhead：上海 / 北京 5-20 人规模专注商业合同的律所
-- Channel：**温热关系直接触达**——创始人通过朋友/校友/前同事联系，目标是获得 5-10 次免费试用邀请
-- 循环证明：试用 → 律师节省时间确认 → 转付费（¥500/月 pilot）→ 介绍同行
-- North-star metric：试用律所中有 ≥30% 在 30 天内主动续费
+- Beachhead:5–20 person law firms in Shanghai / Beijing specializing in commercial contracts.
+- Channel:**Direct warm relationship outreach** — founders contact through friends/alumni/former colleagues with the goal of securing 5–10 free trial invitations.
+- Loop proof:Trial → lawyer confirms time saved → convert to paying (¥500/month pilot) → refer peer.
+- North-star metric:≥30% of trial firms proactively renew within 30 days.
 
-**Phase 1→10（10-100 家）**
+**Phase 1→10 (10–100 firms)**
 
-- 保持单一渠道：律师圈口碑 + 无讼/法律读库 1 篇深度案例文章
-- Done 标准：有 3 家可公开引用的标杆律所，口碑转介绍占新客 50%
+- Keep single channel:Lawyer circle word-of-mouth + one deep case-study article on Wusong / Legal Reader.
+- Done criteria:3 publicly referenceable flagship law firms, with word-of-mouth referrals accounting for 50% of new customers.
 
-**Phase 10→100（100+ 家）**
+**Phase 10→100 (100+ firms)**
 
-- 加入一个渠道：律协合作 or 法律 SaaS 集成（如 iManage 中国版）
-- 开始构建合同模板库作为第二产品线
+- Add one channel:Bar Association partnership or legal SaaS integration (e.g., iManage Chinese edition).
+- Start building a contract template library as a second product line.
 
-**暂时不做**：
-1. 付费广告（获客成本远高于 LTV）
-2. 企业律所（合规要求完全不同）
-3. 国际市场（法律体系不通用）
-4. 自研法律大模型（成本高、时机未到）
-5. 多城市同步铺开（先聚焦 1 个城市打透）
+**Do not do for now**:
+1. Paid advertising (CAC far exceeds LTV).
+2. Enterprise law firms (compliance requirements are completely different).
+3. International markets (legal systems are not universal).
+4. Self-developed legal LLM (too costly, wrong timing).
+5. Simultaneous multi-city rollout (penetrate one city deeply first).
 
 ---
 
 ## Step 7: Pre-Mortem + Investment Verdict
 
-**24 个月后如果死了，最可能的原因：**
+**If this dies in 24 months, the most likely causes:**
 
-**原因 1：冷启动失败，无法进入律所圈子**
-*描述*：团队没有法律行业人脉，靠内容/SEO 无法获取对价格敏感、决策流程慢的律所客户。
-*早期预警信号*：90 天内接触 50 家律所，仍无 5 家愿意免费试用。
-*缓解方案*：启动前先花 2 周联系 20 个认识的律师朋友，若无一感兴趣则重新评估 Beachhead。
+**Cause 1:Cold start fails, cannot enter the law firm circle**
+*Description*:The team has no legal industry connections; content/SEO cannot acquire price-sensitive law firm clients with slow decision-making processes.
+*Early warning signal*:Contact 50 law firms within 90 days, yet still fewer than 5 willing to do a free trial.
+*Mitigation*:Before starting, spend 2 weeks reaching out to 20 known lawyer friends; if none show interest, reassess the Beachhead.
 
-**原因 2：律师对 AI 输出不信任，使用频次低**
-*描述*：律师每次都要从头复核 AI 的风险识别结果，并没有真正省时间，导致不续费。
-*早期预警信号*：试用律所 D30 留存率 < 20%，用户反馈"AI 经常漏判"。
-*缓解方案*：MVP 阶段以简单合同类型（劳动合同、采购合同）为切入，而非复杂商业合同；降低 AI 的输出置信门槛，宁可多报风险点，不要漏报。
+**Cause 2:Lawyers do not trust AI output, usage frequency is low**
+*Description*:Lawyers recheck every AI risk identification result from scratch every time; no real time saved, leading to non-renewal.
+*Early warning signal*:Trial firm D30 retention <20%, user feedback “AI often misses judgments.”
+*Mitigation*:At the MVP stage, start with simple contract types (labor contracts, procurement contracts) rather than complex commercial contracts; lower the AI output confidence threshold, erring on the side of flagging too many risks rather than missing any.
 
-**原因 3：竞品切入，LLM 通用能力压缩产品价值**
-*描述*：GPT-4o / 文心一言直接提供合同审查功能，律师开始直接用，不需要专门付费。
-*早期预警信号*：潜在客户在 Demo 中说"我直接问 ChatGPT 就好了"。
-*缓解方案*：尽快构建律所专属合同模板库和风险条款数据库，使产品超越通用 LLM 的深度。
+**Cause 3:Competitors enter, generic LLM capability compresses product value**
+*Description*:GPT-4o / ERNIE Bot directly offer contract review features; lawyers start using them directly without needing to pay for a specialized tool.
+*Early warning signal*:Prospective clients say during the demo “I can just ask ChatGPT.”
+*Mitigation*:Quickly build a law-firm-specific contract template library and risk clause database, so the product surpasses the depth of generic LLMs.
 
-**Pivot scan**：若律所获客太难，同样的技术栈可以转向**企业法务部门**（100-500 人公司的内部法务，ARPU 更高，购买决策更快，且有内部预算）。
+**Pivot scan**:If acquiring law firm clients is too difficult, the same tech stack can pivot to **corporate legal departments** (internal legal teams at 100–500 person companies; higher ARPU, faster purchasing decisions, and they have internal budgets).
 
 ---
 
 **Investment Verdict**
 
-决定：**Watch（观察）**
+Decision:**Watch**
 
-Bull thesis：若创始人有律所人脉能快速验证试用，止痛药产品 + 高毛利 + 有限竞争的小市场是极佳的小而美机会。
+Bull thesis:If the founders have law firm connections to quickly validate a trial, a painkiller product + high margin + limited competition in a small market is an excellent small-and-beautiful opportunity.
 
-Bear thesis：法律行业信任建立慢，若无人脉冷启动代价太高，3 人团队会在找到 PMF 之前耗尽精力。
+Bear thesis:Trust in the legal industry builds slowly; if no connections exist, the cold start cost is too high, and a 3-person team will exhaust itself before finding PMF.
 
-**6 个月内需要看到的证据**：
-1. ≥10 家律所完成试用，其中 ≥4 家主动转付费
-2. 至少 1 家律所提供可公开引用的案例和背书
-3. 有 1 个可重复的获客路径（不依赖创始人个人关系）
+**Evidence to see within 6 months**:
+1. ≥10 law firms complete trial, of which ≥4 proactively convert to paying.
+2. At least 1 law firm provides a publicly referenceable case study and endorsement.
+3. One repeatable customer acquisition path exists (not dependent solely on founder’s personal relationships).
 
-**Straight Verdict**：
-「小而美」— 适合 3 人团队长期运营，健康现金流，不需要融资，正是这个团队的最优解——**前提是你们有律所人脉**。若没有，先验证获客再动手。
+**Straight Verdict**:
+“Small & Beautiful” — suitable for a 3-person team to operate long-term, healthy cash flow, no need for outside funding, exactly the optimal solution for this team — **provided you have law firm connections**. If not, validate customer acquisition first before building.
